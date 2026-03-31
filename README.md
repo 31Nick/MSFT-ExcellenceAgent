@@ -13,6 +13,7 @@ ExcellenceAgent ingests [Azure Proactive Resiliency Library (APRL) v2](https://a
 - **Pattern Detection** — Identifies cross-domain patterns, high-impact clusters, and resource-group hotspots
 - **ADO CSV Export** — UTF-8 BOM CSV with indented title columns for direct ADO bulk import
 - **Web Dashboard** — Flask-based UI for visual hierarchy exploration, pattern insights, and export configuration
+- **Azure Advisor Cross-Reference** (Optional) — Upload Advisor CSV exports to cross-reference and identify overlapping insights between APRL and Advisor recommendations
 - **LLM Enrichment** (Optional) — Azure OpenAI integration for enhanced acceptance criteria, remediation steps, and semantic clustering
 
 ## Quick Start
@@ -89,6 +90,28 @@ excellence-agent -v analyse --report path/to/report.xlsx
 ```bash
 excellence-agent serve
 ```
+
+Open `http://localhost:5000` in your browser. Upload an APRL Excel report to explore:
+
+1. **Dashboard** — View summary stats, impact breakdown, and epic overview
+2. **Hierarchy** — Explore the interactive Epic → Feature → User Story → Task tree
+3. **Patterns** — Review cross-domain pattern insights
+4. **Export** — Configure Area/Iteration paths and download the ADO CSV
+
+#### Azure Advisor Cross-Reference (Optional)
+
+To overlay Azure Advisor recommendations alongside APRL:
+
+1. Export your Azure Advisor recommendations as CSV from the [Azure Portal](https://portal.azure.com/#view/Microsoft_Azure_Expert/AdvisorMenuBlade/~/overview)
+2. On the Dashboard page, scroll to **Add Azure Advisor Export (Optional)**
+3. Click to select your Advisor CSV file
+4. Upload or re-upload your APRL report (the Advisor file will be attached automatically)
+5. Navigate to **Dashboard** to see the APRL × Advisor Cross-Reference card with:
+   - **Matched resources** — Resources cited in both APRL and Advisor (with similarity scores)
+   - **Overlapping recommendations** — Advisor recommendations that correlate with APRL suggestions
+   - **Advisor-only resources** — Resources Advisor flagged but APRL did not mention
+
+This enables you to prioritize remediation efforts and identify coverage gaps across assessment tools.
 
 ### Server Management (PowerShell)
 
