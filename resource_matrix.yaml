@@ -27,6 +27,7 @@ categories:
     resource_patterns:
       - "microsoft.compute/virtualmachines"
       - "microsoft.compute/virtualmachinescalesets"
+      - "microsoft.compute/disks"
       - "microsoft.containerservice/managedclusters"
       - "microsoft.containerinstance/"
       - "microsoft.containerregistry/"
@@ -76,3 +77,25 @@ categories:
 
 # Fallback for resource types that don't match any pattern
 default_category: "Uncategorised"
+
+# ---------------------------------------------------------------------------
+# Mapping of Azure Advisor friendly type names to ARM resource types
+# ---------------------------------------------------------------------------
+advisor_type_mapping:
+  "Cosmos DB account": "Microsoft.DocumentDB/databaseAccounts"
+  "Virtual machine": "Microsoft.Compute/virtualMachines"
+  "Disk": "Microsoft.Compute/disks"
+  "App Service plan": "microsoft.web/serverfarms"
+  "App Service": "Microsoft.Web/sites"
+  "Function app": "Microsoft.Web/sites"
+  "Storage account": "Microsoft.Storage/storageAccounts"
+  "SQL database": "Microsoft.Sql/servers/databases"
+  "SQL server": "Microsoft.Sql/servers"
+  "Virtual network": "Microsoft.Network/virtualNetworks"
+  "Network security group": "Microsoft.Network/networkSecurityGroups"
+  "Load balancer": "Microsoft.Network/loadBalancers"
+  "Application gateway": "Microsoft.Network/applicationGateways"
+  "Key vault": "Microsoft.KeyVault/vaults"
+  "Log Analytics workspace": "microsoft.operationalinsights/workspaces"
+  "Application Insights": "microsoft.insights/components"
+  "Kubernetes service": "Microsoft.ContainerService/managedClusters"

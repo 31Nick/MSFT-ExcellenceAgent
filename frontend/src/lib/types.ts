@@ -86,10 +86,31 @@ export interface Pattern {
   recommendations: string[];
 }
 
+export interface CrossReferenceReport {
+  has_data: boolean;
+  total_aprl_rows: number;
+  total_advisor_rows: number;
+  total_merged_rows: number;
+  matched_resources_count: number;
+  aprl_only_resources_count: number;
+  advisor_only_resources_count: number;
+  duplicate_recommendations_count: number;
+  matched_resources: string[];
+  aprl_only_resources: string[];
+  advisor_only_resources: string[];
+  duplicate_recommendations: {
+    resource: string;
+    aprl_title: string;
+    advisor_title: string;
+    similarity: number;
+  }[];
+}
+
 export interface UploadResponse {
   success: boolean;
   stats: Stats;
   message: string;
+  cross_reference?: CrossReferenceReport;
 }
 
 export interface ExportRequest {

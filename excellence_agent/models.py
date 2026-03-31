@@ -25,6 +25,8 @@ class Task:
     custom_fields: Dict[str, str] = field(default_factory=dict)
     notes: str = ""
     check_name: str = ""
+    source: str = ""  # "APRL", "Advisor", or "APRL & Advisor"
+    advisor_metadata: Dict[str, str] = field(default_factory=dict)  # retirement_date, retiring_feature, etc.
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -37,6 +39,8 @@ class Task:
             "custom_fields": dict(self.custom_fields),
             "notes": self.notes,
             "check_name": self.check_name,
+            "source": self.source,
+            "advisor_metadata": dict(self.advisor_metadata),
         }
 
 
@@ -54,6 +58,7 @@ class UserStory:
     waf_pillar: str = ""
     category: str = ""
     source: str = ""
+    advisor_metadata: Dict[str, str] = field(default_factory=dict)
     feature: Optional[Feature] = field(default=None, repr=False)
     tasks: List[Task] = field(default_factory=list)
 
@@ -78,6 +83,7 @@ class UserStory:
             "waf_pillar": self.waf_pillar,
             "category": self.category,
             "source": self.source,
+            "advisor_metadata": dict(self.advisor_metadata),
             "tasks": [t.to_dict() for t in self.tasks],
         }
 

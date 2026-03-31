@@ -54,37 +54,56 @@ def _error(message: str, status: int = 400):
 
 @api_bp.route("/upload", methods=["POST"])
 def upload():
-    """Accept APRL Excel file, run the full pipeline, return JSON summary."""
+    """Accept APRL Excel file and optional Advisor CSV, run the full pipeline."""
     file = request.files.get("aprl_file")
     if not file or file.filename == "":
         return _error("No file selected.", 400)
+
+    advisor_file = request.files.get("advisor_file")  # Optional
 
     config = _get_config()
 
     output_dir = os.path.abspath(config.output_dir)
     os.makedirs(output_dir, exist_ok=True)
+
     upload_path = os.path.join(output_dir, file.filename)
     file.save(upload_path)
+
+    advisor_path = None
+    if advisor_file and advisor_file.filename:
+        advisor_path = os.path.join(output_dir, advisor_file.filename)
+        advisor_file.save(advisor_path)
 
     try:
         from excellence_agent.ingest import APRLParser
         from excellence_agent.analysis import (
+            CrossReferencer,
             Deduplicator,
             HierarchyBuilder,
             PatternDetector,
             ResourceMapper,
         )
 
-        # 1. Parse
+        # 1. Parse APRL
         parser = APRLParser(upload_path)
         report = parser.parse()
+        df = report.impacted_resources
 
-        # 2. Map resources
+        # 2. Optional Advisor merge
+        xref_report = None
         matrix = config.load_resource_matrix()
-        mapper = ResourceMapper(matrix)
-        mapped_df = mapper.map_dataframe(report.impacted_resources)
+        if advisor_path:
+            from excellence_agent.ingest import AdvisorParser
+            type_mapping = matrix.get("advisor_type_mapping", {})
+            advisor_report = AdvisorParser(advisor_path, type_mapping=type_mapping).parse()
+            xref = CrossReferencer()
+            df, xref_report = xref.merge(df, advisor_report.recommendations)
 
-        # 3. Build hierarchy
+        # 3. Map resources
+        mapper = ResourceMapper(matrix)
+        mapped_df = mapper.map_dataframe(df)
+
+        # 4. Build hierarchy
         descriptions = {
             cat: info.get("description", "")
             for cat, info in matrix.get("categories", {}).items()
@@ -92,11 +111,11 @@ def upload():
         builder = HierarchyBuilder(category_descriptions=descriptions)
         hierarchy = builder.build(mapped_df)
 
-        # 4. Deduplicate
+        # 5. Deduplicate
         dedup = Deduplicator()
         dedup_report = dedup.analyse(hierarchy)
 
-        # 5. Detect patterns
+        # 6. Detect patterns
         detector = PatternDetector()
         patterns = detector.detect(hierarchy)
 
@@ -104,23 +123,46 @@ def upload():
         current_app.config["EA_HIERARCHY"] = hierarchy
         current_app.config["EA_DEDUP_REPORT"] = dedup_report
         current_app.config["EA_PATTERNS"] = patterns
+        current_app.config["EA_XREF_REPORT"] = xref_report
 
         stats = hierarchy.summary_stats()
-        return jsonify(
-            success=True,
-            stats=stats,
-            message=(
-                f"Pipeline complete — {stats['epics']} Epics, "
-                f"{stats['features']} Features, "
-                f"{stats['user_stories']} User Stories, "
-                f"{stats['tasks']} Tasks."
-            ),
+        message = (
+            f"Pipeline complete — {stats['epics']} Epics, "
+            f"{stats['features']} Features, "
+            f"{stats['user_stories']} User Stories, "
+            f"{stats['tasks']} Tasks."
         )
+        if xref_report:
+            message += (
+                f" Cross-ref: {len(xref_report.matched_resources)} matched, "
+                f"{len(xref_report.advisor_only_resources)} Advisor-only."
+            )
+
+        response_data = {
+            "success": True,
+            "stats": stats,
+            "message": message,
+        }
+        if xref_report:
+            response_data["cross_reference"] = xref_report.to_dict()
+
+        return jsonify(response_data)
     except Exception as exc:
         return _error(f"Pipeline error: {exc}", 500)
     finally:
         if os.path.exists(upload_path):
             os.remove(upload_path)
+        if advisor_path and os.path.exists(advisor_path):
+            os.remove(advisor_path)
+
+
+@api_bp.route("/cross-reference", methods=["GET"])
+def cross_reference():
+    """Return the cross-reference report if Advisor data was provided."""
+    xref = current_app.config.get("EA_XREF_REPORT")
+    if xref is None:
+        return jsonify({"has_data": False})
+    return jsonify({"has_data": True, **xref.to_dict()})
 
 
 @api_bp.route("/stats", methods=["GET"])

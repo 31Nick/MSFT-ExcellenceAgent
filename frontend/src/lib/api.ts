@@ -5,6 +5,7 @@ import type {
   DedupReport,
   UploadResponse,
   ExportRequest,
+  CrossReferenceReport,
 } from './types';
 
 class ApiError extends Error {
@@ -27,7 +28,8 @@ async function request<T>(url: string, options?: RequestInit): Promise<T> {
 
 export async function uploadFile(
   file: File,
-  onProgress?: (pct: number) => void
+  onProgress?: (pct: number) => void,
+  advisorFile?: File | null
 ): Promise<UploadResponse> {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -51,6 +53,9 @@ export async function uploadFile(
 
     const fd = new FormData();
     fd.append('aprl_file', file);
+    if (advisorFile) {
+      fd.append('advisor_file', advisorFile);
+    }
     xhr.send(fd);
   });
 }
@@ -69,6 +74,10 @@ export async function getPatterns(): Promise<Pattern[]> {
 
 export async function getDedup(): Promise<DedupReport> {
   return request<DedupReport>('/api/dedup');
+}
+
+export async function getCrossReference(): Promise<CrossReferenceReport> {
+  return request<CrossReferenceReport>('/api/cross-reference');
 }
 
 export async function exportCsv(params: ExportRequest): Promise<void> {

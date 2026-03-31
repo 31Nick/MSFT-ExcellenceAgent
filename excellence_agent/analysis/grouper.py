@@ -204,6 +204,21 @@ class HierarchyBuilder:
     ) -> UserStory:
         first_row = story_df.iloc[0]
 
+        # Use _Source from cross-referencer if available, else fallback to APRL Source column
+        source_val = _safe_str(first_row.get("_Source")) or _safe_str(first_row.get(COL_SOURCE))
+
+        advisor_metadata: Dict[str, str] = {}
+        for col_name in (
+            "advisor_retirement_date",
+            "advisor_retiring_feature",
+            "advisor_subscription_name",
+            "advisor_updated_date",
+            "advisor_cost_implications",
+        ):
+            val = _safe_str(first_row.get(col_name))
+            if val:
+                advisor_metadata[col_name] = val
+
         story = UserStory(
             title=rec_title,
             recommendation_guid=guid,
@@ -214,7 +229,8 @@ class HierarchyBuilder:
             long_description=_safe_str(first_row.get(COL_LONG_DESCRIPTION)),
             waf_pillar=_safe_str(first_row.get(COL_WAF_PILLAR)),
             category=_safe_str(first_row.get(COL_CATEGORY)),
-            source=_safe_str(first_row.get(COL_SOURCE)),
+            source=source_val,
+            advisor_metadata=advisor_metadata,
         )
 
         for _, row in story_df.iterrows():
@@ -230,6 +246,20 @@ class HierarchyBuilder:
             if val:
                 custom_fields[col] = val
 
+        source_val = _safe_str(row.get("_Source")) or _safe_str(row.get(COL_SOURCE))
+
+        advisor_metadata: Dict[str, str] = {}
+        for col_name in (
+            "advisor_retirement_date",
+            "advisor_retiring_feature",
+            "advisor_subscription_name",
+            "advisor_updated_date",
+            "advisor_cost_implications",
+        ):
+            val = _safe_str(row.get(col_name))
+            if val:
+                advisor_metadata[col_name] = val
+
         return Task(
             resource_name=_safe_str(row.get(COL_NAME)),
             resource_id=_safe_str(row.get(COL_ID)),
@@ -240,4 +270,6 @@ class HierarchyBuilder:
             custom_fields=custom_fields,
             notes=_safe_str(row.get(COL_NOTES)),
             check_name=_safe_str(row.get(COL_CHECK_NAME)),
+            source=source_val,
+            advisor_metadata=advisor_metadata,
         )

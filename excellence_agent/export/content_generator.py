@@ -153,6 +153,7 @@ class ContentGenerator:
             recommendation_control=story.recommendation_control,
             potential_benefit=story.potential_benefit or "N/A",
             source=story.source or "APRL",
+            advisor_metadata=getattr(story, 'advisor_metadata', {}),
             recommendation_guid=story.recommendation_guid,
             learn_more_link=story.learn_more_link or "N/A",
             tasks=story.tasks,
@@ -184,6 +185,18 @@ class ContentGenerator:
                 f"<li>Changes verified via <a href=\"{story.learn_more_link}\">{story.learn_more_link}</a></li>"
             )
 
+        if story.source and story.source != "APRL":
+            lines.append(f"<li>Source: <strong>{story.source}</strong></li>")
+        advisor_meta = getattr(story, 'advisor_metadata', {})
+        if advisor_meta.get("advisor_retirement_date"):
+            lines.append(
+                f"<li>⚠️ Retirement date: <strong>{advisor_meta['advisor_retirement_date']}</strong></li>"
+            )
+        if advisor_meta.get("advisor_retiring_feature"):
+            lines.append(
+                f"<li>Retiring feature: {advisor_meta['advisor_retiring_feature']}</li>"
+            )
+
         lines.append("</ul>")
         logger.debug("Generated UserStory acceptance criteria for '%s'", story.title)
         return "\n".join(lines)
@@ -205,6 +218,8 @@ class ContentGenerator:
             notes=task.notes or "",
             recommendation_title=story.title,
             learn_more_link=story.learn_more_link or "",
+            source=getattr(task, 'source', '') or story.source or "APRL",
+            advisor_metadata=getattr(task, 'advisor_metadata', {}),
         )
         logger.debug("Generated Task description for '%s'", task.resource_name)
         return rendered

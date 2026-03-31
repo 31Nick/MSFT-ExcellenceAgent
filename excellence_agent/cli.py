@@ -32,8 +32,27 @@ def _report_option(fn):
     )(fn)
 
 
+def _advisor_option(fn):
+    """Optional ``--advisor`` option for Advisor CSV path."""
+    return click.option(
+        "--advisor",
+        required=False,
+        default=None,
+        type=click.Path(exists=True, dir_okay=False),
+        help="Optional path to Azure Advisor CSV export.",
+    )(fn)
+
+
 def _elapsed(start: float) -> str:
     return f"{time.time() - start:.2f}s"
+
+
+def _load_advisor_type_mapping(matrix_path: str) -> dict[str, str]:
+    """Load the advisor_type_mapping from a resource matrix YAML file."""
+    import yaml
+    with open(matrix_path, "r", encoding="utf-8") as f:
+        data = yaml.safe_load(f) or {}
+    return data.get("advisor_type_mapping", {})
 
 
 # ---------------------------------------------------------------------------
@@ -58,7 +77,8 @@ def cli(verbose: bool) -> None:
 
 @cli.command()
 @_report_option
-def ingest(report: str) -> None:
+@_advisor_option
+def ingest(report: str, advisor: str | None) -> None:
     """Parse an APRL report and display a summary."""
     from excellence_agent.ingest import APRLParser
 
@@ -99,6 +119,17 @@ def ingest(report: str) -> None:
         ):
             click.echo(f"    {impact}: {count}")
 
+    if advisor:
+        from excellence_agent.ingest import AdvisorParser
+        click.echo(click.style("▶ Parsing Advisor CSV …", fg="cyan"))
+        type_mapping = _load_advisor_type_mapping(_DEFAULT_MATRIX)
+        advisor_parser = AdvisorParser(advisor, type_mapping=type_mapping)
+        advisor_report = advisor_parser.parse()
+        advisor_df = advisor_report.recommendations
+        click.echo(f"  Advisor rows:           {len(advisor_df)}")
+        advisor_types = advisor_df["Type"].nunique() if "Type" in advisor_df.columns else 0
+        click.echo(f"  Advisor resource types: {advisor_types}")
+
     click.echo(f"\n  Elapsed: {_elapsed(start)}")
 
 
@@ -108,6 +139,7 @@ def ingest(report: str) -> None:
 
 @cli.command()
 @_report_option
+@_advisor_option
 @click.option(
     "--matrix",
     default=_DEFAULT_MATRIX,
@@ -115,7 +147,7 @@ def ingest(report: str) -> None:
     show_default=True,
     help="Path to resource_matrix.yaml.",
 )
-def analyse(report: str, matrix: str) -> None:
+def analyse(report: str, matrix: str, advisor: str | None) -> None:
     """Run the full analysis pipeline on an APRL report."""
     from excellence_agent.analysis import (
         Deduplicator,
@@ -133,10 +165,27 @@ def analyse(report: str, matrix: str) -> None:
     except Exception as exc:
         raise click.ClickException(str(exc)) from exc
 
-    # Map
+    df = aprl.impacted_resources
+
+    # Optional Advisor merge
+    xref_report = None
+    if advisor:
+        from excellence_agent.ingest import AdvisorParser
+        from excellence_agent.analysis import CrossReferencer
+
+        click.echo(click.style("▶ Parsing Advisor CSV …", fg="cyan"))
+        type_mapping = _load_advisor_type_mapping(matrix)
+        advisor_report = AdvisorParser(advisor, type_mapping=type_mapping).parse()
+
+        click.echo(click.style("▶ Cross-referencing APRL + Advisor …", fg="cyan"))
+        xref = CrossReferencer()
+        df, xref_report = xref.merge(df, advisor_report.recommendations)
+        click.echo(xref_report.summary())
+
+    # Map (use df which may be merged)
     click.echo(click.style("▶ Mapping resources …", fg="cyan"))
     mapper = ResourceMapper.from_yaml(matrix)
-    df = mapper.map_dataframe(aprl.impacted_resources)
+    df = mapper.map_dataframe(df)
 
     # Build hierarchy
     click.echo(click.style("▶ Building hierarchy …", fg="cyan"))
@@ -179,6 +228,7 @@ def analyse(report: str, matrix: str) -> None:
 
 @cli.command()
 @_report_option
+@_advisor_option
 @click.option(
     "--matrix",
     default=_DEFAULT_MATRIX,
@@ -200,6 +250,7 @@ def export(
     output: str,
     area_path: str,
     iteration_path: str,
+    advisor: str | None,
 ) -> None:
     """Run analysis and export an ADO-compatible CSV."""
     from excellence_agent.analysis import (
@@ -219,10 +270,25 @@ def export(
     except Exception as exc:
         raise click.ClickException(str(exc)) from exc
 
+    df = aprl.impacted_resources
+
+    if advisor:
+        from excellence_agent.ingest import AdvisorParser
+        from excellence_agent.analysis import CrossReferencer
+
+        click.echo(click.style("▶ Parsing Advisor CSV …", fg="cyan"))
+        type_mapping = _load_advisor_type_mapping(matrix)
+        advisor_report = AdvisorParser(advisor, type_mapping=type_mapping).parse()
+
+        click.echo(click.style("▶ Cross-referencing …", fg="cyan"))
+        xref = CrossReferencer()
+        df, xref_report = xref.merge(df, advisor_report.recommendations)
+        click.echo(f"  Merged: {xref_report.total_merged_rows} rows ({len(xref_report.matched_resources)} matched resources)")
+
     # Map
     click.echo(click.style("▶ Mapping resources …", fg="cyan"))
     mapper = ResourceMapper.from_yaml(matrix)
-    df = mapper.map_dataframe(aprl.impacted_resources)
+    df = mapper.map_dataframe(df)
 
     # Build hierarchy
     click.echo(click.style("▶ Building hierarchy …", fg="cyan"))

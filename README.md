@@ -90,6 +90,53 @@ excellence-agent -v analyse --report path/to/report.xlsx
 excellence-agent serve
 ```
 
+### Server Management (PowerShell)
+
+Use these PowerShell cmdlets from the project root on Windows.
+
+Start the dashboard on port 5000:
+
+```powershell
+excellence-agent serve --port 5000
+```
+
+Check whether anything is listening on port 5000:
+
+```powershell
+Get-NetTCPConnection -LocalPort 5000 -State Listen
+```
+
+Stop the process currently bound to port 5000:
+
+```powershell
+$conn = Get-NetTCPConnection -LocalPort 5000 -State Listen -ErrorAction SilentlyContinue
+if ($conn) {
+  $pids = $conn | Select-Object -ExpandProperty OwningProcess -Unique
+  foreach ($pid in $pids) {
+    Stop-Process -Id $pid -Force
+  }
+}
+```
+
+Restart in one sequence (stop any existing process, then start again):
+
+```powershell
+$conn = Get-NetTCPConnection -LocalPort 5000 -State Listen -ErrorAction SilentlyContinue
+if ($conn) {
+  $pids = $conn | Select-Object -ExpandProperty OwningProcess -Unique
+  foreach ($pid in $pids) {
+    Stop-Process -Id $pid -Force -ErrorAction SilentlyContinue
+  }
+}
+excellence-agent serve --port 5000
+```
+
+Restart in a new PowerShell window (non-blocking, keeps current terminal free):
+
+```powershell
+$conn = Get-NetTCPConnection -LocalPort 5000 -State Listen -ErrorAction SilentlyContinue; if ($conn) { ($conn | Select-Object -ExpandProperty OwningProcess -Unique) | ForEach-Object { Stop-Process -Id $_ -Force -ErrorAction SilentlyContinue } }; Start-Process pwsh -ArgumentList '-NoExit','-Command',"Set-Location '$($PWD.Path)'; excellence-agent serve --port 5000"
+```
+
 Open `http://localhost:5000` in your browser. Upload an APRL Excel report to:
 
 1. **Dashboard** — View summary stats, impact breakdown, and epic overview

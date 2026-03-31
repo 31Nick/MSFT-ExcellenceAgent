@@ -1,7 +1,7 @@
 ﻿"Work Item Type","Title 1","Title 2","Title 3","Title 4","Description","Acceptance Criteria","Tags","Priority","Area Path","Iteration Path"
 "Epic","Apps","","","","<h1>Apps</h1>
 <h2>Overview</h2>
-<p>Application hosting — App Service, Functions, Static Web Apps</p>
+<p>Azure Excellence recommendations for the Apps domain.</p>
 <p><strong>WAF Pillars:</strong> Reliability</p>
 <h2>Scope</h2>
 <ul>
@@ -780,31 +780,29 @@
 </ul>","Medium; eastus; Source:APRL","2","",""
 "Epic","Compute","","","","<h1>Compute</h1>
 <h2>Overview</h2>
-<p>Virtual machines, scale sets, containers, and orchestration</p>
+<p>Azure Excellence recommendations for the Compute domain.</p>
 <p><strong>WAF Pillars:</strong> Reliability</p>
 <h2>Scope</h2>
 <ul>
-<li><strong>Total Features:</strong> 2</li>
-<li><strong>Total Recommendations:</strong> 7</li>
-<li><strong>Total Affected Resources:</strong> 7</li>
+<li><strong>Total Features:</strong> 1</li>
+<li><strong>Total Recommendations:</strong> 6</li>
+<li><strong>Total Affected Resources:</strong> 6</li>
 <li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 </ul>
 <h2>Impact Summary</h2>
 <ul>
 <li><strong>High:</strong> 1 recommendation(s)</li>
-<li><strong>Medium:</strong> 5 recommendation(s)</li>
+<li><strong>Medium:</strong> 4 recommendation(s)</li>
 <li><strong>Low:</strong> 1 recommendation(s)</li>
 </ul>
 <h2>Features</h2>
 <ul>
 <li><strong>Virtual Machines</strong> (Microsoft.Compute/virtualMachines) &mdash; 6 resource(s), 6 recommendation(s)</li>
-<li><strong>Disks</strong> (Microsoft.Compute/disks) &mdash; 1 resource(s), 1 recommendation(s)</li>
 </ul>
 ","<p>All Features within this Epic are completed and verified.</p>
 <p><strong>Features to complete:</strong></p>
 <ul>
 <li>Virtual Machines (Microsoft.Compute/virtualMachines) &mdash; 6 recommendation(s), 6 resource(s)</li>
-<li>Disks (Microsoft.Compute/disks) &mdash; 1 recommendation(s), 1 resource(s)</li>
 </ul>","Reliability; Compute","2","",""
 "Feature","","Virtual Machines","","","<h1>Virtual Machines (Microsoft.Compute/virtualMachines)</h1>
 <h2>Overview</h2>
@@ -1163,89 +1161,9 @@
 <li>Resource <strong>server01</strong> in <code>resiliancetestingworkload</code> passes APRL check <strong>Enable VM Insights</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/vm/vminsights-overview"">https://learn.microsoft.com/azure/azure-monitor/vm/vminsights-overview</a></li>
 </ul>","Low; uksouth; Source:APRL","3","",""
-"Feature","","Disks","","","<h1>Disks (Microsoft.Compute/disks)</h1>
-<h2>Overview</h2>
-<p>Recommendations for <strong>Microsoft.Compute/disks</strong> resources within the <strong>Compute</strong> domain.</p>
-<h2>Scope</h2>
-<ul>
-<li><strong>Recommendations:</strong> 1</li>
-<li><strong>Affected Resources:</strong> 1</li>
-<li><strong>Resource Groups:</strong> resiliancetestingworkload</li>
-<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-<li><strong>Regions:</strong> </li>
-</ul>
-<h2>Impact Breakdown</h2>
-<ul>
-<li><strong>Medium:</strong> 1</li>
-</ul>
-<h2>Recommendations</h2>
-<ol>
-<li><strong>Migrate Standard HDD OS Disks to SSD</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> </li>
-<li><strong>Benefit:</strong> Avoid potential service disruption after retirement</li>
-<li><strong>Affected Resources:</strong> 1</li>
-</ul>
-</li>
-</ol>
-","<p>All User Stories for <strong>Microsoft.Compute/disks</strong> are completed. Resources validated against APRL checks.</p>
-<p><strong>User Stories to complete:</strong></p>
-<ul>
-<li>Migrate Standard HDD OS Disks to SSD [Medium] &mdash; 1 resource(s)</li>
-</ul>","Microsoft.Compute/disks; Compute","2","",""
-"User Story","","","Migrate Standard HDD OS Disks to SSD","","<h1>Migrate Standard HDD OS Disks to SSD</h1>
-<h2>Recommendation</h2>
-<p>No detailed description available.</p>
-<h2>Details</h2>
-<ul>
-<li><strong>Impact:</strong> Medium</li>
-<li><strong>WAF Pillar:</strong> N/A</li>
-<li><strong>Control:</strong> </li>
-<li><strong>Potential Benefit:</strong> Avoid potential service disruption after retirement</li>
-<li><strong>Source:</strong> Advisor</li>
-<li><strong>APRL Guid:</strong> </li>
-</ul>
-<h2>Advisor Information</h2>
-<ul>
-<li><strong>⚠️ Retirement Date:</strong> 08/09/2028</li>
-<li><strong>Retiring Feature:</strong> Operating System (OS) Disks on Standard HDD</li>
-<li><strong>Cost Implications:</strong> No data</li>
-</ul>
-<h2>Affected Resources (1)</h2>
-<table>
-<tr><th>#</th><th>Resource Name</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>1</td><td>server01_osdisk_1_44cd5ccc8fa44c15afcce9733b4ad87f</td><td>resiliancetestingworkload</td><td></td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-","<ul>
-<li>All 1 resource(s) have been remediated</li>
-<li>APRL check <code></code> passes for all resources</li>
-</ul>
-<p><strong>Per-resource verification:</strong></p>
-<ul>
-<li>Resource <strong>server01_osdisk_1_44cd5ccc8fa44c15afcce9733b4ad87f</strong> in <code>resiliancetestingworkload</code> is compliant</li>
-<li>Source: <strong>Advisor</strong></li>
-<li>⚠️ Retirement date: <strong>08/09/2028</strong></li>
-<li>Retiring feature: Operating System (OS) Disks on Standard HDD</li>
-</ul>","Medium; Azure Service; Source:Advisor","2","",""
-"Task","","","","server01_osdisk_1_44cd5ccc8fa44c15afcce9733b4ad87f","<h1>Remediate: server01_osdisk_1_44cd5ccc8fa44c15afcce9733b4ad87f</h1>
-<h2>Resource Details</h2>
-<ul>
-<li><strong>Resource Name:</strong> server01_osdisk_1_44cd5ccc8fa44c15afcce9733b4ad87f</li>
-<li><strong>Resource ID:</strong> <code></code></li>
-<li><strong>Resource Group:</strong> resiliancetestingworkload</li>
-<li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-<li><strong>Location:</strong> </li>
-<li><strong>Source:</strong> Advisor</li></ul>
-<h2>Action Required</h2>
-<p>Apply the recommendation &quot;Migrate Standard HDD OS Disks to SSD&quot; to this resource.</p>
-<h2>Verification</h2>
-<p>Confirm the resource passes the APRL compliance check after remediation.</p>
-","<ul>
-<li>Resource <strong>server01_osdisk_1_44cd5ccc8fa44c15afcce9733b4ad87f</strong> in <code>resiliancetestingworkload</code> passes APRL check <strong>Migrate Standard HDD OS Disks to SSD</strong></li>
-</ul>","Medium; Source:Advisor","2","",""
 "Epic","Data","","","","<h1>Data</h1>
 <h2>Overview</h2>
-<p>Databases, storage, and data services</p>
+<p>Azure Excellence recommendations for the Data domain.</p>
 <p><strong>WAF Pillars:</strong> Reliability</p>
 <h2>Scope</h2>
 <ul>
@@ -1651,7 +1569,7 @@
 </ul>","Medium; westus2; Source:APRL","2","",""
 "Epic","Networking","","","","<h1>Networking</h1>
 <h2>Overview</h2>
-<p>Virtual networks, gateways, load balancers, and connectivity</p>
+<p>Azure Excellence recommendations for the Networking domain.</p>
 <p><strong>WAF Pillars:</strong> Reliability</p>
 <h2>Scope</h2>
 <ul>
@@ -2191,7 +2109,7 @@
 </ul>","Medium; uksouth; Source:APRL","2","",""
 "Epic","Observability","","","","<h1>Observability</h1>
 <h2>Overview</h2>
-<p>Monitoring, logging, and diagnostics resources</p>
+<p>Azure Excellence recommendations for the Observability domain.</p>
 <p><strong>WAF Pillars:</strong> Reliability</p>
 <h2>Scope</h2>
 <ul>
@@ -2512,7 +2430,7 @@
 </ul>","Medium; eastus; Source:APRL","2","",""
 "Epic","Platform","","","","<h1>Platform</h1>
 <h2>Overview</h2>
-<p>Core platform services — identity, secrets, governance</p>
+<p>Azure Excellence recommendations for the Platform domain.</p>
 <p><strong>WAF Pillars:</strong> N/A</p>
 <h2>Scope</h2>
 <ul>
@@ -3291,3 +3209,107 @@
 <ol>
 </ol>
 ","<p>All User Stories for <strong>microsoft.eventgrid/systemtopics</strong> are completed. Resources validated against APRL checks.</p>","microsoft.eventgrid/systemtopics; Platform","2","",""
+"Epic","Uncategorised","","","","<h1>Uncategorised</h1>
+<h2>Overview</h2>
+<p>Azure Excellence recommendations for the Uncategorised domain.</p>
+<p><strong>WAF Pillars:</strong> N/A</p>
+<h2>Scope</h2>
+<ul>
+<li><strong>Total Features:</strong> 1</li>
+<li><strong>Total Recommendations:</strong> 1</li>
+<li><strong>Total Affected Resources:</strong> 1</li>
+<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
+</ul>
+<h2>Impact Summary</h2>
+<ul>
+<li><strong>Medium:</strong> 1 recommendation(s)</li>
+</ul>
+<h2>Features</h2>
+<ul>
+<li><strong>Disks</strong> (Microsoft.Compute/disks) &mdash; 1 resource(s), 1 recommendation(s)</li>
+</ul>
+","<p>All Features within this Epic are completed and verified.</p>
+<p><strong>Features to complete:</strong></p>
+<ul>
+<li>Disks (Microsoft.Compute/disks) &mdash; 1 recommendation(s), 1 resource(s)</li>
+</ul>","Uncategorised","2","",""
+"Feature","","Disks","","","<h1>Disks (Microsoft.Compute/disks)</h1>
+<h2>Overview</h2>
+<p>Recommendations for <strong>Microsoft.Compute/disks</strong> resources within the <strong>Uncategorised</strong> domain.</p>
+<h2>Scope</h2>
+<ul>
+<li><strong>Recommendations:</strong> 1</li>
+<li><strong>Affected Resources:</strong> 1</li>
+<li><strong>Resource Groups:</strong> resiliancetestingworkload</li>
+<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
+<li><strong>Regions:</strong> </li>
+</ul>
+<h2>Impact Breakdown</h2>
+<ul>
+<li><strong>Medium:</strong> 1</li>
+</ul>
+<h2>Recommendations</h2>
+<ol>
+<li><strong>Migrate Standard HDD OS Disks to SSD</strong> [Medium]
+<ul>
+<li><strong>Control:</strong> </li>
+<li><strong>Benefit:</strong> Avoid potential service disruption after retirement</li>
+<li><strong>Affected Resources:</strong> 1</li>
+</ul>
+</li>
+</ol>
+","<p>All User Stories for <strong>Microsoft.Compute/disks</strong> are completed. Resources validated against APRL checks.</p>
+<p><strong>User Stories to complete:</strong></p>
+<ul>
+<li>Migrate Standard HDD OS Disks to SSD [Medium] &mdash; 1 resource(s)</li>
+</ul>","Microsoft.Compute/disks; Uncategorised","2","",""
+"User Story","","","Migrate Standard HDD OS Disks to SSD","","<h1>Migrate Standard HDD OS Disks to SSD</h1>
+<h2>Recommendation</h2>
+<p>No detailed description available.</p>
+<h2>Details</h2>
+<ul>
+<li><strong>Impact:</strong> Medium</li>
+<li><strong>WAF Pillar:</strong> N/A</li>
+<li><strong>Control:</strong> </li>
+<li><strong>Potential Benefit:</strong> Avoid potential service disruption after retirement</li>
+<li><strong>Source:</strong> Advisor</li>
+<li><strong>APRL Guid:</strong> </li>
+</ul>
+<h2>Advisor Information</h2>
+<ul>
+<li><strong>⚠️ Retirement Date:</strong> 08/09/2028</li>
+<li><strong>Retiring Feature:</strong> Operating System (OS) Disks on Standard HDD</li>
+<li><strong>Cost Implications:</strong> No data</li>
+</ul>
+<h2>Affected Resources (1)</h2>
+<table>
+<tr><th>#</th><th>Resource Name</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
+<tr><td>1</td><td>server01_osdisk_1_44cd5ccc8fa44c15afcce9733b4ad87f</td><td>resiliancetestingworkload</td><td></td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
+</table>
+","<ul>
+<li>All 1 resource(s) have been remediated</li>
+<li>APRL check <code></code> passes for all resources</li>
+</ul>
+<p><strong>Per-resource verification:</strong></p>
+<ul>
+<li>Resource <strong>server01_osdisk_1_44cd5ccc8fa44c15afcce9733b4ad87f</strong> in <code>resiliancetestingworkload</code> is compliant</li>
+<li>Source: <strong>Advisor</strong></li>
+<li>⚠️ Retirement date: <strong>08/09/2028</strong></li>
+<li>Retiring feature: Operating System (OS) Disks on Standard HDD</li>
+</ul>","Medium; Azure Service; Source:Advisor","2","",""
+"Task","","","","server01_osdisk_1_44cd5ccc8fa44c15afcce9733b4ad87f","<h1>Remediate: server01_osdisk_1_44cd5ccc8fa44c15afcce9733b4ad87f</h1>
+<h2>Resource Details</h2>
+<ul>
+<li><strong>Resource Name:</strong> server01_osdisk_1_44cd5ccc8fa44c15afcce9733b4ad87f</li>
+<li><strong>Resource ID:</strong> <code></code></li>
+<li><strong>Resource Group:</strong> resiliancetestingworkload</li>
+<li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
+<li><strong>Location:</strong> </li>
+<li><strong>Source:</strong> Advisor</li></ul>
+<h2>Action Required</h2>
+<p>Apply the recommendation &quot;Migrate Standard HDD OS Disks to SSD&quot; to this resource.</p>
+<h2>Verification</h2>
+<p>Confirm the resource passes the APRL compliance check after remediation.</p>
+","<ul>
+<li>Resource <strong>server01_osdisk_1_44cd5ccc8fa44c15afcce9733b4ad87f</strong> in <code>resiliancetestingworkload</code> passes APRL check <strong>Migrate Standard HDD OS Disks to SSD</strong></li>
+</ul>","Medium; Source:Advisor","2","",""

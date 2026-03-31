@@ -152,6 +152,7 @@ class ADOExporter:
                 impact=story.impact,
                 waf_pillar=story.waf_pillar or None,
                 category=story.category or None,
+                source=f"Source:{story.source}" if story.source else None,
             ),
             "Priority": story.priority,
             "Area Path": self._config.area_path,
@@ -159,6 +160,7 @@ class ADOExporter:
         }
 
     def _task_row(self, task: Task, story: UserStory) -> dict:
+        source_val = getattr(task, 'source', '') or story.source
         return {
             "Work Item Type": self._config.work_item_type_task,
             "Title 1": "",
@@ -170,6 +172,7 @@ class ADOExporter:
             "Tags": self._build_tags(
                 impact=story.impact,
                 location=task.location or None,
+                source=f"Source:{source_val}" if source_val else None,
             ),
             "Priority": story.priority,
             "Area Path": self._config.area_path,
