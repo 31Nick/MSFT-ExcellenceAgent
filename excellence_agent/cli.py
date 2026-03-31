@@ -1,0 +1,281 @@
+"""Click CLI entry point for the ExcellenceAgent."""
+
+from __future__ import annotations
+
+import logging
+import time
+from collections import Counter
+from pathlib import Path
+
+import click
+
+from excellence_agent import __version__
+
+logger = logging.getLogger(__name__)
+
+# Default matrix path: project root / resource_matrix.yaml
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent
+_DEFAULT_MATRIX = str(_PROJECT_ROOT / "resource_matrix.yaml")
+
+
+# ---------------------------------------------------------------------------
+# Shared option helpers
+# ---------------------------------------------------------------------------
+
+def _report_option(fn):
+    """Common ``--report`` option for commands that need an APRL Excel path."""
+    return click.option(
+        "--report",
+        required=True,
+        type=click.Path(exists=True, dir_okay=False),
+        help="Path to the APRL v2 Excel report.",
+    )(fn)
+
+
+def _elapsed(start: float) -> str:
+    return f"{time.time() - start:.2f}s"
+
+
+# ---------------------------------------------------------------------------
+# Main group
+# ---------------------------------------------------------------------------
+
+@click.group()
+@click.version_option(version=__version__, prog_name="excellence-agent")
+@click.option("-v", "--verbose", is_flag=True, help="Enable DEBUG logging.")
+def cli(verbose: bool) -> None:
+    """ExcellenceAgent — APRL-to-ADO work-item pipeline."""
+    level = logging.DEBUG if verbose else logging.INFO
+    logging.basicConfig(
+        level=level,
+        format="%(asctime)s  %(levelname)-8s  %(name)s  %(message)s",
+    )
+
+
+# ---------------------------------------------------------------------------
+# ingest
+# ---------------------------------------------------------------------------
+
+@cli.command()
+@_report_option
+def ingest(report: str) -> None:
+    """Parse an APRL report and display a summary."""
+    from excellence_agent.ingest import APRLParser
+
+    start = time.time()
+    click.echo(click.style("▶ Parsing APRL report …", fg="cyan"))
+
+    try:
+        parser = APRLParser(report)
+        aprl = parser.parse()
+    except Exception as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    df = aprl.impacted_resources
+    row_count = len(df)
+
+    unique_types = df["Resource Type"].nunique() if "Resource Type" in df.columns else 0
+    unique_recs = (
+        df["Recommendation Title"].nunique()
+        if "Recommendation Title" in df.columns
+        else 0
+    )
+
+    impact_breakdown: dict[str, int] = {}
+    if "Impact" in df.columns:
+        impact_breakdown = dict(Counter(df["Impact"].dropna()))
+
+    click.echo(click.style("\n✔ Ingest complete", fg="green"))
+    click.echo(f"  Rows:                   {row_count}")
+    click.echo(f"  Platform-issue rows:    {len(aprl.platform_issues)}")
+    click.echo(f"  Unique resource types:  {unique_types}")
+    click.echo(f"  Unique recommendations: {unique_recs}")
+
+    if impact_breakdown:
+        click.echo(click.style("  Impact breakdown:", fg="cyan"))
+        for impact, count in sorted(
+            impact_breakdown.items(),
+            key=lambda kv: {"High": 1, "Medium": 2, "Low": 3}.get(kv[0], 4),
+        ):
+            click.echo(f"    {impact}: {count}")
+
+    click.echo(f"\n  Elapsed: {_elapsed(start)}")
+
+
+# ---------------------------------------------------------------------------
+# analyse
+# ---------------------------------------------------------------------------
+
+@cli.command()
+@_report_option
+@click.option(
+    "--matrix",
+    default=_DEFAULT_MATRIX,
+    type=click.Path(exists=True, dir_okay=False),
+    show_default=True,
+    help="Path to resource_matrix.yaml.",
+)
+def analyse(report: str, matrix: str) -> None:
+    """Run the full analysis pipeline on an APRL report."""
+    from excellence_agent.analysis import (
+        Deduplicator,
+        HierarchyBuilder,
+        PatternDetector,
+        ResourceMapper,
+    )
+    from excellence_agent.ingest import APRLParser
+
+    start = time.time()
+    click.echo(click.style("▶ Parsing APRL report …", fg="cyan"))
+
+    try:
+        aprl = APRLParser(report).parse()
+    except Exception as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    # Map
+    click.echo(click.style("▶ Mapping resources …", fg="cyan"))
+    mapper = ResourceMapper.from_yaml(matrix)
+    df = mapper.map_dataframe(aprl.impacted_resources)
+
+    # Build hierarchy
+    click.echo(click.style("▶ Building hierarchy …", fg="cyan"))
+    descriptions = {
+        cat: info["description"]
+        for cat, info in mapper.get_mapping_summary().items()
+    }
+    hierarchy = HierarchyBuilder(category_descriptions=descriptions).build(df)
+
+    # Deduplication
+    click.echo(click.style("▶ Deduplication analysis …", fg="cyan"))
+    dedup_report = Deduplicator().analyse(hierarchy)
+    click.echo(dedup_report.summary())
+
+    # Pattern detection
+    click.echo(click.style("\n▶ Pattern detection …", fg="cyan"))
+    patterns = PatternDetector().detect(hierarchy)
+    if patterns:
+        for p in patterns:
+            click.echo(
+                click.style(f"  ● {p.name}", fg="yellow")
+                + f"  — {p.description}"
+            )
+    else:
+        click.echo("  No cross-cutting patterns detected.")
+
+    # Hierarchy summary
+    stats = hierarchy.summary_stats()
+    click.echo(click.style("\n✔ Analysis complete", fg="green"))
+    click.echo(f"  Epics:        {stats['epics']}")
+    click.echo(f"  Features:     {stats['features']}")
+    click.echo(f"  User Stories: {stats['user_stories']}")
+    click.echo(f"  Tasks:        {stats['tasks']}")
+    click.echo(f"\n  Elapsed: {_elapsed(start)}")
+
+
+# ---------------------------------------------------------------------------
+# export
+# ---------------------------------------------------------------------------
+
+@cli.command()
+@_report_option
+@click.option(
+    "--matrix",
+    default=_DEFAULT_MATRIX,
+    type=click.Path(exists=True, dir_okay=False),
+    show_default=True,
+    help="Path to resource_matrix.yaml.",
+)
+@click.option(
+    "--output",
+    default="output/ado_import.csv",
+    show_default=True,
+    help="Output CSV file path.",
+)
+@click.option("--area-path", default="", help="ADO Area Path.")
+@click.option("--iteration-path", default="", help="ADO Iteration Path.")
+def export(
+    report: str,
+    matrix: str,
+    output: str,
+    area_path: str,
+    iteration_path: str,
+) -> None:
+    """Run analysis and export an ADO-compatible CSV."""
+    from excellence_agent.analysis import (
+        HierarchyBuilder,
+        ResourceMapper,
+    )
+    from excellence_agent.config import ADOConfig
+    from excellence_agent.export.ado_csv import ADOExporter
+    from excellence_agent.export.content_generator import ContentGenerator
+    from excellence_agent.ingest import APRLParser
+
+    start = time.time()
+    click.echo(click.style("▶ Parsing APRL report …", fg="cyan"))
+
+    try:
+        aprl = APRLParser(report).parse()
+    except Exception as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    # Map
+    click.echo(click.style("▶ Mapping resources …", fg="cyan"))
+    mapper = ResourceMapper.from_yaml(matrix)
+    df = mapper.map_dataframe(aprl.impacted_resources)
+
+    # Build hierarchy
+    click.echo(click.style("▶ Building hierarchy …", fg="cyan"))
+    descriptions = {
+        cat: info["description"]
+        for cat, info in mapper.get_mapping_summary().items()
+    }
+    hierarchy = HierarchyBuilder(category_descriptions=descriptions).build(df)
+
+    # Export
+    click.echo(click.style("▶ Exporting to CSV …", fg="cyan"))
+    ado_config = ADOConfig(area_path=area_path, iteration_path=iteration_path)
+    content_gen = ContentGenerator()
+    exporter = ADOExporter(config=ado_config, content_generator=content_gen)
+
+    try:
+        out_path = exporter.export(hierarchy, output)
+    except Exception as exc:
+        raise click.ClickException(f"Export failed: {exc}") from exc
+
+    stats = hierarchy.summary_stats()
+    click.echo(click.style(f"\n✔ CSV exported to {out_path}", fg="green"))
+    click.echo(f"  Epics:        {stats['epics']}")
+    click.echo(f"  Features:     {stats['features']}")
+    click.echo(f"  User Stories: {stats['user_stories']}")
+    click.echo(f"  Tasks:        {stats['tasks']}")
+    click.echo(f"\n  Elapsed: {_elapsed(start)}")
+
+
+# ---------------------------------------------------------------------------
+# serve
+# ---------------------------------------------------------------------------
+
+@cli.command()
+@click.option("--port", default=5000, show_default=True, help="Port for the web dashboard.")
+def serve(port: int) -> None:
+    """Start the ExcellenceAgent web dashboard."""
+    click.echo(click.style(f"▶ Starting web dashboard on port {port} …", fg="cyan"))
+
+    try:
+        from excellence_agent.web.app import create_app
+    except ImportError as exc:
+        raise click.ClickException(
+            f"Web module not available — install web extras: {exc}"
+        ) from exc
+
+    app = create_app()
+    app.run(host="0.0.0.0", port=port)
+
+
+# ---------------------------------------------------------------------------
+# Entry point
+# ---------------------------------------------------------------------------
+
+if __name__ == "__main__":
+    cli()

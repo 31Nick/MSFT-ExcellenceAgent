@@ -1,0 +1,29 @@
+<h1>{{ feature_name }} ({{ resource_type }})</h1>
+<h2>Overview</h2>
+<p>Recommendations for <strong>{{ resource_type }}</strong> resources within the <strong>{{ epic_name }}</strong> domain.</p>
+<h2>Scope</h2>
+<ul>
+<li><strong>Recommendations:</strong> {{ story_count }}</li>
+<li><strong>Affected Resources:</strong> {{ resource_count }}</li>
+<li><strong>Resource Groups:</strong> {{ resource_groups | join(', ') }}</li>
+<li><strong>Subscriptions:</strong> {{ subscriptions | join(', ') }}</li>
+<li><strong>Regions:</strong> {{ locations | join(', ') }}</li>
+</ul>
+<h2>Impact Breakdown</h2>
+<ul>
+{% for level, count in impact_summary.items() -%}
+<li><strong>{{ level }}:</strong> {{ count }}</li>
+{% endfor -%}
+</ul>
+<h2>Recommendations</h2>
+<ol>
+{% for story in user_stories -%}
+<li><strong>{{ story.title }}</strong> [{{ story.impact }}]
+<ul>
+<li><strong>Control:</strong> {{ story.recommendation_control }}</li>
+<li><strong>Benefit:</strong> {{ story.potential_benefit }}</li>
+<li><strong>Affected Resources:</strong> {{ story.tasks | length }}</li>
+</ul>
+</li>
+{% endfor -%}
+</ol>

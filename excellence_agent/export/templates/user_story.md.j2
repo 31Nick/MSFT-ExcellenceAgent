@@ -1,0 +1,23 @@
+<h1>{{ title }}</h1>
+<h2>Recommendation</h2>
+<p>{{ long_description }}</p>
+<h2>Details</h2>
+<ul>
+<li><strong>Impact:</strong> {{ impact }}</li>
+<li><strong>WAF Pillar:</strong> {{ waf_pillar }}</li>
+<li><strong>Control:</strong> {{ recommendation_control }}</li>
+<li><strong>Potential Benefit:</strong> {{ potential_benefit }}</li>
+<li><strong>Source:</strong> {{ source }}</li>
+<li><strong>APRL Guid:</strong> {{ recommendation_guid }}</li>
+</ul>
+{% if learn_more_link and learn_more_link != 'N/A' -%}
+<h2>Learn More</h2>
+<p><a href="{{ learn_more_link }}">{{ learn_more_link }}</a></p>
+{% endif -%}
+<h2>Affected Resources ({{ tasks | length }})</h2>
+<table>
+<tr><th>#</th><th>Resource Name</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
+{% for task in tasks -%}
+<tr><td>{{ loop.index }}</td><td>{{ task.resource_name }}</td><td>{{ task.resource_group }}</td><td>{{ task.location }}</td><td>{{ task.subscription_id }}</td></tr>
+{% endfor -%}
+</table>

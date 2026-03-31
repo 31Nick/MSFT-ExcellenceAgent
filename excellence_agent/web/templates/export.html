@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Export — ExcellenceAgent{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Export to ADO CSV</h2>
+
+{% if not has_data %}
+  <div class="alert alert-info">No data loaded. <a href="{{ url_for('main.dashboard') }}">Upload an APRL file</a> first.</div>
+{% else %}
+  <div class="card">
+    <div class="card-body">
+      <form action="{{ url_for('main.export_csv') }}" method="post">
+        <div class="mb-3">
+          <label for="area_path" class="form-label">Area Path</label>
+          <input type="text" class="form-control" id="area_path" name="area_path"
+                 value="{{ area_path }}" placeholder="e.g. MyProject\MyTeam">
+        </div>
+        <div class="mb-3">
+          <label for="iteration_path" class="form-label">Iteration Path</label>
+          <input type="text" class="form-control" id="iteration_path" name="iteration_path"
+                 value="{{ iteration_path }}" placeholder="e.g. MyProject\Sprint 1">
+        </div>
+        <button type="submit" class="btn btn-primary">Export CSV</button>
+      </form>
+    </div>
+  </div>
+{% endif %}
+{% endblock %}

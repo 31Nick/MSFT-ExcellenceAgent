@@ -1,0 +1,16 @@
+Metadata-Version: 2.4
+Name: excellence-agent
+Version: 0.1.0
+Summary: ExcellenceAgent — APRL v2 report analyser and ADO work-item generator
+Requires-Python: >=3.11
+Requires-Dist: openpyxl>=3.1.0
+Requires-Dist: pandas>=2.0.0
+Requires-Dist: click>=8.1.0
+Requires-Dist: flask>=3.0.0
+Requires-Dist: Jinja2>=3.1.0
+Requires-Dist: python-dotenv>=1.0.0
+Requires-Dist: openai>=1.0.0
+Requires-Dist: PyYAML>=6.0.0
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary

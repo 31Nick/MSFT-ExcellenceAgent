@@ -1,0 +1,2 @@
+[console_scripts]
+excellence-agent = excellence_agent.cli:cli

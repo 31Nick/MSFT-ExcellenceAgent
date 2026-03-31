@@ -1,0 +1,19 @@
+<h1>Remediate: {{ resource_name }}</h1>
+<h2>Resource Details</h2>
+<ul>
+<li><strong>Resource Name:</strong> {{ resource_name }}</li>
+<li><strong>Resource ID:</strong> <code>{{ resource_id }}</code></li>
+<li><strong>Resource Group:</strong> {{ resource_group }}</li>
+<li><strong>Subscription:</strong> {{ subscription_id }}</li>
+<li><strong>Location:</strong> {{ location }}</li>
+{% if check_name %}<li><strong>Check Name:</strong> {{ check_name }}</li>{% endif %}
+{% if notes %}<li><strong>Notes:</strong> {{ notes }}</li>{% endif %}
+</ul>
+<h2>Action Required</h2>
+<p>Apply the recommendation &quot;{{ recommendation_title }}&quot; to this resource.</p>
+<h2>Verification</h2>
+<p>Confirm the resource passes the APRL compliance check after remediation.</p>
+{% if learn_more_link -%}
+<h2>Reference</h2>
+<p><a href="{{ learn_more_link }}">{{ learn_more_link }}</a></p>
+{% endif -%}

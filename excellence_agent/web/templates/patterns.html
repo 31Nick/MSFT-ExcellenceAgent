@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Patterns — ExcellenceAgent{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Detected Patterns</h2>
+
+{% if not patterns %}
+  <div class="alert alert-info">No data loaded. <a href="{{ url_for('main.dashboard') }}">Upload an APRL file</a> first.</div>
+{% elif patterns | length == 0 %}
+  <div class="alert alert-secondary">No patterns detected in the current data set.</div>
+{% else %}
+  <div class="row g-3">
+    {% for p in patterns %}
+    <div class="col-md-6">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">{{ p.name }}</h5>
+          <p class="card-text">{{ p.description }}</p>
+          <ul class="list-unstyled mb-2">
+            <li><strong>Stories:</strong> {{ p.story_count }}</li>
+            <li><strong>Tasks:</strong> {{ p.task_count }}</li>
+            {% if p.recommendation_control %}
+              <li><strong>Control:</strong> {{ p.recommendation_control }}</li>
+            {% endif %}
+          </ul>
+          {% if p.affected_epics %}
+            <div class="mb-1">
+              <strong>Epics:</strong>
+              {% for e in p.affected_epics %}
+                <span class="badge bg-primary">{{ e }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+          {% if p.affected_features %}
+            <div>
+              <strong>Features:</strong>
+              {% for f in p.affected_features %}
+                <span class="badge bg-secondary">{{ f }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% endif %}
+{% endblock %}

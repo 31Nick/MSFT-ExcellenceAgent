@@ -1,0 +1,78 @@
+# Resource Matrix — maps Azure resource type patterns to Epic categories.
+# The agent uses case-insensitive prefix matching against APRL resource types.
+# Add or override entries as needed.
+
+categories:
+  Observability:
+    description: "Monitoring, logging, and diagnostics resources"
+    resource_patterns:
+      - "microsoft.operationalinsights/workspaces"
+      - "microsoft.insights/components"
+      - "microsoft.insights/activitylogalerts"
+      - "microsoft.insights/metricalerts"
+      - "microsoft.monitor/"
+
+  Platform:
+    description: "Core platform services — identity, secrets, governance"
+    resource_patterns:
+      - "microsoft.keyvault/"
+      - "microsoft.network/bastionhosts"
+      - "microsoft.subscription/subscriptions"
+      - "microsoft.eventgrid/"
+      - "microsoft.authorization/"
+      - "microsoft.managedidentity/"
+
+  Compute:
+    description: "Virtual machines, scale sets, containers, and orchestration"
+    resource_patterns:
+      - "microsoft.compute/virtualmachines"
+      - "microsoft.compute/virtualmachinescalesets"
+      - "microsoft.containerservice/managedclusters"
+      - "microsoft.containerinstance/"
+      - "microsoft.containerregistry/"
+
+  Data:
+    description: "Databases, storage, and data services"
+    resource_patterns:
+      - "microsoft.sql/"
+      - "microsoft.documentdb/"
+      - "microsoft.storage/"
+      - "microsoft.dbformysql/"
+      - "microsoft.dbforpostgresql/"
+      - "microsoft.cache/"
+      - "microsoft.cosmosdb/"
+
+  Networking:
+    description: "Virtual networks, gateways, load balancers, and connectivity"
+    resource_patterns:
+      - "microsoft.network/virtualnetworks"
+      - "microsoft.network/networksecuritygroups"
+      - "microsoft.network/networkwatchers"
+      - "microsoft.network/applicationgateways"
+      - "microsoft.network/loadbalancers"
+      - "microsoft.network/firewallpolicies"
+      - "microsoft.network/azurefirewalls"
+      - "microsoft.network/publicipaddresses"
+      - "microsoft.network/privateendpoints"
+      - "microsoft.network/virtualnetworkgateways"
+      - "microsoft.network/expressroutecircuits"
+      - "microsoft.network/frontdoors"
+      - "microsoft.cdn/"
+
+  Apps:
+    description: "Application hosting — App Service, Functions, Static Web Apps"
+    resource_patterns:
+      - "microsoft.web/sites"
+      - "microsoft.web/serverfarms"
+      - "microsoft.web/staticsites"
+      - "microsoft.app/"
+
+  AI:
+    description: "AI and Machine Learning services"
+    resource_patterns:
+      - "microsoft.machinelearningservices/"
+      - "microsoft.cognitiveservices/"
+      - "microsoft.search/"
+
+# Fallback for resource types that don't match any pattern
+default_category: "Uncategorised"

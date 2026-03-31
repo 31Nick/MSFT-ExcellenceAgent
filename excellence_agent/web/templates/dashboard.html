@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — ExcellenceAgent{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Dashboard</h2>
+
+{% if not hierarchy %}
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Upload APRL Report</h5>
+      <p class="text-muted">Upload an APRL Excel file to run the analysis pipeline.</p>
+      <form action="{{ url_for('main.upload') }}" method="post" enctype="multipart/form-data">
+        <div class="input-group">
+          <input type="file" class="form-control" name="aprl_file" accept=".xlsx,.xls" required>
+          <button class="btn btn-primary" type="submit">Analyse</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% else %}
+
+  {# Upload form (collapsed) #}
+  <div class="mb-4">
+    <details>
+      <summary class="btn btn-outline-secondary btn-sm">Upload new file</summary>
+      <form action="{{ url_for('main.upload') }}" method="post" enctype="multipart/form-data" class="mt-2">
+        <div class="input-group">
+          <input type="file" class="form-control" name="aprl_file" accept=".xlsx,.xls" required>
+          <button class="btn btn-primary" type="submit">Analyse</button>
+        </div>
+      </form>
+    </details>
+  </div>
+
+  {# Summary cards #}
+  <div class="row g-3 mb-4">
+    <div class="col-sm-6 col-lg-3">
+      <div class="card stat-card text-center">
+        <div class="card-body">
+          <div class="stat-value">{{ stats.epics }}</div>
+          <div class="stat-label">Epics</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="card stat-card text-center">
+        <div class="card-body">
+          <div class="stat-value">{{ stats.features }}</div>
+          <div class="stat-label">Features</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="card stat-card text-center">
+        <div class="card-body">
+          <div class="stat-value">{{ stats.user_stories }}</div>
+          <div class="stat-label">User Stories</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="card stat-card text-center">
+        <div class="card-body">
+          <div class="stat-value">{{ stats.tasks }}</div>
+          <div class="stat-label">Tasks</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# Impact breakdown #}
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Impact Breakdown</h5>
+      <div class="d-flex gap-4 flex-wrap">
+        <span class="badge-impact badge-high">High: {{ impact.High }}</span>
+        <span class="badge-impact badge-medium">Medium: {{ impact.Medium }}</span>
+        <span class="badge-impact badge-low">Low: {{ impact.Low }}</span>
+      </div>
+    </div>
+  </div>
+
+  {# Epic list #}
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Epics</h5>
+      <table class="table table-hover mb-0">
+        <thead>
+          <tr>
+            <th>Epic</th>
+            <th class="text-end">Features</th>
+            <th class="text-end">Stories</th>
+            <th class="text-end">Tasks</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for epic in hierarchy.epics %}
+          <tr>
+            <td>{{ epic.name }}</td>
+            <td class="text-end">{{ epic.features | length }}</td>
+            <td class="text-end">{{ epic.total_stories() }}</td>
+            <td class="text-end">{{ epic.total_tasks() }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endif %}
+{% endblock %}

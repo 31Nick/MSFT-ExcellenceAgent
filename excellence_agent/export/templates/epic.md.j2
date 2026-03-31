@@ -1,0 +1,23 @@
+<h1>{{ epic_name }}</h1>
+<h2>Overview</h2>
+<p>{{ description }}</p>
+<p><strong>WAF Pillars:</strong> {{ waf_pillars | join(', ') }}</p>
+<h2>Scope</h2>
+<ul>
+<li><strong>Total Features:</strong> {{ feature_count }}</li>
+<li><strong>Total Recommendations:</strong> {{ story_count }}</li>
+<li><strong>Total Affected Resources:</strong> {{ resource_count }}</li>
+<li><strong>Subscriptions:</strong> {{ subscriptions | join(', ') }}</li>
+</ul>
+<h2>Impact Summary</h2>
+<ul>
+{% for level, count in impact_summary.items() -%}
+<li><strong>{{ level }}:</strong> {{ count }} recommendation(s)</li>
+{% endfor -%}
+</ul>
+<h2>Features</h2>
+<ul>
+{% for feature in features -%}
+<li><strong>{{ feature.name }}</strong> ({{ feature.resource_type }}) &mdash; {{ feature.resource_count }} resource(s), {{ feature.user_stories | length }} recommendation(s)</li>
+{% endfor -%}
+</ul>
