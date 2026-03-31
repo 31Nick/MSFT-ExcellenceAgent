@@ -25,7 +25,7 @@ ExcellenceAgent ingests [Azure Proactive Resiliency Library (APRL) v2](https://a
 ### Installation
 
 ```bash
-cd MSFT-Asda-ExcellenceAgent-v3
+cd MSFT-ExcellenceAgent-v3
 pip install -r requirements.txt
 pip install -e .
 ```
@@ -156,7 +156,7 @@ Enable by setting the Azure OpenAI environment variables in `.env`, then use the
 ## Project Structure
 
 ```
-MSFT-Asda-ExcellenceAgent-v3/
+MSFT-ExcellenceAgent-v3/
 ├── resource_matrix.yaml          # Resource type → Epic category mapping
 ├── requirements.txt
 ├── .env.example
@@ -178,7 +178,3 @@ MSFT-Asda-ExcellenceAgent-v3/
 pip install pytest
 pytest tests/ -v
 ```
-
-## License
-
-Internal use — Microsoft/Asda Excellence Programme.
