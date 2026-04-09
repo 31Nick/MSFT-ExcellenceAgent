@@ -20,6 +20,15 @@ class ADOConfig:
 
 
 @dataclass
+class GitHubConfig:
+    """GitHub Issues export configuration."""
+    repo: str = ""               # owner/repo format
+    milestone: str = ""          # optional milestone name
+    assignee: str = ""           # optional default assignee
+    extra_labels: list[str] = field(default_factory=list)  # additional labels to apply
+
+
+@dataclass
 class AzureOpenAIConfig:
     """Azure OpenAI enrichment configuration."""
     endpoint: str = ""
@@ -38,6 +47,7 @@ class Config:
     aprl_report_path: str = ""
     resource_matrix_path: str = ""
     ado: ADOConfig = field(default_factory=ADOConfig)
+    github: GitHubConfig = field(default_factory=GitHubConfig)
     openai: AzureOpenAIConfig = field(default_factory=AzureOpenAIConfig)
     flask_port: int = 5000
     output_dir: str = "./output"
@@ -57,6 +67,14 @@ class Config:
                 work_item_type_task=os.getenv("ADO_WORK_ITEM_TYPE_TASK", "Task"),
                 area_path=os.getenv("ADO_AREA_PATH", ""),
                 iteration_path=os.getenv("ADO_ITERATION_PATH", ""),
+            ),
+            github=GitHubConfig(
+                repo=os.getenv("GITHUB_REPO", ""),
+                milestone=os.getenv("GITHUB_MILESTONE", ""),
+                assignee=os.getenv("GITHUB_ASSIGNEE", ""),
+                extra_labels=[
+                    l.strip() for l in os.getenv("GITHUB_EXTRA_LABELS", "").split(",") if l.strip()
+                ],
             ),
             openai=AzureOpenAIConfig(
                 endpoint=os.getenv("AZURE_OPENAI_ENDPOINT", ""),

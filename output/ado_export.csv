@@ -6,41 +6,41 @@
 <h2>Scope</h2>
 <ul>
 <li><strong>Total Features:</strong> 2</li>
-<li><strong>Total Recommendations:</strong> 12</li>
-<li><strong>Total Affected Resources:</strong> 14</li>
+<li><strong>Total Recommendations:</strong> 11</li>
+<li><strong>Total Affected Resources:</strong> 13</li>
 <li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 </ul>
 <h2>Impact Summary</h2>
 <ul>
-<li><strong>High:</strong> 3 recommendation(s)</li>
+<li><strong>High:</strong> 2 recommendation(s)</li>
 <li><strong>Medium:</strong> 6 recommendation(s)</li>
 <li><strong>Low:</strong> 3 recommendation(s)</li>
 </ul>
 <h2>Features</h2>
 <ul>
-<li><strong>Sites</strong> (Microsoft.Web/sites) &mdash; 10 resource(s), 10 recommendation(s)</li>
+<li><strong>Sites</strong> (Microsoft.Web/sites) &mdash; 9 resource(s), 9 recommendation(s)</li>
 <li><strong>Serverfarms</strong> (microsoft.web/serverfarms) &mdash; 4 resource(s), 2 recommendation(s)</li>
 </ul>
 ","<p>All Features within this Epic are completed and verified.</p>
 <p><strong>Features to complete:</strong></p>
 <ul>
-<li>Sites (Microsoft.Web/sites) &mdash; 10 recommendation(s), 10 resource(s)</li>
+<li>Sites (Microsoft.Web/sites) &mdash; 9 recommendation(s), 9 resource(s)</li>
 <li>Serverfarms (microsoft.web/serverfarms) &mdash; 2 recommendation(s), 4 resource(s)</li>
-</ul>","Reliability; Apps","2","",""
+</ul>","Reliability; Apps","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Feature","","Sites","","","<h1>Sites (Microsoft.Web/sites)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>Microsoft.Web/sites</strong> resources within the <strong>Apps</strong> domain.</p>
 <h2>Scope</h2>
 <ul>
-<li><strong>Recommendations:</strong> 10</li>
-<li><strong>Affected Resources:</strong> 10</li>
-<li><strong>Resource Groups:</strong> resiliancetestingworkload, rg-m2c-demo</li>
+<li><strong>Recommendations:</strong> 9</li>
+<li><strong>Affected Resources:</strong> 9</li>
+<li><strong>Resource Groups:</strong> rg-m2c-demo</li>
 <li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-<li><strong>Regions:</strong> , eastus</li>
+<li><strong>Regions:</strong> eastus</li>
 </ul>
 <h2>Impact Breakdown</h2>
 <ul>
-<li><strong>High:</strong> 2</li>
+<li><strong>High:</strong> 1</li>
 <li><strong>Medium:</strong> 5</li>
 <li><strong>Low:</strong> 3</li>
 </ul>
@@ -50,13 +50,6 @@
 <ul>
 <li><strong>Control:</strong> Monitoring And Alerting</li>
 <li><strong>Benefit:</strong> Real-time insights and issue diagnosis</li>
-<li><strong>Affected Resources:</strong> 1</li>
-</ul>
-</li>
-<li><strong>Use Standard or Premium tier</strong> [High]
-<ul>
-<li><strong>Control:</strong> </li>
-<li><strong>Benefit:</strong> Enhanced scaling and reliability</li>
 <li><strong>Affected Resources:</strong> 1</li>
 </ul>
 </li>
@@ -121,7 +114,6 @@
 <p><strong>User Stories to complete:</strong></p>
 <ul>
 <li>Monitor Performance [High] &mdash; 1 resource(s)</li>
-<li>Use Standard or Premium tier [High] &mdash; 1 resource(s)</li>
 <li>Create a separate storage account for logs [Medium] &mdash; 1 resource(s)</li>
 <li>Store configuration as app settings for Web Sites [Medium] &mdash; 1 resource(s)</li>
 <li>No warmup trigger added to Function App [Medium] &mdash; 1 resource(s)</li>
@@ -130,7 +122,7 @@
 <li>Enable diagnostics logging [Low] &mdash; 1 resource(s)</li>
 <li>Separate web apps from web APIs [Low] &mdash; 1 resource(s)</li>
 <li>Ensure unique hostid set for Function App [Low] &mdash; 1 resource(s)</li>
-</ul>","Microsoft.Web/sites; Apps","1","",""
+</ul>","Microsoft.Web/sites; Apps","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Monitor Performance","","<h1>Monitor Performance</h1>
 <h2>Recommendation</h2>
 <p>Use Application Insights to monitor app performance and load behavior, offering real-time insights, issue diagnosis, and root-cause analysis. It supports ASP.NET, ASP.NET Core, Java, and Node.js on Azure App Service, now with built-in monitoring.</p>
@@ -158,7 +150,7 @@
 <ul>
 <li>Resource <strong>m2c-4sac2i6ziq5kc</strong> in <code>rg-m2c-demo</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/application-insights/app-insights-overview"">https://learn.microsoft.com/azure/application-insights/app-insights-overview</a></li>
-</ul>","High; Reliability; Azure Service; Source:APRL","1","",""
+</ul>","High; Reliability; Azure Service","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","m2c-4sac2i6ziq5kc","<h1>Remediate: m2c-4sac2i6ziq5kc</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -167,7 +159,7 @@
 <li><strong>Resource Group:</strong> rg-m2c-demo</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> eastus</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Monitor Performance&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -177,53 +169,7 @@
 ","<ul>
 <li>Resource <strong>m2c-4sac2i6ziq5kc</strong> in <code>rg-m2c-demo</code> passes APRL check <strong>Monitor Performance</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/application-insights/app-insights-overview"">https://learn.microsoft.com/azure/application-insights/app-insights-overview</a></li>
-</ul>","High; eastus; Source:APRL","1","",""
-"User Story","","","Use Standard or Premium tier","","<h1>Use Standard or Premium tier</h1>
-<h2>Recommendation</h2>
-<p>No detailed description available.</p>
-<h2>Details</h2>
-<ul>
-<li><strong>Impact:</strong> High</li>
-<li><strong>WAF Pillar:</strong> N/A</li>
-<li><strong>Control:</strong> </li>
-<li><strong>Potential Benefit:</strong> Enhanced scaling and reliability</li>
-<li><strong>Source:</strong> Advisor</li>
-<li><strong>APRL Guid:</strong> </li>
-</ul>
-<h2>Advisor Information</h2>
-<ul>
-<li><strong>Cost Implications:</strong> No data</li>
-</ul>
-<h2>Affected Resources (1)</h2>
-<table>
-<tr><th>#</th><th>Resource Name</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>1</td><td>asp-01</td><td>resiliancetestingworkload</td><td></td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-","<ul>
-<li>All 1 resource(s) have been remediated</li>
-<li>APRL check <code></code> passes for all resources</li>
-</ul>
-<p><strong>Per-resource verification:</strong></p>
-<ul>
-<li>Resource <strong>asp-01</strong> in <code>resiliancetestingworkload</code> is compliant</li>
-<li>Source: <strong>Advisor</strong></li>
-</ul>","High; Azure Service; Source:Advisor","1","",""
-"Task","","","","asp-01","<h1>Remediate: asp-01</h1>
-<h2>Resource Details</h2>
-<ul>
-<li><strong>Resource Name:</strong> asp-01</li>
-<li><strong>Resource ID:</strong> <code></code></li>
-<li><strong>Resource Group:</strong> resiliancetestingworkload</li>
-<li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-<li><strong>Location:</strong> </li>
-<li><strong>Source:</strong> Advisor</li></ul>
-<h2>Action Required</h2>
-<p>Apply the recommendation &quot;Use Standard or Premium tier&quot; to this resource.</p>
-<h2>Verification</h2>
-<p>Confirm the resource passes the APRL compliance check after remediation.</p>
-","<ul>
-<li>Resource <strong>asp-01</strong> in <code>resiliancetestingworkload</code> passes APRL check <strong>Use Standard or Premium tier</strong></li>
-</ul>","High; Source:Advisor","1","",""
+</ul>","High; eastus","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Create a separate storage account for logs","","<h1>Create a separate storage account for logs</h1>
 <h2>Recommendation</h2>
 <p>Creating a separate storage account for logs and not using the same one for application data prevents logging activities from reducing application performance by ensuring that the resources dedicated to handling application data are not burdened by logging processes.</p>
@@ -251,7 +197,7 @@
 <ul>
 <li>Resource <strong>m2c-4sac2i6ziq5kc</strong> in <code>rg-m2c-demo</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service"">https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service</a></li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
+</ul>","Medium; Reliability; Azure Service","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","m2c-4sac2i6ziq5kc","<h1>Remediate: m2c-4sac2i6ziq5kc</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -260,7 +206,7 @@
 <li><strong>Resource Group:</strong> rg-m2c-demo</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> eastus</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Create a separate storage account for logs&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -270,7 +216,7 @@
 ","<ul>
 <li>Resource <strong>m2c-4sac2i6ziq5kc</strong> in <code>rg-m2c-demo</code> passes APRL check <strong>Create a separate storage account for logs</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service"">https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service</a></li>
-</ul>","Medium; eastus; Source:APRL","2","",""
+</ul>","Medium; eastus","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Store configuration as app settings for Web Sites","","<h1>Store configuration as app settings for Web Sites</h1>
 <h2>Recommendation</h2>
 <p>Use app settings for configuration and define them in Resource Manager templates or via PowerShell to facilitate part of an automated deployment/update process for improved reliability.</p>
@@ -298,7 +244,7 @@
 <ul>
 <li>Resource <strong>m2c-4sac2i6ziq5kc</strong> in <code>rg-m2c-demo</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/app-service-web/web-sites-configure"">https://learn.microsoft.com/azure/app-service-web/web-sites-configure</a></li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
+</ul>","Medium; Reliability; Azure Service","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","m2c-4sac2i6ziq5kc","<h1>Remediate: m2c-4sac2i6ziq5kc</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -307,7 +253,7 @@
 <li><strong>Resource Group:</strong> rg-m2c-demo</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> eastus</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Store configuration as app settings for Web Sites&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -317,7 +263,7 @@
 ","<ul>
 <li>Resource <strong>m2c-4sac2i6ziq5kc</strong> in <code>rg-m2c-demo</code> passes APRL check <strong>Store configuration as app settings for Web Sites</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/app-service-web/web-sites-configure"">https://learn.microsoft.com/azure/app-service-web/web-sites-configure</a></li>
-</ul>","Medium; eastus; Source:APRL","2","",""
+</ul>","Medium; eastus","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","No warmup trigger added to Function App","","<h1>No warmup trigger added to Function App</h1>
 <h2>Recommendation</h2>
 <p>Add a warmup trigger to pre-load custom dependencies during the pre-warming process so that your functions are ready to start processing requests immediately.</p>
@@ -345,7 +291,7 @@
 <ul>
 <li>Resource <strong>m2c-4sac2i6ziq5kc</strong> in <code>rg-m2c-demo</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/azure-functions/functions-bindings-warmup?tabs=in-process%2Cnodejs-v4&pivots=programming-language-csharp#trigger"">https://learn.microsoft.com/azure/azure-functions/functions-bindings-warmup?tabs=in-process%2Cnodejs-v4&pivots=programming-language-csharp#trigger</a></li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
+</ul>","Medium; Reliability; Azure Service","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","m2c-4sac2i6ziq5kc","<h1>Remediate: m2c-4sac2i6ziq5kc</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -354,7 +300,7 @@
 <li><strong>Resource Group:</strong> rg-m2c-demo</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> eastus</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;No warmup trigger added to Function App&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -364,7 +310,7 @@
 ","<ul>
 <li>Resource <strong>m2c-4sac2i6ziq5kc</strong> in <code>rg-m2c-demo</code> passes APRL check <strong>No warmup trigger added to Function App</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/azure-functions/functions-bindings-warmup?tabs=in-process%2Cnodejs-v4&pivots=programming-language-csharp#trigger"">https://learn.microsoft.com/azure/azure-functions/functions-bindings-warmup?tabs=in-process%2Cnodejs-v4&pivots=programming-language-csharp#trigger</a></li>
-</ul>","Medium; eastus; Source:APRL","2","",""
+</ul>","Medium; eastus","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Ensure Function App runs a supported version","","<h1>Ensure Function App runs a supported version</h1>
 <h2>Recommendation</h2>
 <p>Beginning on December 13, 2022, function apps running on versions 2.x and 3.x of the Azure Functions runtime have reached the end of life (EOL) of extended support. We highly recommend you migrating your function apps to version 4.x of the Functions runtime.</p>
@@ -392,7 +338,7 @@
 <ul>
 <li>Resource <strong>m2c-4sac2i6ziq5kc</strong> in <code>rg-m2c-demo</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/azure-functions/migrate-version-3-version-4?tabs=net6-in-proc%2Cazure-cli%2Cwindows&pivots=programming-language-csharp"">https://learn.microsoft.com/azure/azure-functions/migrate-version-3-version-4?tabs=net6-in-proc%2Cazure-cli%2Cwindows&pivots=programming-language-csharp</a></li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
+</ul>","Medium; Reliability; Azure Service","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","m2c-4sac2i6ziq5kc","<h1>Remediate: m2c-4sac2i6ziq5kc</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -401,7 +347,7 @@
 <li><strong>Resource Group:</strong> rg-m2c-demo</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> eastus</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Ensure Function App runs a supported version&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -411,7 +357,7 @@
 ","<ul>
 <li>Resource <strong>m2c-4sac2i6ziq5kc</strong> in <code>rg-m2c-demo</code> passes APRL check <strong>Ensure Function App runs a supported version</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/azure-functions/migrate-version-3-version-4?tabs=net6-in-proc%2Cazure-cli%2Cwindows&pivots=programming-language-csharp"">https://learn.microsoft.com/azure/azure-functions/migrate-version-3-version-4?tabs=net6-in-proc%2Cazure-cli%2Cwindows&pivots=programming-language-csharp</a></li>
-</ul>","Medium; eastus; Source:APRL","2","",""
+</ul>","Medium; eastus","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Ensure FUNCTIONS_WORKER_RUNTIME is set properly","","<h1>Ensure FUNCTIONS_WORKER_RUNTIME is set properly</h1>
 <h2>Recommendation</h2>
 <p>The FUNCTIONS_WORKER_RUNTIME setting in the Function App configuration should be set to the appropriate value based on the language you are using. This setting is used to determine the language worker that will be used to execute your functions.</p>
@@ -439,7 +385,7 @@
 <ul>
 <li>Resource <strong>m2c-4sac2i6ziq5kc</strong> in <code>rg-m2c-demo</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/azure-functions/functions-app-settings#functions_worker_runtime"">https://learn.microsoft.com/azure/azure-functions/functions-app-settings#functions_worker_runtime</a></li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
+</ul>","Medium; Reliability; Azure Service","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","m2c-4sac2i6ziq5kc","<h1>Remediate: m2c-4sac2i6ziq5kc</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -448,7 +394,7 @@
 <li><strong>Resource Group:</strong> rg-m2c-demo</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> eastus</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Ensure FUNCTIONS_WORKER_RUNTIME is set properly&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -458,7 +404,7 @@
 ","<ul>
 <li>Resource <strong>m2c-4sac2i6ziq5kc</strong> in <code>rg-m2c-demo</code> passes APRL check <strong>Ensure FUNCTIONS_WORKER_RUNTIME is set properly</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/azure-functions/functions-app-settings#functions_worker_runtime"">https://learn.microsoft.com/azure/azure-functions/functions-app-settings#functions_worker_runtime</a></li>
-</ul>","Medium; eastus; Source:APRL","2","",""
+</ul>","Medium; eastus","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Enable diagnostics logging","","<h1>Enable diagnostics logging</h1>
 <h2>Recommendation</h2>
 <p>Enabling diagnostics logging for your Azure App Service is crucial for monitoring and diagnostics, including both application logging and web server logging.</p>
@@ -486,7 +432,7 @@
 <ul>
 <li>Resource <strong>m2c-4sac2i6ziq5kc</strong> in <code>rg-m2c-demo</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/app-service/troubleshoot-diagnostic-logs"">https://learn.microsoft.com/azure/app-service/troubleshoot-diagnostic-logs</a></li>
-</ul>","Low; Reliability; Azure Service; Source:APRL","3","",""
+</ul>","Low; Reliability; Azure Service","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","m2c-4sac2i6ziq5kc","<h1>Remediate: m2c-4sac2i6ziq5kc</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -495,7 +441,7 @@
 <li><strong>Resource Group:</strong> rg-m2c-demo</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> eastus</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Enable diagnostics logging&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -505,7 +451,7 @@
 ","<ul>
 <li>Resource <strong>m2c-4sac2i6ziq5kc</strong> in <code>rg-m2c-demo</code> passes APRL check <strong>Enable diagnostics logging</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/app-service/troubleshoot-diagnostic-logs"">https://learn.microsoft.com/azure/app-service/troubleshoot-diagnostic-logs</a></li>
-</ul>","Low; eastus; Source:APRL","3","",""
+</ul>","Low; eastus","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Separate web apps from web APIs","","<h1>Separate web apps from web APIs</h1>
 <h2>Recommendation</h2>
 <p>If your solution includes both a web front end and a web API, decomposing them into separate App Service apps facilitates solution decomposition by workload, allowing for independent scaling. Initially, you can deploy both in the same plan and separate them for independent scaling when necessary.</p>
@@ -533,7 +479,7 @@
 <ul>
 <li>Resource <strong>m2c-4sac2i6ziq5kc</strong> in <code>rg-m2c-demo</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service"">https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service</a></li>
-</ul>","Low; Reliability; Azure Service; Source:APRL","3","",""
+</ul>","Low; Reliability; Azure Service","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","m2c-4sac2i6ziq5kc","<h1>Remediate: m2c-4sac2i6ziq5kc</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -542,7 +488,7 @@
 <li><strong>Resource Group:</strong> rg-m2c-demo</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> eastus</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Separate web apps from web APIs&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -552,7 +498,7 @@
 ","<ul>
 <li>Resource <strong>m2c-4sac2i6ziq5kc</strong> in <code>rg-m2c-demo</code> passes APRL check <strong>Separate web apps from web APIs</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service"">https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service</a></li>
-</ul>","Low; eastus; Source:APRL","3","",""
+</ul>","Low; eastus","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Ensure unique hostid set for Function App","","<h1>Ensure unique hostid set for Function App</h1>
 <h2>Recommendation</h2>
 <p>A host ID must be between 1 and 32 characters, contain only lowercase letters, numbers, and dashes, not start or end with a dash, and not contain consecutive dashes. The host ID value should be unique for all apps/slots you're running.</p>
@@ -580,7 +526,7 @@
 <ul>
 <li>Resource <strong>m2c-4sac2i6ziq5kc</strong> in <code>rg-m2c-demo</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules"">https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules</a></li>
-</ul>","Low; Reliability; Azure Service; Source:APRL","3","",""
+</ul>","Low; Reliability; Azure Service","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","m2c-4sac2i6ziq5kc","<h1>Remediate: m2c-4sac2i6ziq5kc</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -589,7 +535,7 @@
 <li><strong>Resource Group:</strong> rg-m2c-demo</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> eastus</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Ensure unique hostid set for Function App&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -599,7 +545,7 @@
 ","<ul>
 <li>Resource <strong>m2c-4sac2i6ziq5kc</strong> in <code>rg-m2c-demo</code> passes APRL check <strong>Ensure unique hostid set for Function App</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules"">https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules</a></li>
-</ul>","Low; eastus; Source:APRL","3","",""
+</ul>","Low; eastus","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Feature","","Serverfarms","","","<h1>Serverfarms (microsoft.web/serverfarms)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>microsoft.web/serverfarms</strong> resources within the <strong>Apps</strong> domain.</p>
@@ -638,7 +584,7 @@
 <ul>
 <li>Create separate App Service plans for production and test [High] &mdash; 2 resource(s)</li>
 <li>Enable Autoscale/Automatic scaling to ensure adequate resources are available to service requests [Medium] &mdash; 2 resource(s)</li>
-</ul>","microsoft.web/serverfarms; Apps","1","",""
+</ul>","microsoft.web/serverfarms; Apps","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Create separate App Service plans for production and test","","<h1>Create separate App Service plans for production and test</h1>
 <h2>Recommendation</h2>
 <p>It is strongly recommended to create separate App Service plans for production and test environments to avoid using slots within your production deployment for testing purposes.</p>
@@ -648,7 +594,7 @@
 <li><strong>WAF Pillar:</strong> Reliability</li>
 <li><strong>Control:</strong> Other Best Practices</li>
 <li><strong>Potential Benefit:</strong> Protects prod performance; avoids test impact</li>
-<li><strong>Source:</strong> APRL & Advisor</li>
+<li><strong>Source:</strong> APRL</li>
 <li><strong>APRL Guid:</strong> dbe3fd66-fb2a-9d46-b162-1791e21da236</li>
 </ul>
 <h2>Learn More</h2>
@@ -668,8 +614,7 @@
 <li>Resource <strong>asp-01</strong> in <code>resiliancetestingworkload</code> is compliant</li>
 <li>Resource <strong>m2c-plan</strong> in <code>rg-m2c-demo</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service"">https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service</a></li>
-<li>Source: <strong>APRL & Advisor</strong></li>
-</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","",""
+</ul>","High; Reliability; Azure Service","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","asp-01","<h1>Remediate: asp-01</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -678,7 +623,7 @@
 <li><strong>Resource Group:</strong> resiliancetestingworkload</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> ukwest</li>
-<li><strong>Notes:</strong> [Advisor] Use zone-supported App Service Plan</li><li><strong>Source:</strong> APRL & Advisor</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Create separate App Service plans for production and test&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -687,9 +632,8 @@
 <p><a href=""https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service"">https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service</a></p>
 ","<ul>
 <li>Resource <strong>asp-01</strong> in <code>resiliancetestingworkload</code> passes APRL check <strong>Create separate App Service plans for production and test</strong></li>
-<li>Notes addressed: [Advisor] Use zone-supported App Service Plan</li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service"">https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service</a></li>
-</ul>","High; ukwest; Source:APRL & Advisor","1","",""
+</ul>","High; ukwest","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","m2c-plan","<h1>Remediate: m2c-plan</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -698,7 +642,7 @@
 <li><strong>Resource Group:</strong> rg-m2c-demo</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> eastus</li>
-<li><strong>Notes:</strong> [Advisor] Use zone-supported App Service Plan</li><li><strong>Source:</strong> APRL & Advisor</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Create separate App Service plans for production and test&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -707,9 +651,8 @@
 <p><a href=""https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service"">https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service</a></p>
 ","<ul>
 <li>Resource <strong>m2c-plan</strong> in <code>rg-m2c-demo</code> passes APRL check <strong>Create separate App Service plans for production and test</strong></li>
-<li>Notes addressed: [Advisor] Use zone-supported App Service Plan</li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service"">https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service</a></li>
-</ul>","High; eastus; Source:APRL & Advisor","1","",""
+</ul>","High; eastus","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Enable Autoscale/Automatic scaling to ensure adequate resources are available to service requests","","<h1>Enable Autoscale/Automatic scaling to ensure adequate resources are available to service requests</h1>
 <h2>Recommendation</h2>
 <p>Enabling Autoscale/Automatic Scaling for your Azure App Service ensures sufficient resources for incoming requests. Autoscaling is rule-based, whereas Automatic Scaling, a newer feature, automatically adjusts resources based on HTTP traffic.</p>
@@ -739,7 +682,7 @@
 <li>Resource <strong>asp-01</strong> in <code>resiliancetestingworkload</code> is compliant</li>
 <li>Resource <strong>m2c-plan</strong> in <code>rg-m2c-demo</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/app-service/manage-automatic-scaling?tabs=azure-portal"">https://learn.microsoft.com/azure/app-service/manage-automatic-scaling?tabs=azure-portal</a></li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
+</ul>","Medium; Reliability; Azure Service","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","asp-01","<h1>Remediate: asp-01</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -748,7 +691,7 @@
 <li><strong>Resource Group:</strong> resiliancetestingworkload</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> ukwest</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Enable Autoscale/Automatic scaling to ensure adequate resources are available to service requests&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -758,7 +701,7 @@
 ","<ul>
 <li>Resource <strong>asp-01</strong> in <code>resiliancetestingworkload</code> passes APRL check <strong>Enable Autoscale/Automatic scaling to ensure adequate resources are available to service requests</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/app-service/manage-automatic-scaling?tabs=azure-portal"">https://learn.microsoft.com/azure/app-service/manage-automatic-scaling?tabs=azure-portal</a></li>
-</ul>","Medium; ukwest; Source:APRL","2","",""
+</ul>","Medium; ukwest","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","m2c-plan","<h1>Remediate: m2c-plan</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -767,7 +710,7 @@
 <li><strong>Resource Group:</strong> rg-m2c-demo</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> eastus</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Enable Autoscale/Automatic scaling to ensure adequate resources are available to service requests&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -777,61 +720,50 @@
 ","<ul>
 <li>Resource <strong>m2c-plan</strong> in <code>rg-m2c-demo</code> passes APRL check <strong>Enable Autoscale/Automatic scaling to ensure adequate resources are available to service requests</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/app-service/manage-automatic-scaling?tabs=azure-portal"">https://learn.microsoft.com/azure/app-service/manage-automatic-scaling?tabs=azure-portal</a></li>
-</ul>","Medium; eastus; Source:APRL","2","",""
+</ul>","Medium; eastus","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Epic","Compute","","","","<h1>Compute</h1>
 <h2>Overview</h2>
 <p>Virtual machines, scale sets, containers, and orchestration</p>
 <p><strong>WAF Pillars:</strong> Reliability</p>
 <h2>Scope</h2>
 <ul>
-<li><strong>Total Features:</strong> 2</li>
-<li><strong>Total Recommendations:</strong> 7</li>
-<li><strong>Total Affected Resources:</strong> 7</li>
+<li><strong>Total Features:</strong> 1</li>
+<li><strong>Total Recommendations:</strong> 5</li>
+<li><strong>Total Affected Resources:</strong> 5</li>
 <li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 </ul>
 <h2>Impact Summary</h2>
 <ul>
-<li><strong>High:</strong> 1 recommendation(s)</li>
-<li><strong>Medium:</strong> 5 recommendation(s)</li>
+<li><strong>Medium:</strong> 4 recommendation(s)</li>
 <li><strong>Low:</strong> 1 recommendation(s)</li>
 </ul>
 <h2>Features</h2>
 <ul>
-<li><strong>Virtual Machines</strong> (Microsoft.Compute/virtualMachines) &mdash; 6 resource(s), 6 recommendation(s)</li>
-<li><strong>Disks</strong> (Microsoft.Compute/disks) &mdash; 1 resource(s), 1 recommendation(s)</li>
+<li><strong>Virtual Machines</strong> (Microsoft.Compute/virtualMachines) &mdash; 5 resource(s), 5 recommendation(s)</li>
 </ul>
 ","<p>All Features within this Epic are completed and verified.</p>
 <p><strong>Features to complete:</strong></p>
 <ul>
-<li>Virtual Machines (Microsoft.Compute/virtualMachines) &mdash; 6 recommendation(s), 6 resource(s)</li>
-<li>Disks (Microsoft.Compute/disks) &mdash; 1 recommendation(s), 1 resource(s)</li>
-</ul>","Reliability; Compute","2","",""
+<li>Virtual Machines (Microsoft.Compute/virtualMachines) &mdash; 5 recommendation(s), 5 resource(s)</li>
+</ul>","Reliability; Compute","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Feature","","Virtual Machines","","","<h1>Virtual Machines (Microsoft.Compute/virtualMachines)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>Microsoft.Compute/virtualMachines</strong> resources within the <strong>Compute</strong> domain.</p>
 <h2>Scope</h2>
 <ul>
-<li><strong>Recommendations:</strong> 6</li>
-<li><strong>Affected Resources:</strong> 6</li>
+<li><strong>Recommendations:</strong> 5</li>
+<li><strong>Affected Resources:</strong> 5</li>
 <li><strong>Resource Groups:</strong> resiliancetestingworkload</li>
 <li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-<li><strong>Regions:</strong> , uksouth</li>
+<li><strong>Regions:</strong> uksouth</li>
 </ul>
 <h2>Impact Breakdown</h2>
 <ul>
-<li><strong>High:</strong> 1</li>
 <li><strong>Medium:</strong> 4</li>
 <li><strong>Low:</strong> 1</li>
 </ul>
 <h2>Recommendations</h2>
 <ol>
-<li><strong>Review and migrate virtual machine workloads</strong> [High]
-<ul>
-<li><strong>Control:</strong> </li>
-<li><strong>Benefit:</strong> Avoid service disruptions by proactively migrating workloads</li>
-<li><strong>Affected Resources:</strong> 1</li>
-</ul>
-</li>
 <li><strong>Enable Accelerated Networking (AccelNet)</strong> [Medium]
 <ul>
 <li><strong>Control:</strong> Scalability</li>
@@ -871,63 +803,12 @@
 ","<p>All User Stories for <strong>Microsoft.Compute/virtualMachines</strong> are completed. Resources validated against APRL checks.</p>
 <p><strong>User Stories to complete:</strong></p>
 <ul>
-<li>Review and migrate virtual machine workloads [High] &mdash; 1 resource(s)</li>
 <li>Enable Accelerated Networking (AccelNet) [Medium] &mdash; 1 resource(s)</li>
 <li>Use Azure Boost VMs for Maintenance sensitive workload VMs [Medium] &mdash; 1 resource(s)</li>
 <li>Enable Scheduled Events for Maintenance sensitive workload VMs [Medium] &mdash; 1 resource(s)</li>
 <li>Reserve Compute Capacity in Disaster Recovery Regions [Medium] &mdash; 1 resource(s)</li>
 <li>Enable VM Insights [Low] &mdash; 1 resource(s)</li>
-</ul>","Microsoft.Compute/virtualMachines; Compute","1","",""
-"User Story","","","Review and migrate virtual machine workloads","","<h1>Review and migrate virtual machine workloads</h1>
-<h2>Recommendation</h2>
-<p>No detailed description available.</p>
-<h2>Details</h2>
-<ul>
-<li><strong>Impact:</strong> High</li>
-<li><strong>WAF Pillar:</strong> N/A</li>
-<li><strong>Control:</strong> </li>
-<li><strong>Potential Benefit:</strong> Avoid service disruptions by proactively migrating workloads</li>
-<li><strong>Source:</strong> Advisor</li>
-<li><strong>APRL Guid:</strong> </li>
-</ul>
-<h2>Advisor Information</h2>
-<ul>
-<li><strong>⚠️ Retirement Date:</strong> 15/11/2028</li>
-<li><strong>Retiring Feature:</strong> LSv2, G, GS, F, FS, Fsv2, B, Av2 - Series</li>
-<li><strong>Cost Implications:</strong> No data</li>
-</ul>
-<h2>Affected Resources (1)</h2>
-<table>
-<tr><th>#</th><th>Resource Name</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>1</td><td>server01</td><td>resiliancetestingworkload</td><td></td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-","<ul>
-<li>All 1 resource(s) have been remediated</li>
-<li>APRL check <code></code> passes for all resources</li>
-</ul>
-<p><strong>Per-resource verification:</strong></p>
-<ul>
-<li>Resource <strong>server01</strong> in <code>resiliancetestingworkload</code> is compliant</li>
-<li>Source: <strong>Advisor</strong></li>
-<li>⚠️ Retirement date: <strong>15/11/2028</strong></li>
-<li>Retiring feature: LSv2, G, GS, F, FS, Fsv2, B, Av2 - Series</li>
-</ul>","High; Azure Service; Source:Advisor","1","",""
-"Task","","","","server01","<h1>Remediate: server01</h1>
-<h2>Resource Details</h2>
-<ul>
-<li><strong>Resource Name:</strong> server01</li>
-<li><strong>Resource ID:</strong> <code></code></li>
-<li><strong>Resource Group:</strong> resiliancetestingworkload</li>
-<li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-<li><strong>Location:</strong> </li>
-<li><strong>Source:</strong> Advisor</li></ul>
-<h2>Action Required</h2>
-<p>Apply the recommendation &quot;Review and migrate virtual machine workloads&quot; to this resource.</p>
-<h2>Verification</h2>
-<p>Confirm the resource passes the APRL compliance check after remediation.</p>
-","<ul>
-<li>Resource <strong>server01</strong> in <code>resiliancetestingworkload</code> passes APRL check <strong>Review and migrate virtual machine workloads</strong></li>
-</ul>","High; Source:Advisor","1","",""
+</ul>","Microsoft.Compute/virtualMachines; Compute","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Enable Accelerated Networking (AccelNet)","","<h1>Enable Accelerated Networking (AccelNet)</h1>
 <h2>Recommendation</h2>
 <p>Accelerated networking enables SR-IOV to a VM, greatly improving its networking performance by bypassing the host from the data path, which reduces latency, jitter, and CPU utilization for demanding network workloads on supported VM types.</p>
@@ -955,7 +836,7 @@
 <ul>
 <li>Resource <strong>server01</strong> in <code>resiliancetestingworkload</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/virtual-network/accelerated-networking-overview"">https://learn.microsoft.com/azure/virtual-network/accelerated-networking-overview</a></li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
+</ul>","Medium; Reliability; Azure Service","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","server01","<h1>Remediate: server01</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -964,7 +845,7 @@
 <li><strong>Resource Group:</strong> resiliancetestingworkload</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> uksouth</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Enable Accelerated Networking (AccelNet)&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -974,7 +855,7 @@
 ","<ul>
 <li>Resource <strong>server01</strong> in <code>resiliancetestingworkload</code> passes APRL check <strong>Enable Accelerated Networking (AccelNet)</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/virtual-network/accelerated-networking-overview"">https://learn.microsoft.com/azure/virtual-network/accelerated-networking-overview</a></li>
-</ul>","Medium; uksouth; Source:APRL","2","",""
+</ul>","Medium; uksouth","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Use Azure Boost VMs for Maintenance sensitive workload VMs","","<h1>Use Azure Boost VMs for Maintenance sensitive workload VMs</h1>
 <h2>Recommendation</h2>
 <p>If the workload is Maintenance sensitive, consider Azure Boost compatible VMs. Azure Boost is designed to lessen the impact on customers when Azure maintenance activities occur on the host.</p>
@@ -1002,7 +883,7 @@
 <ul>
 <li>Resource <strong>server01</strong> in <code>resiliancetestingworkload</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/azure-boost/overview"">https://learn.microsoft.com/azure/azure-boost/overview</a></li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
+</ul>","Medium; Reliability; Azure Service","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","server01","<h1>Remediate: server01</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -1011,7 +892,7 @@
 <li><strong>Resource Group:</strong> resiliancetestingworkload</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> uksouth</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Use Azure Boost VMs for Maintenance sensitive workload VMs&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -1021,7 +902,7 @@
 ","<ul>
 <li>Resource <strong>server01</strong> in <code>resiliancetestingworkload</code> passes APRL check <strong>Use Azure Boost VMs for Maintenance sensitive workload VMs</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/azure-boost/overview"">https://learn.microsoft.com/azure/azure-boost/overview</a></li>
-</ul>","Medium; uksouth; Source:APRL","2","",""
+</ul>","Medium; uksouth","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Enable Scheduled Events for Maintenance sensitive workload VMs","","<h1>Enable Scheduled Events for Maintenance sensitive workload VMs</h1>
 <h2>Recommendation</h2>
 <p>If your workload is Maintenance sensitive, enable Scheduled Events. This Azure Metadata Service lets your app prepare for virtual machine maintenance by providing information on upcoming events like reboots, reducing disruptions.</p>
@@ -1049,7 +930,7 @@
 <ul>
 <li>Resource <strong>server01</strong> in <code>resiliancetestingworkload</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/virtual-machines/windows/scheduled-event-service"">https://learn.microsoft.com/azure/virtual-machines/windows/scheduled-event-service</a></li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
+</ul>","Medium; Reliability; Azure Service","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","server01","<h1>Remediate: server01</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -1058,7 +939,7 @@
 <li><strong>Resource Group:</strong> resiliancetestingworkload</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> uksouth</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Enable Scheduled Events for Maintenance sensitive workload VMs&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -1068,7 +949,7 @@
 ","<ul>
 <li>Resource <strong>server01</strong> in <code>resiliancetestingworkload</code> passes APRL check <strong>Enable Scheduled Events for Maintenance sensitive workload VMs</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/virtual-machines/windows/scheduled-event-service"">https://learn.microsoft.com/azure/virtual-machines/windows/scheduled-event-service</a></li>
-</ul>","Medium; uksouth; Source:APRL","2","",""
+</ul>","Medium; uksouth","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Reserve Compute Capacity in Disaster Recovery Regions","","<h1>Reserve Compute Capacity in Disaster Recovery Regions</h1>
 <h2>Recommendation</h2>
 <p>On-Demand Capacity Reservations ensure recovery of virtual machines in the event of a natural disaster by reserving compute capacity in advance within a specific region or zone. This guarantees that VMs have the necessary resources during disaster recovery failover events thus reducing downtime.</p>
@@ -1096,7 +977,7 @@
 <ul>
 <li>Resource <strong>server01</strong> in <code>resiliancetestingworkload</code> is compliant</li>
 <li>Changes verified via <a href=""https://aka.ms/on-demand-capacity-reservations-docs"">https://aka.ms/on-demand-capacity-reservations-docs</a></li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
+</ul>","Medium; Reliability; Azure Service","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","server01","<h1>Remediate: server01</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -1105,7 +986,7 @@
 <li><strong>Resource Group:</strong> resiliancetestingworkload</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> uksouth</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Reserve Compute Capacity in Disaster Recovery Regions&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -1115,7 +996,7 @@
 ","<ul>
 <li>Resource <strong>server01</strong> in <code>resiliancetestingworkload</code> passes APRL check <strong>Reserve Compute Capacity in Disaster Recovery Regions</strong></li>
 <li>Verified via <a href=""https://aka.ms/on-demand-capacity-reservations-docs"">https://aka.ms/on-demand-capacity-reservations-docs</a></li>
-</ul>","Medium; uksouth; Source:APRL","2","",""
+</ul>","Medium; uksouth","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Enable VM Insights","","<h1>Enable VM Insights</h1>
 <h2>Recommendation</h2>
 <p>VM Insights monitors VM and scale set performance, health, running processes, and dependencies. It enhances the predictability of application performance and availability by pinpointing performance bottlenecks and network issues, and it clarifies if problems are related to other dependencies.</p>
@@ -1143,7 +1024,7 @@
 <ul>
 <li>Resource <strong>server01</strong> in <code>resiliancetestingworkload</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/vm/vminsights-overview"">https://learn.microsoft.com/azure/azure-monitor/vm/vminsights-overview</a></li>
-</ul>","Low; Reliability; Azure Service; Source:APRL","3","",""
+</ul>","Low; Reliability; Azure Service","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","server01","<h1>Remediate: server01</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -1152,7 +1033,7 @@
 <li><strong>Resource Group:</strong> resiliancetestingworkload</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> uksouth</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Enable VM Insights&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -1162,87 +1043,7 @@
 ","<ul>
 <li>Resource <strong>server01</strong> in <code>resiliancetestingworkload</code> passes APRL check <strong>Enable VM Insights</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/vm/vminsights-overview"">https://learn.microsoft.com/azure/azure-monitor/vm/vminsights-overview</a></li>
-</ul>","Low; uksouth; Source:APRL","3","",""
-"Feature","","Disks","","","<h1>Disks (Microsoft.Compute/disks)</h1>
-<h2>Overview</h2>
-<p>Recommendations for <strong>Microsoft.Compute/disks</strong> resources within the <strong>Compute</strong> domain.</p>
-<h2>Scope</h2>
-<ul>
-<li><strong>Recommendations:</strong> 1</li>
-<li><strong>Affected Resources:</strong> 1</li>
-<li><strong>Resource Groups:</strong> resiliancetestingworkload</li>
-<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-<li><strong>Regions:</strong> </li>
-</ul>
-<h2>Impact Breakdown</h2>
-<ul>
-<li><strong>Medium:</strong> 1</li>
-</ul>
-<h2>Recommendations</h2>
-<ol>
-<li><strong>Migrate Standard HDD OS Disks to SSD</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> </li>
-<li><strong>Benefit:</strong> Avoid potential service disruption after retirement</li>
-<li><strong>Affected Resources:</strong> 1</li>
-</ul>
-</li>
-</ol>
-","<p>All User Stories for <strong>Microsoft.Compute/disks</strong> are completed. Resources validated against APRL checks.</p>
-<p><strong>User Stories to complete:</strong></p>
-<ul>
-<li>Migrate Standard HDD OS Disks to SSD [Medium] &mdash; 1 resource(s)</li>
-</ul>","Microsoft.Compute/disks; Compute","2","",""
-"User Story","","","Migrate Standard HDD OS Disks to SSD","","<h1>Migrate Standard HDD OS Disks to SSD</h1>
-<h2>Recommendation</h2>
-<p>No detailed description available.</p>
-<h2>Details</h2>
-<ul>
-<li><strong>Impact:</strong> Medium</li>
-<li><strong>WAF Pillar:</strong> N/A</li>
-<li><strong>Control:</strong> </li>
-<li><strong>Potential Benefit:</strong> Avoid potential service disruption after retirement</li>
-<li><strong>Source:</strong> Advisor</li>
-<li><strong>APRL Guid:</strong> </li>
-</ul>
-<h2>Advisor Information</h2>
-<ul>
-<li><strong>⚠️ Retirement Date:</strong> 08/09/2028</li>
-<li><strong>Retiring Feature:</strong> Operating System (OS) Disks on Standard HDD</li>
-<li><strong>Cost Implications:</strong> No data</li>
-</ul>
-<h2>Affected Resources (1)</h2>
-<table>
-<tr><th>#</th><th>Resource Name</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>1</td><td>server01_osdisk_1_44cd5ccc8fa44c15afcce9733b4ad87f</td><td>resiliancetestingworkload</td><td></td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-","<ul>
-<li>All 1 resource(s) have been remediated</li>
-<li>APRL check <code></code> passes for all resources</li>
-</ul>
-<p><strong>Per-resource verification:</strong></p>
-<ul>
-<li>Resource <strong>server01_osdisk_1_44cd5ccc8fa44c15afcce9733b4ad87f</strong> in <code>resiliancetestingworkload</code> is compliant</li>
-<li>Source: <strong>Advisor</strong></li>
-<li>⚠️ Retirement date: <strong>08/09/2028</strong></li>
-<li>Retiring feature: Operating System (OS) Disks on Standard HDD</li>
-</ul>","Medium; Azure Service; Source:Advisor","2","",""
-"Task","","","","server01_osdisk_1_44cd5ccc8fa44c15afcce9733b4ad87f","<h1>Remediate: server01_osdisk_1_44cd5ccc8fa44c15afcce9733b4ad87f</h1>
-<h2>Resource Details</h2>
-<ul>
-<li><strong>Resource Name:</strong> server01_osdisk_1_44cd5ccc8fa44c15afcce9733b4ad87f</li>
-<li><strong>Resource ID:</strong> <code></code></li>
-<li><strong>Resource Group:</strong> resiliancetestingworkload</li>
-<li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-<li><strong>Location:</strong> </li>
-<li><strong>Source:</strong> Advisor</li></ul>
-<h2>Action Required</h2>
-<p>Apply the recommendation &quot;Migrate Standard HDD OS Disks to SSD&quot; to this resource.</p>
-<h2>Verification</h2>
-<p>Confirm the resource passes the APRL compliance check after remediation.</p>
-","<ul>
-<li>Resource <strong>server01_osdisk_1_44cd5ccc8fa44c15afcce9733b4ad87f</strong> in <code>resiliancetestingworkload</code> passes APRL check <strong>Migrate Standard HDD OS Disks to SSD</strong></li>
-</ul>","Medium; Source:Advisor","2","",""
+</ul>","Low; uksouth","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Epic","Data","","","","<h1>Data</h1>
 <h2>Overview</h2>
 <p>Databases, storage, and data services</p>
@@ -1270,7 +1071,7 @@
 <ul>
 <li>Storage Accounts (Microsoft.Storage/storageAccounts) &mdash; 4 recommendation(s), 4 resource(s)</li>
 <li>Database Accounts (Microsoft.DocumentDB/databaseAccounts) &mdash; 2 recommendation(s), 2 resource(s)</li>
-</ul>","Reliability; Data","2","",""
+</ul>","Reliability; Data","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Feature","","Storage Accounts","","","<h1>Storage Accounts (Microsoft.Storage/storageAccounts)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>Microsoft.Storage/storageAccounts</strong> resources within the <strong>Data</strong> domain.</p>
@@ -1325,7 +1126,7 @@
 <li>Enable versioning for accidental modification and keep the number of versions below 1000 [Low] &mdash; 1 resource(s)</li>
 <li>Enable point-in-time restore for GPv2 accounts to safeguard against data loss [Low] &mdash; 1 resource(s)</li>
 <li>Monitor all blob storage accounts [Low] &mdash; 1 resource(s)</li>
-</ul>","Microsoft.Storage/storageAccounts; Data","1","",""
+</ul>","Microsoft.Storage/storageAccounts; Data","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Ensure that storage accounts are zone or region redundant","","<h1>Ensure that storage accounts are zone or region redundant</h1>
 <h2>Recommendation</h2>
 <p>Redundancy ensures storage accounts meet availability and durability targets amidst failures, weighing lower costs against higher availability. Locally redundant storage offers the least durability at the lowest cost.</p>
@@ -1353,7 +1154,7 @@
 <ul>
 <li>Resource <strong>mcapsb30a58e84134ade1</strong> in <code>mcapsgovernance</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/storage/common/storage-redundancy"">https://learn.microsoft.com/azure/storage/common/storage-redundancy</a></li>
-</ul>","High; Reliability; Azure Service; Source:APRL","1","",""
+</ul>","High; Reliability; Azure Service","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","mcapsb30a58e84134ade1","<h1>Remediate: mcapsb30a58e84134ade1</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -1362,7 +1163,7 @@
 <li><strong>Resource Group:</strong> mcapsgovernance</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> westus2</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Ensure that storage accounts are zone or region redundant&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -1372,7 +1173,7 @@
 ","<ul>
 <li>Resource <strong>mcapsb30a58e84134ade1</strong> in <code>mcapsgovernance</code> passes APRL check <strong>Ensure that storage accounts are zone or region redundant</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/storage/common/storage-redundancy"">https://learn.microsoft.com/azure/storage/common/storage-redundancy</a></li>
-</ul>","High; westus2; Source:APRL","1","",""
+</ul>","High; westus2","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Enable versioning for accidental modification and keep the number of versions below 1000","","<h1>Enable versioning for accidental modification and keep the number of versions below 1000</h1>
 <h2>Recommendation</h2>
 <p>Consider enabling versioning for Azure Storage Accounts to recover from accidental modifications or deletions and manage blob operation latency. Microsoft advises maintaining fewer than 1000 versions per blob to optimize performance. Lifecycle management can help delete old versions automatically.</p>
@@ -1400,7 +1201,7 @@
 <ul>
 <li>Resource <strong>mcapsb30a58e84134ade1</strong> in <code>mcapsgovernance</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/storage/blobs/versioning-overview"">https://learn.microsoft.com/azure/storage/blobs/versioning-overview</a></li>
-</ul>","Low; Reliability; Azure Service; Source:APRL","3","",""
+</ul>","Low; Reliability; Azure Service","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","mcapsb30a58e84134ade1","<h1>Remediate: mcapsb30a58e84134ade1</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -1409,7 +1210,7 @@
 <li><strong>Resource Group:</strong> mcapsgovernance</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> westus2</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Enable versioning for accidental modification and keep the number of versions below 1000&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -1419,7 +1220,7 @@
 ","<ul>
 <li>Resource <strong>mcapsb30a58e84134ade1</strong> in <code>mcapsgovernance</code> passes APRL check <strong>Enable versioning for accidental modification and keep the number of versions below 1000</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/storage/blobs/versioning-overview"">https://learn.microsoft.com/azure/storage/blobs/versioning-overview</a></li>
-</ul>","Low; westus2; Source:APRL","3","",""
+</ul>","Low; westus2","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Enable point-in-time restore for GPv2 accounts to safeguard against data loss","","<h1>Enable point-in-time restore for GPv2 accounts to safeguard against data loss</h1>
 <h2>Recommendation</h2>
 <p>Consider enabling point-in-time restore for standard general purpose v2 accounts with flat namespace to protect against accidental deletion or corruption by restoring block blob data to an earlier state.</p>
@@ -1447,7 +1248,7 @@
 <ul>
 <li>Resource <strong>mcapsb30a58e84134ade1</strong> in <code>mcapsgovernance</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/storage/blobs/point-in-time-restore-overview"">https://learn.microsoft.com/azure/storage/blobs/point-in-time-restore-overview</a></li>
-</ul>","Low; Reliability; Azure Service; Source:APRL","3","",""
+</ul>","Low; Reliability; Azure Service","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","mcapsb30a58e84134ade1","<h1>Remediate: mcapsb30a58e84134ade1</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -1456,7 +1257,7 @@
 <li><strong>Resource Group:</strong> mcapsgovernance</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> westus2</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Enable point-in-time restore for GPv2 accounts to safeguard against data loss&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -1466,7 +1267,7 @@
 ","<ul>
 <li>Resource <strong>mcapsb30a58e84134ade1</strong> in <code>mcapsgovernance</code> passes APRL check <strong>Enable point-in-time restore for GPv2 accounts to safeguard against data loss</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/storage/blobs/point-in-time-restore-overview"">https://learn.microsoft.com/azure/storage/blobs/point-in-time-restore-overview</a></li>
-</ul>","Low; westus2; Source:APRL","3","",""
+</ul>","Low; westus2","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Monitor all blob storage accounts","","<h1>Monitor all blob storage accounts</h1>
 <h2>Recommendation</h2>
 <p>For critical applications and business processes relying on Azure, monitoring and alerts are crucial. Resource logs are only stored after creating a diagnostic setting to route logs to specified locations, requiring selection of log categories to collect.</p>
@@ -1494,7 +1295,7 @@
 <ul>
 <li>Resource <strong>mcapsb30a58e84134ade1</strong> in <code>mcapsgovernance</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/storage/blobs/monitor-blob-storage"">https://learn.microsoft.com/azure/storage/blobs/monitor-blob-storage</a></li>
-</ul>","Low; Reliability; Azure Service; Source:APRL","3","",""
+</ul>","Low; Reliability; Azure Service","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","mcapsb30a58e84134ade1","<h1>Remediate: mcapsb30a58e84134ade1</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -1503,7 +1304,7 @@
 <li><strong>Resource Group:</strong> mcapsgovernance</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> westus2</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Monitor all blob storage accounts&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -1513,7 +1314,7 @@
 ","<ul>
 <li>Resource <strong>mcapsb30a58e84134ade1</strong> in <code>mcapsgovernance</code> passes APRL check <strong>Monitor all blob storage accounts</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/storage/blobs/monitor-blob-storage"">https://learn.microsoft.com/azure/storage/blobs/monitor-blob-storage</a></li>
-</ul>","Low; westus2; Source:APRL","3","",""
+</ul>","Low; westus2","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Feature","","Database Accounts","","","<h1>Database Accounts (Microsoft.DocumentDB/databaseAccounts)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>Microsoft.DocumentDB/databaseAccounts</strong> resources within the <strong>Data</strong> domain.</p>
@@ -1552,7 +1353,7 @@
 <ul>
 <li>Configure continuous backup mode [High] &mdash; 1 resource(s)</li>
 <li>Monitor Cosmos DB health and set up alerts [Medium] &mdash; 1 resource(s)</li>
-</ul>","Microsoft.DocumentDB/databaseAccounts; Data","1","",""
+</ul>","Microsoft.DocumentDB/databaseAccounts; Data","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Configure continuous backup mode","","<h1>Configure continuous backup mode</h1>
 <h2>Recommendation</h2>
 <p>Cosmos DB's backup is always on, offering protection against data mishaps. Continuous mode allows for self-serve restoration to a pre-mishap point, unlike periodic mode which requires contacting Microsoft support, leading to longer restore times.</p>
@@ -1562,7 +1363,7 @@
 <li><strong>WAF Pillar:</strong> Reliability</li>
 <li><strong>Control:</strong> Disaster Recovery</li>
 <li><strong>Potential Benefit:</strong> Faster self-serve data restore</li>
-<li><strong>Source:</strong> APRL & Advisor</li>
+<li><strong>Source:</strong> APRL</li>
 <li><strong>APRL Guid:</strong> e544520b-8505-7841-9e77-1f1974ee86ec</li>
 </ul>
 <h2>Learn More</h2>
@@ -1580,8 +1381,7 @@
 <ul>
 <li>Resource <strong>test-cdb-uk01</strong> in <code>defaultresourcegroup-suk</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/cosmos-db/continuous-backup-restore-introduction"">https://learn.microsoft.com/azure/cosmos-db/continuous-backup-restore-introduction</a></li>
-<li>Source: <strong>APRL & Advisor</strong></li>
-</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","",""
+</ul>","High; Reliability; Azure Service","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","test-cdb-uk01","<h1>Remediate: test-cdb-uk01</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -1590,7 +1390,7 @@
 <li><strong>Resource Group:</strong> defaultresourcegroup-suk</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> westus2</li>
-<li><strong>Notes:</strong> [Advisor] Improve resiliency by migrating your Azure Cosmos DB accounts to continuous backup</li><li><strong>Source:</strong> APRL & Advisor</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Configure continuous backup mode&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -1599,9 +1399,8 @@
 <p><a href=""https://learn.microsoft.com/azure/cosmos-db/continuous-backup-restore-introduction"">https://learn.microsoft.com/azure/cosmos-db/continuous-backup-restore-introduction</a></p>
 ","<ul>
 <li>Resource <strong>test-cdb-uk01</strong> in <code>defaultresourcegroup-suk</code> passes APRL check <strong>Configure continuous backup mode</strong></li>
-<li>Notes addressed: [Advisor] Improve resiliency by migrating your Azure Cosmos DB accounts to continuous backup</li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/cosmos-db/continuous-backup-restore-introduction"">https://learn.microsoft.com/azure/cosmos-db/continuous-backup-restore-introduction</a></li>
-</ul>","High; westus2; Source:APRL & Advisor","1","",""
+</ul>","High; westus2","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Monitor Cosmos DB health and set up alerts","","<h1>Monitor Cosmos DB health and set up alerts</h1>
 <h2>Recommendation</h2>
 <p>Monitoring the availability and responsiveness of Azure Cosmos DB resources and having alerts set up for your workload is a good practice. This ensures you stay proactive in handling unforeseen events.</p>
@@ -1629,7 +1428,7 @@
 <ul>
 <li>Resource <strong>test-cdb-uk01</strong> in <code>defaultresourcegroup-suk</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/cosmos-db/create-alerts"">https://learn.microsoft.com/azure/cosmos-db/create-alerts</a></li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
+</ul>","Medium; Reliability; Azure Service","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","test-cdb-uk01","<h1>Remediate: test-cdb-uk01</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -1638,7 +1437,7 @@
 <li><strong>Resource Group:</strong> defaultresourcegroup-suk</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> westus2</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Monitor Cosmos DB health and set up alerts&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -1648,7 +1447,7 @@
 ","<ul>
 <li>Resource <strong>test-cdb-uk01</strong> in <code>defaultresourcegroup-suk</code> passes APRL check <strong>Monitor Cosmos DB health and set up alerts</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/cosmos-db/create-alerts"">https://learn.microsoft.com/azure/cosmos-db/create-alerts</a></li>
-</ul>","Medium; westus2; Source:APRL","2","",""
+</ul>","Medium; westus2","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Epic","Networking","","","","<h1>Networking</h1>
 <h2>Overview</h2>
 <p>Virtual networks, gateways, load balancers, and connectivity</p>
@@ -1677,7 +1476,7 @@
 <li>Network Security Groups (Microsoft.Network/networkSecurityGroups) &mdash; 2 recommendation(s), 8 resource(s)</li>
 <li>Networkwatchers (microsoft.network/networkwatchers) &mdash; 2 recommendation(s), 4 resource(s)</li>
 <li>Virtual Networks (Microsoft.Network/virtualNetworks) &mdash; 1 recommendation(s), 1 resource(s)</li>
-</ul>","Reliability; Networking","2","",""
+</ul>","Reliability; Networking","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Feature","","Network Security Groups","","","<h1>Network Security Groups (Microsoft.Network/networkSecurityGroups)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>Microsoft.Network/networkSecurityGroups</strong> resources within the <strong>Networking</strong> domain.</p>
@@ -1716,7 +1515,7 @@
 <ul>
 <li>Configure Diagnostic Settings for all network security groups [Medium] &mdash; 4 resource(s)</li>
 <li>Monitor changes in Network Security Groups with Azure Monitor [Low] &mdash; 4 resource(s)</li>
-</ul>","Microsoft.Network/networkSecurityGroups; Networking","2","",""
+</ul>","Microsoft.Network/networkSecurityGroups; Networking","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Configure Diagnostic Settings for all network security groups","","<h1>Configure Diagnostic Settings for all network security groups</h1>
 <h2>Recommendation</h2>
 <p>Resource Logs are not collected and stored until you create a diagnostic setting and route them to one or more locations.</p>
@@ -1750,7 +1549,7 @@
 <li>Resource <strong>vnet01-subnet01-nsg-uksouth</strong> in <code>resiliancetestingworkload</code> is compliant</li>
 <li>Resource <strong>vnet01-snet-uksouth-1-nsg-uksouth</strong> in <code>resiliancetestingworkload</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/essentials/diagnostic-settings"">https://learn.microsoft.com/azure/azure-monitor/essentials/diagnostic-settings</a></li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
+</ul>","Medium; Reliability; Azure Service","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","vnet01-subnet02-nsg-uksouth","<h1>Remediate: vnet01-subnet02-nsg-uksouth</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -1759,7 +1558,7 @@
 <li><strong>Resource Group:</strong> resiliancetestingworkload</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> uksouth</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Configure Diagnostic Settings for all network security groups&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -1769,7 +1568,7 @@
 ","<ul>
 <li>Resource <strong>vnet01-subnet02-nsg-uksouth</strong> in <code>resiliancetestingworkload</code> passes APRL check <strong>Configure Diagnostic Settings for all network security groups</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/essentials/diagnostic-settings"">https://learn.microsoft.com/azure/azure-monitor/essentials/diagnostic-settings</a></li>
-</ul>","Medium; uksouth; Source:APRL","2","",""
+</ul>","Medium; uksouth","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","server01-nsg","<h1>Remediate: server01-nsg</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -1778,7 +1577,7 @@
 <li><strong>Resource Group:</strong> resiliancetestingworkload</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> uksouth</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Configure Diagnostic Settings for all network security groups&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -1788,7 +1587,7 @@
 ","<ul>
 <li>Resource <strong>server01-nsg</strong> in <code>resiliancetestingworkload</code> passes APRL check <strong>Configure Diagnostic Settings for all network security groups</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/essentials/diagnostic-settings"">https://learn.microsoft.com/azure/azure-monitor/essentials/diagnostic-settings</a></li>
-</ul>","Medium; uksouth; Source:APRL","2","",""
+</ul>","Medium; uksouth","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","vnet01-subnet01-nsg-uksouth","<h1>Remediate: vnet01-subnet01-nsg-uksouth</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -1797,7 +1596,7 @@
 <li><strong>Resource Group:</strong> resiliancetestingworkload</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> uksouth</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Configure Diagnostic Settings for all network security groups&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -1807,7 +1606,7 @@
 ","<ul>
 <li>Resource <strong>vnet01-subnet01-nsg-uksouth</strong> in <code>resiliancetestingworkload</code> passes APRL check <strong>Configure Diagnostic Settings for all network security groups</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/essentials/diagnostic-settings"">https://learn.microsoft.com/azure/azure-monitor/essentials/diagnostic-settings</a></li>
-</ul>","Medium; uksouth; Source:APRL","2","",""
+</ul>","Medium; uksouth","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","vnet01-snet-uksouth-1-nsg-uksouth","<h1>Remediate: vnet01-snet-uksouth-1-nsg-uksouth</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -1816,7 +1615,7 @@
 <li><strong>Resource Group:</strong> resiliancetestingworkload</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> uksouth</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Configure Diagnostic Settings for all network security groups&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -1826,7 +1625,7 @@
 ","<ul>
 <li>Resource <strong>vnet01-snet-uksouth-1-nsg-uksouth</strong> in <code>resiliancetestingworkload</code> passes APRL check <strong>Configure Diagnostic Settings for all network security groups</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/essentials/diagnostic-settings"">https://learn.microsoft.com/azure/azure-monitor/essentials/diagnostic-settings</a></li>
-</ul>","Medium; uksouth; Source:APRL","2","",""
+</ul>","Medium; uksouth","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Monitor changes in Network Security Groups with Azure Monitor","","<h1>Monitor changes in Network Security Groups with Azure Monitor</h1>
 <h2>Recommendation</h2>
 <p>Create Alerts with Azure Monitor for operations like creating or updating Network Security Group rules to catch unauthorized/undesired changes to resources and spot attempts to bypass firewalls or access resources from the outside.</p>
@@ -1860,7 +1659,7 @@
 <li>Resource <strong>vnet01-subnet01-nsg-uksouth</strong> in <code>resiliancetestingworkload</code> is compliant</li>
 <li>Resource <strong>vnet01-subnet02-nsg-uksouth</strong> in <code>resiliancetestingworkload</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/essentials/activity-log?tabs=powershell"">https://learn.microsoft.com/azure/azure-monitor/essentials/activity-log?tabs=powershell</a></li>
-</ul>","Low; Reliability; Azure Service; Source:APRL","3","",""
+</ul>","Low; Reliability; Azure Service","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","server01-nsg","<h1>Remediate: server01-nsg</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -1869,7 +1668,7 @@
 <li><strong>Resource Group:</strong> resiliancetestingworkload</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> uksouth</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Monitor changes in Network Security Groups with Azure Monitor&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -1879,7 +1678,7 @@
 ","<ul>
 <li>Resource <strong>server01-nsg</strong> in <code>resiliancetestingworkload</code> passes APRL check <strong>Monitor changes in Network Security Groups with Azure Monitor</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/essentials/activity-log?tabs=powershell"">https://learn.microsoft.com/azure/azure-monitor/essentials/activity-log?tabs=powershell</a></li>
-</ul>","Low; uksouth; Source:APRL","3","",""
+</ul>","Low; uksouth","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","vnet01-snet-uksouth-1-nsg-uksouth","<h1>Remediate: vnet01-snet-uksouth-1-nsg-uksouth</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -1888,7 +1687,7 @@
 <li><strong>Resource Group:</strong> resiliancetestingworkload</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> uksouth</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Monitor changes in Network Security Groups with Azure Monitor&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -1898,7 +1697,7 @@
 ","<ul>
 <li>Resource <strong>vnet01-snet-uksouth-1-nsg-uksouth</strong> in <code>resiliancetestingworkload</code> passes APRL check <strong>Monitor changes in Network Security Groups with Azure Monitor</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/essentials/activity-log?tabs=powershell"">https://learn.microsoft.com/azure/azure-monitor/essentials/activity-log?tabs=powershell</a></li>
-</ul>","Low; uksouth; Source:APRL","3","",""
+</ul>","Low; uksouth","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","vnet01-subnet01-nsg-uksouth","<h1>Remediate: vnet01-subnet01-nsg-uksouth</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -1907,7 +1706,7 @@
 <li><strong>Resource Group:</strong> resiliancetestingworkload</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> uksouth</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Monitor changes in Network Security Groups with Azure Monitor&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -1917,7 +1716,7 @@
 ","<ul>
 <li>Resource <strong>vnet01-subnet01-nsg-uksouth</strong> in <code>resiliancetestingworkload</code> passes APRL check <strong>Monitor changes in Network Security Groups with Azure Monitor</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/essentials/activity-log?tabs=powershell"">https://learn.microsoft.com/azure/azure-monitor/essentials/activity-log?tabs=powershell</a></li>
-</ul>","Low; uksouth; Source:APRL","3","",""
+</ul>","Low; uksouth","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","vnet01-subnet02-nsg-uksouth","<h1>Remediate: vnet01-subnet02-nsg-uksouth</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -1926,7 +1725,7 @@
 <li><strong>Resource Group:</strong> resiliancetestingworkload</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> uksouth</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Monitor changes in Network Security Groups with Azure Monitor&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -1936,7 +1735,7 @@
 ","<ul>
 <li>Resource <strong>vnet01-subnet02-nsg-uksouth</strong> in <code>resiliancetestingworkload</code> passes APRL check <strong>Monitor changes in Network Security Groups with Azure Monitor</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/essentials/activity-log?tabs=powershell"">https://learn.microsoft.com/azure/azure-monitor/essentials/activity-log?tabs=powershell</a></li>
-</ul>","Low; uksouth; Source:APRL","3","",""
+</ul>","Low; uksouth","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Feature","","Networkwatchers","","","<h1>Networkwatchers (microsoft.network/networkwatchers)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>microsoft.network/networkwatchers</strong> resources within the <strong>Networking</strong> domain.</p>
@@ -1975,7 +1774,7 @@
 <ul>
 <li>Configure Network Watcher Connection monitor [Medium] &mdash; 2 resource(s)</li>
 <li>Deploy Network Watcher in all regions where you have networking services [Low] &mdash; 2 resource(s)</li>
-</ul>","microsoft.network/networkwatchers; Networking","2","",""
+</ul>","microsoft.network/networkwatchers; Networking","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Configure Network Watcher Connection monitor","","<h1>Configure Network Watcher Connection monitor</h1>
 <h2>Recommendation</h2>
 <p>Improves monitoring for Azure and Hybrid connectivity</p>
@@ -2005,7 +1804,7 @@
 <li>Resource <strong>NetworkWatcher_northeurope</strong> in <code>networkwatcherrg</code> is compliant</li>
 <li>Resource <strong>NetworkWatcher_uksouth</strong> in <code>networkwatcherrg</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/network-watcher/connection-monitor-overview"">https://learn.microsoft.com/azure/network-watcher/connection-monitor-overview</a></li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
+</ul>","Medium; Reliability; Azure Service","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","NetworkWatcher_northeurope","<h1>Remediate: NetworkWatcher_northeurope</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -2014,7 +1813,7 @@
 <li><strong>Resource Group:</strong> networkwatcherrg</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> northeurope</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Configure Network Watcher Connection monitor&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -2024,7 +1823,7 @@
 ","<ul>
 <li>Resource <strong>NetworkWatcher_northeurope</strong> in <code>networkwatcherrg</code> passes APRL check <strong>Configure Network Watcher Connection monitor</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/network-watcher/connection-monitor-overview"">https://learn.microsoft.com/azure/network-watcher/connection-monitor-overview</a></li>
-</ul>","Medium; northeurope; Source:APRL","2","",""
+</ul>","Medium; northeurope","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","NetworkWatcher_uksouth","<h1>Remediate: NetworkWatcher_uksouth</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -2033,7 +1832,7 @@
 <li><strong>Resource Group:</strong> networkwatcherrg</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> uksouth</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Configure Network Watcher Connection monitor&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -2043,7 +1842,7 @@
 ","<ul>
 <li>Resource <strong>NetworkWatcher_uksouth</strong> in <code>networkwatcherrg</code> passes APRL check <strong>Configure Network Watcher Connection monitor</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/network-watcher/connection-monitor-overview"">https://learn.microsoft.com/azure/network-watcher/connection-monitor-overview</a></li>
-</ul>","Medium; uksouth; Source:APRL","2","",""
+</ul>","Medium; uksouth","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Deploy Network Watcher in all regions where you have networking services","","<h1>Deploy Network Watcher in all regions where you have networking services</h1>
 <h2>Recommendation</h2>
 <p>Azure Network Watcher offers tools for monitoring, diagnosing, viewing metrics, and managing logs for IaaS resources. It helps maintain the health of VMs, VNets, application gateways, load balancers, but not for PaaS or Web analytics.</p>
@@ -2073,7 +1872,7 @@
 <li>Resource <strong>NetworkWatcher_northeurope</strong> in <code>networkwatcherrg</code> is compliant</li>
 <li>Resource <strong>NetworkWatcher_uksouth</strong> in <code>networkwatcherrg</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/network-watcher/network-watcher-overview"">https://learn.microsoft.com/azure/network-watcher/network-watcher-overview</a></li>
-</ul>","Low; Reliability; Azure Service; Source:APRL","3","",""
+</ul>","Low; Reliability; Azure Service","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","NetworkWatcher_northeurope","<h1>Remediate: NetworkWatcher_northeurope</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -2082,7 +1881,7 @@
 <li><strong>Resource Group:</strong> networkwatcherrg</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> northeurope</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Deploy Network Watcher in all regions where you have networking services&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -2092,7 +1891,7 @@
 ","<ul>
 <li>Resource <strong>NetworkWatcher_northeurope</strong> in <code>networkwatcherrg</code> passes APRL check <strong>Deploy Network Watcher in all regions where you have networking services</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/network-watcher/network-watcher-overview"">https://learn.microsoft.com/azure/network-watcher/network-watcher-overview</a></li>
-</ul>","Low; northeurope; Source:APRL","3","",""
+</ul>","Low; northeurope","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","NetworkWatcher_uksouth","<h1>Remediate: NetworkWatcher_uksouth</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -2101,7 +1900,7 @@
 <li><strong>Resource Group:</strong> networkwatcherrg</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> uksouth</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Deploy Network Watcher in all regions where you have networking services&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -2111,7 +1910,7 @@
 ","<ul>
 <li>Resource <strong>NetworkWatcher_uksouth</strong> in <code>networkwatcherrg</code> passes APRL check <strong>Deploy Network Watcher in all regions where you have networking services</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/network-watcher/network-watcher-overview"">https://learn.microsoft.com/azure/network-watcher/network-watcher-overview</a></li>
-</ul>","Low; uksouth; Source:APRL","3","",""
+</ul>","Low; uksouth","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Feature","","Virtual Networks","","","<h1>Virtual Networks (Microsoft.Network/virtualNetworks)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>Microsoft.Network/virtualNetworks</strong> resources within the <strong>Networking</strong> domain.</p>
@@ -2141,7 +1940,7 @@
 <p><strong>User Stories to complete:</strong></p>
 <ul>
 <li>Enable Virtual Network Flow Logs [Medium] &mdash; 1 resource(s)</li>
-</ul>","Microsoft.Network/virtualNetworks; Networking","2","",""
+</ul>","Microsoft.Network/virtualNetworks; Networking","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Enable Virtual Network Flow Logs","","<h1>Enable Virtual Network Flow Logs</h1>
 <h2>Recommendation</h2>
 <p>Improves monitoring and security for Azure and Hybrid connectivity</p>
@@ -2169,7 +1968,7 @@
 <ul>
 <li>Resource <strong>vnet01</strong> in <code>resiliancetestingworkload</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/network-watcher/vnet-flow-logs-overview"">https://learn.microsoft.com/azure/network-watcher/vnet-flow-logs-overview</a></li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
+</ul>","Medium; Reliability; Azure Service","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","vnet01","<h1>Remediate: vnet01</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -2178,7 +1977,7 @@
 <li><strong>Resource Group:</strong> resiliancetestingworkload</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> uksouth</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Enable Virtual Network Flow Logs&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -2188,7 +1987,7 @@
 ","<ul>
 <li>Resource <strong>vnet01</strong> in <code>resiliancetestingworkload</code> passes APRL check <strong>Enable Virtual Network Flow Logs</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/network-watcher/vnet-flow-logs-overview"">https://learn.microsoft.com/azure/network-watcher/vnet-flow-logs-overview</a></li>
-</ul>","Medium; uksouth; Source:APRL","2","",""
+</ul>","Medium; uksouth","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Epic","Observability","","","","<h1>Observability</h1>
 <h2>Overview</h2>
 <p>Monitoring, logging, and diagnostics resources</p>
@@ -2215,7 +2014,7 @@
 <ul>
 <li>Workspaces (microsoft.operationalinsights/workspaces) &mdash; 2 recommendation(s), 6 resource(s)</li>
 <li>Components (microsoft.insights/components) &mdash; 1 recommendation(s), 1 resource(s)</li>
-</ul>","Reliability; Observability","2","",""
+</ul>","Reliability; Observability","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Feature","","Workspaces","","","<h1>Workspaces (microsoft.operationalinsights/workspaces)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>microsoft.operationalinsights/workspaces</strong> resources within the <strong>Observability</strong> domain.</p>
@@ -2254,7 +2053,7 @@
 <ul>
 <li>Enable Log Analytics data export to GRS or GZRS [Medium] &mdash; 3 resource(s)</li>
 <li>Create a health status alert rule for your Log Analytics workspace [Low] &mdash; 3 resource(s)</li>
-</ul>","microsoft.operationalinsights/workspaces; Observability","2","",""
+</ul>","microsoft.operationalinsights/workspaces; Observability","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Enable Log Analytics data export to GRS or GZRS","","<h1>Enable Log Analytics data export to GRS or GZRS</h1>
 <h2>Recommendation</h2>
 <p>Data export in a Log Analytics workspace to an Azure Storage account enhances data protection against regional failures by using geo-redundant (GRS) or geo-zone-redundant storage (GZRS), mainly for compliance and integration with other Azure services and tools.</p>
@@ -2286,7 +2085,7 @@
 <li>Resource <strong>DefaultWorkspace-a4aef89a-cd11-438f-b30a-58e84134ade1-WEU</strong> in <code>defaultresourcegroup-weu</code> is compliant</li>
 <li>Resource <strong>m2c-law-4sac2i6ziq5kc</strong> in <code>rg-m2c-demo</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/logs/logs-data-export"">https://learn.microsoft.com/azure/azure-monitor/logs/logs-data-export</a></li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
+</ul>","Medium; Reliability; Azure Service","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","DefaultWorkspace-a4aef89a-cd11-438f-b30a-58e84134ade1-SUK","<h1>Remediate: DefaultWorkspace-a4aef89a-cd11-438f-b30a-58e84134ade1-SUK</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -2295,7 +2094,7 @@
 <li><strong>Resource Group:</strong> defaultresourcegroup-suk</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> uksouth</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Enable Log Analytics data export to GRS or GZRS&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -2305,7 +2104,7 @@
 ","<ul>
 <li>Resource <strong>DefaultWorkspace-a4aef89a-cd11-438f-b30a-58e84134ade1-SUK</strong> in <code>defaultresourcegroup-suk</code> passes APRL check <strong>Enable Log Analytics data export to GRS or GZRS</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/logs/logs-data-export"">https://learn.microsoft.com/azure/azure-monitor/logs/logs-data-export</a></li>
-</ul>","Medium; uksouth; Source:APRL","2","",""
+</ul>","Medium; uksouth","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","DefaultWorkspace-a4aef89a-cd11-438f-b30a-58e84134ade1-WEU","<h1>Remediate: DefaultWorkspace-a4aef89a-cd11-438f-b30a-58e84134ade1-WEU</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -2314,7 +2113,7 @@
 <li><strong>Resource Group:</strong> defaultresourcegroup-weu</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> westeurope</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Enable Log Analytics data export to GRS or GZRS&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -2324,7 +2123,7 @@
 ","<ul>
 <li>Resource <strong>DefaultWorkspace-a4aef89a-cd11-438f-b30a-58e84134ade1-WEU</strong> in <code>defaultresourcegroup-weu</code> passes APRL check <strong>Enable Log Analytics data export to GRS or GZRS</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/logs/logs-data-export"">https://learn.microsoft.com/azure/azure-monitor/logs/logs-data-export</a></li>
-</ul>","Medium; westeurope; Source:APRL","2","",""
+</ul>","Medium; westeurope","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","m2c-law-4sac2i6ziq5kc","<h1>Remediate: m2c-law-4sac2i6ziq5kc</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -2333,7 +2132,7 @@
 <li><strong>Resource Group:</strong> rg-m2c-demo</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> eastus</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Enable Log Analytics data export to GRS or GZRS&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -2343,7 +2142,7 @@
 ","<ul>
 <li>Resource <strong>m2c-law-4sac2i6ziq5kc</strong> in <code>rg-m2c-demo</code> passes APRL check <strong>Enable Log Analytics data export to GRS or GZRS</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/logs/logs-data-export"">https://learn.microsoft.com/azure/azure-monitor/logs/logs-data-export</a></li>
-</ul>","Medium; eastus; Source:APRL","2","",""
+</ul>","Medium; eastus","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Create a health status alert rule for your Log Analytics workspace","","<h1>Create a health status alert rule for your Log Analytics workspace</h1>
 <h2>Recommendation</h2>
 <p>A health status alert will proactively notify you if a workspace becomes unavailable because of a datacenter or regional failure.</p>
@@ -2375,7 +2174,7 @@
 <li>Resource <strong>DefaultWorkspace-a4aef89a-cd11-438f-b30a-58e84134ade1-WEU</strong> in <code>defaultresourcegroup-weu</code> is compliant</li>
 <li>Resource <strong>m2c-law-4sac2i6ziq5kc</strong> in <code>rg-m2c-demo</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/logs/log-analytics-workspace-health"">https://learn.microsoft.com/azure/azure-monitor/logs/log-analytics-workspace-health</a></li>
-</ul>","Low; Reliability; Azure Service; Source:APRL","3","",""
+</ul>","Low; Reliability; Azure Service","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","DefaultWorkspace-a4aef89a-cd11-438f-b30a-58e84134ade1-SUK","<h1>Remediate: DefaultWorkspace-a4aef89a-cd11-438f-b30a-58e84134ade1-SUK</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -2384,7 +2183,7 @@
 <li><strong>Resource Group:</strong> defaultresourcegroup-suk</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> uksouth</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Create a health status alert rule for your Log Analytics workspace&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -2394,7 +2193,7 @@
 ","<ul>
 <li>Resource <strong>DefaultWorkspace-a4aef89a-cd11-438f-b30a-58e84134ade1-SUK</strong> in <code>defaultresourcegroup-suk</code> passes APRL check <strong>Create a health status alert rule for your Log Analytics workspace</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/logs/log-analytics-workspace-health"">https://learn.microsoft.com/azure/azure-monitor/logs/log-analytics-workspace-health</a></li>
-</ul>","Low; uksouth; Source:APRL","3","",""
+</ul>","Low; uksouth","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","DefaultWorkspace-a4aef89a-cd11-438f-b30a-58e84134ade1-WEU","<h1>Remediate: DefaultWorkspace-a4aef89a-cd11-438f-b30a-58e84134ade1-WEU</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -2403,7 +2202,7 @@
 <li><strong>Resource Group:</strong> defaultresourcegroup-weu</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> westeurope</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Create a health status alert rule for your Log Analytics workspace&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -2413,7 +2212,7 @@
 ","<ul>
 <li>Resource <strong>DefaultWorkspace-a4aef89a-cd11-438f-b30a-58e84134ade1-WEU</strong> in <code>defaultresourcegroup-weu</code> passes APRL check <strong>Create a health status alert rule for your Log Analytics workspace</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/logs/log-analytics-workspace-health"">https://learn.microsoft.com/azure/azure-monitor/logs/log-analytics-workspace-health</a></li>
-</ul>","Low; westeurope; Source:APRL","3","",""
+</ul>","Low; westeurope","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","m2c-law-4sac2i6ziq5kc","<h1>Remediate: m2c-law-4sac2i6ziq5kc</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -2422,7 +2221,7 @@
 <li><strong>Resource Group:</strong> rg-m2c-demo</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> eastus</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Create a health status alert rule for your Log Analytics workspace&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -2432,7 +2231,7 @@
 ","<ul>
 <li>Resource <strong>m2c-law-4sac2i6ziq5kc</strong> in <code>rg-m2c-demo</code> passes APRL check <strong>Create a health status alert rule for your Log Analytics workspace</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/logs/log-analytics-workspace-health"">https://learn.microsoft.com/azure/azure-monitor/logs/log-analytics-workspace-health</a></li>
-</ul>","Low; eastus; Source:APRL","3","",""
+</ul>","Low; eastus","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Feature","","Components","","","<h1>Components (microsoft.insights/components)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>microsoft.insights/components</strong> resources within the <strong>Observability</strong> domain.</p>
@@ -2462,7 +2261,7 @@
 <p><strong>User Stories to complete:</strong></p>
 <ul>
 <li>Migrate from Application Insights instrumentation keys to connection strings [Medium] &mdash; 1 resource(s)</li>
-</ul>","microsoft.insights/components; Observability","2","",""
+</ul>","microsoft.insights/components; Observability","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Migrate from Application Insights instrumentation keys to connection strings","","<h1>Migrate from Application Insights instrumentation keys to connection strings</h1>
 <h2>Recommendation</h2>
 <p>Application Insights is changing from global ingestion endpoints to regional endpoints that use connection strings. Connection strings make telemetry ingestion more reliable by removing dependencies on global ingestion endpoints. Transition to connection string-based ingestion before 31 March 2025.</p>
@@ -2490,7 +2289,7 @@
 <ul>
 <li>Resource <strong>m2c-appi</strong> in <code>rg-m2c-demo</code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/app/migrate-from-instrumentation-keys-to-connection-strings"">https://learn.microsoft.com/azure/azure-monitor/app/migrate-from-instrumentation-keys-to-connection-strings</a></li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
+</ul>","Medium; Reliability; Azure Service","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","m2c-appi","<h1>Remediate: m2c-appi</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -2499,7 +2298,7 @@
 <li><strong>Resource Group:</strong> rg-m2c-demo</li>
 <li><strong>Subscription:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Location:</strong> eastus</li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;Migrate from Application Insights instrumentation keys to connection strings&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -2509,7 +2308,7 @@
 ","<ul>
 <li>Resource <strong>m2c-appi</strong> in <code>rg-m2c-demo</code> passes APRL check <strong>Migrate from Application Insights instrumentation keys to connection strings</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/azure-monitor/app/migrate-from-instrumentation-keys-to-connection-strings"">https://learn.microsoft.com/azure/azure-monitor/app/migrate-from-instrumentation-keys-to-connection-strings</a></li>
-</ul>","Medium; eastus; Source:APRL","2","",""
+</ul>","Medium; eastus","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Epic","Platform","","","","<h1>Platform</h1>
 <h2>Overview</h2>
 <p>Core platform services — identity, secrets, governance</p>
@@ -2535,7 +2334,7 @@
 <ul>
 <li>Subscriptions (Microsoft.Subscription/Subscriptions) &mdash; 13 recommendation(s), 13 resource(s)</li>
 <li>Systemtopics (microsoft.eventgrid/systemtopics) &mdash; 0 recommendation(s), 0 resource(s)</li>
-</ul>","Platform","2","",""
+</ul>","Platform","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Feature","","Subscriptions","","","<h1>Subscriptions (Microsoft.Subscription/Subscriptions)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>Microsoft.Subscription/Subscriptions</strong> resources within the <strong>Platform</strong> domain.</p>
@@ -2661,7 +2460,7 @@
 <li>RE:08 Design a reliability testing strategy [Medium] &mdash; 1 resource(s)</li>
 <li>RE:09 Implement business continuity and disaster recovery plan [Medium] &mdash; 1 resource(s)</li>
 <li>RE:10 Design a reliable monitoring and alerting strategy [Medium] &mdash; 1 resource(s)</li>
-</ul>","Microsoft.Subscription/Subscriptions; Platform","2","",""
+</ul>","Microsoft.Subscription/Subscriptions; Platform","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","RE:01 Design your workload to align with business objectives","","<h1>RE:01 Design your workload to align with business objectives</h1>
 <h2>Recommendation</h2>
 <p>Design your workload to align with business objectives and avoid unnecessary complexity or overhead. Use a practical and balanced approach to make design decisions that deliver the desired results. Contain your design to the necessities to reduce inefficiencies and potential problems.</p>
@@ -2689,7 +2488,7 @@
 <ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/simplify"">https://learn.microsoft.com/azure/well-architected/reliability/simplify</a></li>
-</ul>","Medium; Well Architected; Source:APRL","2","",""
+</ul>","Medium; Well Architected","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","Entire Workload","<h1>Remediate: Entire Workload</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -2698,7 +2497,7 @@
 <li><strong>Resource Group:</strong> </li>
 <li><strong>Subscription:</strong> </li>
 <li><strong>Location:</strong> </li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;RE:01 Design your workload to align with business objectives&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -2708,7 +2507,7 @@
 ","<ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> passes APRL check <strong>RE:01 Design your workload to align with business objectives</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/simplify"">https://learn.microsoft.com/azure/well-architected/reliability/simplify</a></li>
-</ul>","Medium; Source:APRL","2","",""
+</ul>","Medium","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","RE:02 Identify and rate user and system flows","","<h1>RE:02 Identify and rate user and system flows</h1>
 <h2>Recommendation</h2>
 <p>Identify and rate user and system flows. Use a criticality scale based on your business requirements to prioritize the flows.</p>
@@ -2736,7 +2535,7 @@
 <ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/identify-flows"">https://learn.microsoft.com/azure/well-architected/reliability/identify-flows</a></li>
-</ul>","Medium; Well Architected; Source:APRL","2","",""
+</ul>","Medium; Well Architected","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","Entire Workload","<h1>Remediate: Entire Workload</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -2745,7 +2544,7 @@
 <li><strong>Resource Group:</strong> </li>
 <li><strong>Subscription:</strong> </li>
 <li><strong>Location:</strong> </li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;RE:02 Identify and rate user and system flows&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -2755,7 +2554,7 @@
 ","<ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> passes APRL check <strong>RE:02 Identify and rate user and system flows</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/identify-flows"">https://learn.microsoft.com/azure/well-architected/reliability/identify-flows</a></li>
-</ul>","Medium; Source:APRL","2","",""
+</ul>","Medium","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","RE:03 Use failure mode analysis to identify and prioritize potential failures","","<h1>RE:03 Use failure mode analysis to identify and prioritize potential failures</h1>
 <h2>Recommendation</h2>
 <p>Use failure mode analysis (FMA) to identify and prioritize potential failures in your solution components. Perform FMA to help you assess the risk and effect of each failure mode. Determine how the workload responds and recovers.</p>
@@ -2783,7 +2582,7 @@
 <ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/failure-mode-analysis"">https://learn.microsoft.com/azure/well-architected/reliability/failure-mode-analysis</a></li>
-</ul>","Medium; Well Architected; Source:APRL","2","",""
+</ul>","Medium; Well Architected","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","Entire Workload","<h1>Remediate: Entire Workload</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -2792,7 +2591,7 @@
 <li><strong>Resource Group:</strong> </li>
 <li><strong>Subscription:</strong> </li>
 <li><strong>Location:</strong> </li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;RE:03 Use failure mode analysis to identify and prioritize potential failures&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -2802,7 +2601,7 @@
 ","<ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> passes APRL check <strong>RE:03 Use failure mode analysis to identify and prioritize potential failures</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/failure-mode-analysis"">https://learn.microsoft.com/azure/well-architected/reliability/failure-mode-analysis</a></li>
-</ul>","Medium; Source:APRL","2","",""
+</ul>","Medium","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","RE:04 Define reliability and recovery targets","","<h1>RE:04 Define reliability and recovery targets</h1>
 <h2>Recommendation</h2>
 <p>Define reliability and recovery targets for the components, the flows, and the overall solution. Use the defined targets to build the health model. The health model defines what healthy, degraded, and unhealthy states look like.</p>
@@ -2830,7 +2629,7 @@
 <ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/metrics"">https://learn.microsoft.com/azure/well-architected/reliability/metrics</a></li>
-</ul>","Medium; Well Architected; Source:APRL","2","",""
+</ul>","Medium; Well Architected","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","Entire Workload","<h1>Remediate: Entire Workload</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -2839,7 +2638,7 @@
 <li><strong>Resource Group:</strong> </li>
 <li><strong>Subscription:</strong> </li>
 <li><strong>Location:</strong> </li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;RE:04 Define reliability and recovery targets&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -2849,7 +2648,7 @@
 ","<ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> passes APRL check <strong>RE:04 Define reliability and recovery targets</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/metrics"">https://learn.microsoft.com/azure/well-architected/reliability/metrics</a></li>
-</ul>","Medium; Source:APRL","2","",""
+</ul>","Medium","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","RE:05 Design for redundancy","","<h1>RE:05 Design for redundancy</h1>
 <h2>Recommendation</h2>
 <p>Add redundancy at different levels, especially for critical flows. Apply redundancy to the compute, data, network, and other infrastructure tiers in accordance with the identified reliability targets.</p>
@@ -2877,7 +2676,7 @@
 <ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/redundancy"">https://learn.microsoft.com/azure/well-architected/reliability/redundancy</a></li>
-</ul>","Medium; Well Architected; Source:APRL","2","",""
+</ul>","Medium; Well Architected","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","Entire Workload","<h1>Remediate: Entire Workload</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -2886,7 +2685,7 @@
 <li><strong>Resource Group:</strong> </li>
 <li><strong>Subscription:</strong> </li>
 <li><strong>Location:</strong> </li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;RE:05 Design for redundancy&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -2896,7 +2695,7 @@
 ","<ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> passes APRL check <strong>RE:05 Design for redundancy</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/redundancy"">https://learn.microsoft.com/azure/well-architected/reliability/redundancy</a></li>
-</ul>","Medium; Source:APRL","2","",""
+</ul>","Medium","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","RE:05 Design for multi-region high availability","","<h1>RE:05 Design for multi-region high availability</h1>
 <h2>Recommendation</h2>
 <p>High availability is a foundational tenet of designing for reliability. A highly available architecture can help you avoid downtime as much as possible and recover efficiently if downtime does occur.</p>
@@ -2924,7 +2723,7 @@
 <ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/highly-available-multi-region-design"">https://learn.microsoft.com/azure/well-architected/reliability/highly-available-multi-region-design</a></li>
-</ul>","Medium; Well Architected; Source:APRL","2","",""
+</ul>","Medium; Well Architected","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","Entire Workload","<h1>Remediate: Entire Workload</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -2933,7 +2732,7 @@
 <li><strong>Resource Group:</strong> </li>
 <li><strong>Subscription:</strong> </li>
 <li><strong>Location:</strong> </li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;RE:05 Design for multi-region high availability&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -2943,7 +2742,7 @@
 ","<ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> passes APRL check <strong>RE:05 Design for multi-region high availability</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/highly-available-multi-region-design"">https://learn.microsoft.com/azure/well-architected/reliability/highly-available-multi-region-design</a></li>
-</ul>","Medium; Source:APRL","2","",""
+</ul>","Medium","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","RE:05 Design for high availability with availability zones","","<h1>RE:05 Design for high availability with availability zones</h1>
 <h2>Recommendation</h2>
 <p>High availability is a foundational tenet of designing for reliability. A highly available architecture can help you avoid downtime as much as possible and recover efficiently if downtime does occur.</p>
@@ -2971,7 +2770,7 @@
 <ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/regions-availability-zones"">https://learn.microsoft.com/azure/well-architected/reliability/regions-availability-zones</a></li>
-</ul>","Medium; Well Architected; Source:APRL","2","",""
+</ul>","Medium; Well Architected","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","Entire Workload","<h1>Remediate: Entire Workload</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -2980,7 +2779,7 @@
 <li><strong>Resource Group:</strong> </li>
 <li><strong>Subscription:</strong> </li>
 <li><strong>Location:</strong> </li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;RE:05 Design for high availability with availability zones&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -2990,7 +2789,7 @@
 ","<ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> passes APRL check <strong>RE:05 Design for high availability with availability zones</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/regions-availability-zones"">https://learn.microsoft.com/azure/well-architected/reliability/regions-availability-zones</a></li>
-</ul>","Medium; Source:APRL","2","",""
+</ul>","Medium","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","RE:06 Design for data partitioning","","<h1>RE:06 Design for data partitioning</h1>
 <h2>Recommendation</h2>
 <p>Partitioning data improves scalability, reduces contention, and optimizes performance. Implement data partitioning to divide data by usage pattern.</p>
@@ -3018,7 +2817,7 @@
 <ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/partition-data"">https://learn.microsoft.com/azure/well-architected/reliability/partition-data</a></li>
-</ul>","Medium; Well Architected; Source:APRL","2","",""
+</ul>","Medium; Well Architected","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","Entire Workload","<h1>Remediate: Entire Workload</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -3027,7 +2826,7 @@
 <li><strong>Resource Group:</strong> </li>
 <li><strong>Subscription:</strong> </li>
 <li><strong>Location:</strong> </li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;RE:06 Design for data partitioning&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -3037,7 +2836,7 @@
 ","<ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> passes APRL check <strong>RE:06 Design for data partitioning</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/partition-data"">https://learn.microsoft.com/azure/well-architected/reliability/partition-data</a></li>
-</ul>","Medium; Source:APRL","2","",""
+</ul>","Medium","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","RE:06 Design for reliable scaling","","<h1>RE:06 Design for reliable scaling</h1>
 <h2>Recommendation</h2>
 <p>Implement a timely and reliable scaling strategy at the application, data, and infrastructure levels.</p>
@@ -3065,7 +2864,7 @@
 <ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/scaling"">https://learn.microsoft.com/azure/well-architected/reliability/scaling</a></li>
-</ul>","Medium; Well Architected; Source:APRL","2","",""
+</ul>","Medium; Well Architected","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","Entire Workload","<h1>Remediate: Entire Workload</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -3074,7 +2873,7 @@
 <li><strong>Resource Group:</strong> </li>
 <li><strong>Subscription:</strong> </li>
 <li><strong>Location:</strong> </li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;RE:06 Design for reliable scaling&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -3084,7 +2883,7 @@
 ","<ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> passes APRL check <strong>RE:06 Design for reliable scaling</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/scaling"">https://learn.microsoft.com/azure/well-architected/reliability/scaling</a></li>
-</ul>","Medium; Source:APRL","2","",""
+</ul>","Medium","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","RE:07 Implement self-preservation and self-healing measures","","<h1>RE:07 Implement self-preservation and self-healing measures</h1>
 <h2>Recommendation</h2>
 <p>Strengthen the resiliency and recoverability of your workload by implementing self-preservation and self-healing measures. Self-healing capabilities help you avoid downtime by building in failure detection and automatic corrective actions to respond to different failure types.</p>
@@ -3112,7 +2911,7 @@
 <ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/self-preservation"">https://learn.microsoft.com/azure/well-architected/reliability/self-preservation</a></li>
-</ul>","Medium; Well Architected; Source:APRL","2","",""
+</ul>","Medium; Well Architected","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","Entire Workload","<h1>Remediate: Entire Workload</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -3121,7 +2920,7 @@
 <li><strong>Resource Group:</strong> </li>
 <li><strong>Subscription:</strong> </li>
 <li><strong>Location:</strong> </li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;RE:07 Implement self-preservation and self-healing measures&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -3131,7 +2930,7 @@
 ","<ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> passes APRL check <strong>RE:07 Implement self-preservation and self-healing measures</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/self-preservation"">https://learn.microsoft.com/azure/well-architected/reliability/self-preservation</a></li>
-</ul>","Medium; Source:APRL","2","",""
+</ul>","Medium","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","RE:08 Design a reliability testing strategy","","<h1>RE:08 Design a reliability testing strategy</h1>
 <h2>Recommendation</h2>
 <p>Test resiliency and availability scenarios by applying the principles of chaos engineering in your test and production environments. Use testing to ensure that your graceful degradation implementation and scaling strategies are effective by performing active malfunction and simulated load testing.</p>
@@ -3159,7 +2958,7 @@
 <ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/testing-strategy"">https://learn.microsoft.com/azure/well-architected/reliability/testing-strategy</a></li>
-</ul>","Medium; Well Architected; Source:APRL","2","",""
+</ul>","Medium; Well Architected","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","Entire Workload","<h1>Remediate: Entire Workload</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -3168,7 +2967,7 @@
 <li><strong>Resource Group:</strong> </li>
 <li><strong>Subscription:</strong> </li>
 <li><strong>Location:</strong> </li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;RE:08 Design a reliability testing strategy&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -3178,7 +2977,7 @@
 ","<ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> passes APRL check <strong>RE:08 Design a reliability testing strategy</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/testing-strategy"">https://learn.microsoft.com/azure/well-architected/reliability/testing-strategy</a></li>
-</ul>","Medium; Source:APRL","2","",""
+</ul>","Medium","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","RE:09 Implement business continuity and disaster recovery plan","","<h1>RE:09 Implement business continuity and disaster recovery plan</h1>
 <h2>Recommendation</h2>
 <p>Implement structured, tested, and documented business continuity and disaster recovery (BCDR) plans that align with the recovery targets. Plans must cover all components and the system as a whole.</p>
@@ -3206,7 +3005,7 @@
 <ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/disaster-recovery"">https://learn.microsoft.com/azure/well-architected/reliability/disaster-recovery</a></li>
-</ul>","Medium; Well Architected; Source:APRL","2","",""
+</ul>","Medium; Well Architected","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","Entire Workload","<h1>Remediate: Entire Workload</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -3215,7 +3014,7 @@
 <li><strong>Resource Group:</strong> </li>
 <li><strong>Subscription:</strong> </li>
 <li><strong>Location:</strong> </li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;RE:09 Implement business continuity and disaster recovery plan&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -3225,7 +3024,7 @@
 ","<ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> passes APRL check <strong>RE:09 Implement business continuity and disaster recovery plan</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/disaster-recovery"">https://learn.microsoft.com/azure/well-architected/reliability/disaster-recovery</a></li>
-</ul>","Medium; Source:APRL","2","",""
+</ul>","Medium","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","RE:10 Design a reliable monitoring and alerting strategy","","<h1>RE:10 Design a reliable monitoring and alerting strategy</h1>
 <h2>Recommendation</h2>
 <p>Measure and publish the solution's health indicators. Continuously capture uptime and other reliability data from across the workload and also from individual components and key flows.</p>
@@ -3253,7 +3052,7 @@
 <ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> is compliant</li>
 <li>Changes verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/monitoring-alerting-strategy"">https://learn.microsoft.com/azure/well-architected/reliability/monitoring-alerting-strategy</a></li>
-</ul>","Medium; Well Architected; Source:APRL","2","",""
+</ul>","Medium; Well Architected","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Task","","","","Entire Workload","<h1>Remediate: Entire Workload</h1>
 <h2>Resource Details</h2>
 <ul>
@@ -3262,7 +3061,7 @@
 <li><strong>Resource Group:</strong> </li>
 <li><strong>Subscription:</strong> </li>
 <li><strong>Location:</strong> </li>
-<li><strong>Source:</strong> APRL</li></ul>
+</ul>
 <h2>Action Required</h2>
 <p>Apply the recommendation &quot;RE:10 Design a reliable monitoring and alerting strategy&quot; to this resource.</p>
 <h2>Verification</h2>
@@ -3272,7 +3071,7 @@
 ","<ul>
 <li>Resource <strong>Entire Workload</strong> in <code></code> passes APRL check <strong>RE:10 Design a reliable monitoring and alerting strategy</strong></li>
 <li>Verified via <a href=""https://learn.microsoft.com/azure/well-architected/reliability/monitoring-alerting-strategy"">https://learn.microsoft.com/azure/well-architected/reliability/monitoring-alerting-strategy</a></li>
-</ul>","Medium; Source:APRL","2","",""
+</ul>","Medium","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Feature","","Systemtopics","","","<h1>Systemtopics (microsoft.eventgrid/systemtopics)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>microsoft.eventgrid/systemtopics</strong> resources within the <strong>Platform</strong> domain.</p>
@@ -3290,4 +3089,4 @@
 <h2>Recommendations</h2>
 <ol>
 </ol>
-","<p>All User Stories for <strong>microsoft.eventgrid/systemtopics</strong> are completed. Resources validated against APRL checks.</p>","microsoft.eventgrid/systemtopics; Platform","2","",""
+","<p>All User Stories for <strong>microsoft.eventgrid/systemtopics</strong> are completed. Resources validated against APRL checks.</p>","microsoft.eventgrid/systemtopics; Platform","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"

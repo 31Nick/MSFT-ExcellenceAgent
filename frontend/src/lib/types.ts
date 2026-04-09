@@ -117,3 +117,10 @@ export interface ExportRequest {
   area_path: string;
   iteration_path: string;
 }
+
+export interface GitHubExportRequest {
+  repo: string;
+  milestone?: string;
+  assignee?: string;
+  extra_labels?: string;
+}

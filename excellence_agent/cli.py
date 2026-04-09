@@ -55,6 +55,50 @@ def _load_advisor_type_mapping(matrix_path: str) -> dict[str, str]:
     return data.get("advisor_type_mapping", {})
 
 
+def _export_ado(hierarchy, output: str, area_path: str, iteration_path: str) -> None:
+    """Export to ADO CSV format."""
+    from excellence_agent.config import ADOConfig
+    from excellence_agent.export.ado_csv import ADOExporter
+    from excellence_agent.export.content_generator import ContentGenerator
+
+    click.echo(click.style("▶ Exporting to ADO CSV …", fg="cyan"))
+    ado_config = ADOConfig(area_path=area_path, iteration_path=iteration_path)
+    content_gen = ContentGenerator()
+    exporter = ADOExporter(config=ado_config, content_generator=content_gen)
+
+    try:
+        out_path = exporter.export(hierarchy, output)
+    except Exception as exc:
+        raise click.ClickException(f"Export failed: {exc}") from exc
+
+    click.echo(click.style(f"\n✔ CSV exported to {out_path}", fg="green"))
+
+
+def _export_github(hierarchy, output: str | None, repo: str, milestone: str, assignee: str) -> None:
+    """Export to GitHub Issues format (JSON + Markdown)."""
+    from excellence_agent.config import GitHubConfig
+    from excellence_agent.export.github_content import GitHubContentGenerator
+    from excellence_agent.export.github_export import GitHubExporter
+
+    if not repo:
+        raise click.ClickException("--repo is required for GitHub export (e.g. owner/repo).")
+
+    click.echo(click.style("▶ Exporting to GitHub Issues format …", fg="cyan"))
+    github_config = GitHubConfig(repo=repo, milestone=milestone, assignee=assignee)
+    content_gen = GitHubContentGenerator()
+    exporter = GitHubExporter(config=github_config, content_generator=content_gen)
+
+    output_dir = output or "output"
+    try:
+        paths = exporter.export(hierarchy, output_dir)
+    except Exception as exc:
+        raise click.ClickException(f"Export failed: {exc}") from exc
+
+    click.echo(click.style(f"\n✔ GitHub export complete", fg="green"))
+    click.echo(f"  JSON:     {paths['json_path']}")
+    click.echo(f"  Markdown: {paths['markdown_path']}")
+
+
 # ---------------------------------------------------------------------------
 # Main group
 # ---------------------------------------------------------------------------
@@ -237,29 +281,39 @@ def analyse(report: str, matrix: str, advisor: str | None) -> None:
     help="Path to resource_matrix.yaml.",
 )
 @click.option(
-    "--output",
-    default="output/ado_import.csv",
+    "--target",
+    type=click.Choice(["ado", "github"], case_sensitive=False),
+    default="ado",
     show_default=True,
-    help="Output CSV file path.",
+    help="Export target platform.",
 )
-@click.option("--area-path", default="", help="ADO Area Path.")
-@click.option("--iteration-path", default="", help="ADO Iteration Path.")
+@click.option(
+    "--output",
+    default=None,
+    help="Output path. Defaults to output/ado_import.csv (ADO) or output/ directory (GitHub).",
+)
+@click.option("--area-path", default="", help="ADO Area Path (ADO target only).")
+@click.option("--iteration-path", default="", help="ADO Iteration Path (ADO target only).")
+@click.option("--repo", default="", help="GitHub repository as owner/repo (GitHub target only).")
+@click.option("--milestone", default="", help="GitHub milestone name (GitHub target only).")
+@click.option("--assignee", default="", help="GitHub default assignee (GitHub target only).")
 def export(
     report: str,
     matrix: str,
-    output: str,
+    target: str,
+    output: str | None,
     area_path: str,
     iteration_path: str,
+    repo: str,
+    milestone: str,
+    assignee: str,
     advisor: str | None,
 ) -> None:
-    """Run analysis and export an ADO-compatible CSV."""
+    """Run analysis and export work items to ADO CSV or GitHub Issues format."""
     from excellence_agent.analysis import (
         HierarchyBuilder,
         ResourceMapper,
     )
-    from excellence_agent.config import ADOConfig
-    from excellence_agent.export.ado_csv import ADOExporter
-    from excellence_agent.export.content_generator import ContentGenerator
     from excellence_agent.ingest import APRLParser
 
     start = time.time()
@@ -298,19 +352,13 @@ def export(
     }
     hierarchy = HierarchyBuilder(category_descriptions=descriptions).build(df)
 
-    # Export
-    click.echo(click.style("▶ Exporting to CSV …", fg="cyan"))
-    ado_config = ADOConfig(area_path=area_path, iteration_path=iteration_path)
-    content_gen = ContentGenerator()
-    exporter = ADOExporter(config=ado_config, content_generator=content_gen)
-
-    try:
-        out_path = exporter.export(hierarchy, output)
-    except Exception as exc:
-        raise click.ClickException(f"Export failed: {exc}") from exc
+    # Export based on target
+    if target == "github":
+        _export_github(hierarchy, output, repo, milestone, assignee)
+    else:
+        _export_ado(hierarchy, output or "output/ado_import.csv", area_path, iteration_path)
 
     stats = hierarchy.summary_stats()
-    click.echo(click.style(f"\n✔ CSV exported to {out_path}", fg="green"))
     click.echo(f"  Epics:        {stats['epics']}")
     click.echo(f"  Features:     {stats['features']}")
     click.echo(f"  User Stories: {stats['user_stories']}")

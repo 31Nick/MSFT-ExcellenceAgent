@@ -1,0 +1,27 @@
+# {{ epic_name }}
+
+## Overview
+{{ description }}
+
+**WAF Pillars:** {{ waf_pillars | join(', ') }}
+
+## Scope
+- **Total Features:** {{ feature_count }}
+- **Total Recommendations:** {{ story_count }}
+- **Total Affected Resources:** {{ resource_count }}
+- **Subscriptions:** {{ subscriptions | join(', ') }}
+
+## Impact Summary
+{% for level, count in impact_summary.items() -%}
+- **{{ level }}:** {{ count }} recommendation(s)
+{% endfor %}
+
+## Features
+{% for feature in features -%}
+- **{{ feature.name }}** (`{{ feature.resource_type }}`) — {{ feature.resource_count }} resource(s), {{ feature.user_stories | length }} recommendation(s)
+{% endfor %}
+
+## Child Issues
+{% for feature in features -%}
+- [ ] {{ feature.name }}
+{% endfor %}

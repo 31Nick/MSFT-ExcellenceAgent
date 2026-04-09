@@ -1,0 +1,25 @@
+# Remediate: {{ resource_name }}
+
+## Resource Details
+| Field | Value |
+|-------|-------|
+| **Resource Name** | {{ resource_name }} |
+| **Resource ID** | `{{ resource_id }}` |
+| **Resource Group** | {{ resource_group }} |
+| **Subscription** | {{ subscription_id }} |
+| **Location** | {{ location }} |
+{% if check_name %}| **Check Name** | {{ check_name }} |
+{% endif %}{% if notes %}| **Notes** | {{ notes }} |
+{% endif %}{% if source %}| **Source** | {{ source }} |
+{% endif %}
+
+## Action Required
+Apply the recommendation "{{ recommendation_title }}" to this resource.
+
+## Verification
+Confirm the resource passes the APRL compliance check after remediation.
+
+{% if learn_more_link -%}
+## Reference
+[{{ learn_more_link }}]({{ learn_more_link }})
+{% endif -%}

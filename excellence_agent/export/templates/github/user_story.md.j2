@@ -1,0 +1,44 @@
+# {{ title }}
+
+## Recommendation
+{{ long_description }}
+
+## Details
+| Field | Value |
+|-------|-------|
+| **Impact** | {{ impact }} |
+| **WAF Pillar** | {{ waf_pillar }} |
+| **Control** | {{ recommendation_control }} |
+| **Potential Benefit** | {{ potential_benefit }} |
+| **Source** | {{ source }} |
+| **APRL Guid** | `{{ recommendation_guid }}` |
+
+{% if learn_more_link and learn_more_link != 'N/A' -%}
+## Learn More
+[{{ learn_more_link }}]({{ learn_more_link }})
+{% endif -%}
+
+{% if advisor_metadata -%}
+## Advisor Information
+{% if advisor_metadata.get('advisor_retirement_date') -%}
+- ⚠️ **Retirement Date:** {{ advisor_metadata['advisor_retirement_date'] }}
+{% endif -%}
+{% if advisor_metadata.get('advisor_retiring_feature') -%}
+- **Retiring Feature:** {{ advisor_metadata['advisor_retiring_feature'] }}
+{% endif -%}
+{% if advisor_metadata.get('advisor_cost_implications') -%}
+- **Cost Implications:** {{ advisor_metadata['advisor_cost_implications'] }}
+{% endif -%}
+{% endif -%}
+
+## Affected Resources ({{ tasks | length }})
+| # | Resource Name | Resource Group | Location | Subscription |
+|---|---------------|----------------|----------|--------------|
+{% for task in tasks -%}
+| {{ loop.index }} | {{ task.resource_name }} | {{ task.resource_group }} | {{ task.location }} | {{ task.subscription_id }} |
+{% endfor %}
+
+## Child Issues
+{% for task in tasks -%}
+- [ ] {{ task.resource_name }}
+{% endfor %}

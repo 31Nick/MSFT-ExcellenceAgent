@@ -284,3 +284,59 @@ def export_csv():
         )
     except Exception as exc:
         return _error(f"Export error: {exc}", 500)
+
+
+@api_bp.route("/export/github", methods=["POST"])
+def export_github():
+    """Generate a GitHub Issues export and return it as a ZIP download."""
+    h = _get_hierarchy()
+    if h is None:
+        return _error("No data loaded. Upload an APRL file first.", 404)
+
+    data = request.get_json(silent=True) or {}
+    repo = data.get("repo", "")
+    if not repo:
+        return _error("Repository (owner/repo) is required.", 400)
+
+    config = _get_config()
+
+    try:
+        import zipfile
+
+        from excellence_agent.config import GitHubConfig
+        from excellence_agent.export.github_content import GitHubContentGenerator
+        from excellence_agent.export.github_export import GitHubExporter
+
+        github_config = GitHubConfig(
+            repo=repo,
+            milestone=data.get("milestone", ""),
+            assignee=data.get("assignee", ""),
+            extra_labels=[
+                l.strip()
+                for l in data.get("extra_labels", "").split(",")
+                if l.strip()
+            ],
+        )
+
+        content_gen = GitHubContentGenerator()
+        exporter = GitHubExporter(github_config, content_gen)
+
+        output_dir = os.path.abspath(config.output_dir)
+        github_dir = os.path.join(output_dir, "github")
+        os.makedirs(github_dir, exist_ok=True)
+
+        paths = exporter.export(h, github_dir)
+
+        zip_path = os.path.join(output_dir, "github_export.zip")
+        with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
+            zf.write(paths["json_path"], "github_issues.json")
+            zf.write(paths["markdown_path"], "github_issues.md")
+
+        return send_file(
+            zip_path,
+            mimetype="application/zip",
+            as_attachment=True,
+            download_name="github_export.zip",
+        )
+    except Exception as exc:
+        return _error(f"GitHub export error: {exc}", 500)

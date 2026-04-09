@@ -1,0 +1,29 @@
+# {{ feature_name }} (`{{ resource_type }}`)
+
+## Overview
+Recommendations for `{{ resource_type }}` resources within the **{{ epic_name }}** domain.
+
+## Scope
+- **Recommendations:** {{ story_count }}
+- **Affected Resources:** {{ resource_count }}
+- **Resource Groups:** {{ resource_groups | join(', ') }}
+- **Subscriptions:** {{ subscriptions | join(', ') }}
+- **Regions:** {{ locations | join(', ') }}
+
+## Impact Breakdown
+{% for level, count in impact_summary.items() -%}
+- **{{ level }}:** {{ count }}
+{% endfor %}
+
+## Recommendations
+{% for story in user_stories -%}
+{{ loop.index }}. **{{ story.title }}** [{{ story.impact }}]
+   - **Control:** {{ story.recommendation_control }}
+   - **Benefit:** {{ story.potential_benefit }}
+   - **Affected Resources:** {{ story.tasks | length }}
+{% endfor %}
+
+## Child Issues
+{% for story in user_stories -%}
+- [ ] {{ story.title }}
+{% endfor %}

@@ -5,6 +5,7 @@ import type {
   DedupReport,
   UploadResponse,
   ExportRequest,
+  GitHubExportRequest,
   CrossReferenceReport,
 } from './types';
 
@@ -95,6 +96,27 @@ export async function exportCsv(params: ExportRequest): Promise<void> {
   const a = document.createElement('a');
   a.href = url;
   a.download = 'ado_export.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+export async function exportGitHub(params: GitHubExportRequest): Promise<void> {
+  const res = await fetch('/api/export/github', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(params),
+  });
+  if (!res.ok) {
+    const body = await res.text();
+    throw new ApiError(res.status, body || res.statusText);
+  }
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'github_export.zip';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
