@@ -35,6 +35,7 @@ from excellence_agent.ingest.schema import (
     COL_WAF_PILLAR,
 )
 from excellence_agent.models import (
+    AffectedResource,
     Epic,
     Feature,
     Task,
@@ -152,9 +153,10 @@ class HierarchyBuilder:
             total_resources += feature.resource_count
 
             for story in feature.user_stories:
-                impact_counter[story.impact] += 1
-                if story.waf_pillar:
-                    waf_pillars.add(story.waf_pillar)
+                for task in story.tasks:
+                    impact_counter[task.impact] += 1
+                    if task.waf_pillar:
+                        waf_pillars.add(task.waf_pillar)
 
         epic.total_resource_count = total_resources
         epic.impact_summary = dict(impact_counter)
@@ -174,37 +176,85 @@ class HierarchyBuilder:
         resource_groups: Set[str] = set()
         subscriptions: Set[str] = set()
 
-        for (rec_title, guid), story_df in rt_df.groupby(
-            [COL_RECOMMENDATION_TITLE, COL_GUID], sort=False
-        ):
-            story = self._build_user_story(
-                _safe_str(rec_title), _safe_str(guid), story_df
-            )
-            feature.add_user_story(story)
-
-            for _, row in story_df.iterrows():
-                rg = _safe_str(row.get(COL_RESOURCE_GROUP))
-                sub = _safe_str(row.get(COL_SUBSCRIPTION_ID))
-                if rg:
-                    resource_groups.add(rg)
-                if sub:
-                    subscriptions.add(sub)
+        for _, row in rt_df.iterrows():
+            rg = _safe_str(row.get(COL_RESOURCE_GROUP))
+            sub = _safe_str(row.get(COL_SUBSCRIPTION_ID))
+            if rg:
+                resource_groups.add(rg)
+            if sub:
+                subscriptions.add(sub)
 
         feature.resource_groups = resource_groups
         feature.subscriptions = subscriptions
-        feature.resource_count = len(rt_df)
+        # Unique resource count (a resource may appear in multiple recommendations)
+        unique_ids = rt_df[COL_ID].dropna().unique()
+        feature.resource_count = len(unique_ids)
 
-        # Sort UserStories by priority (High first).
-        feature.user_stories.sort(key=lambda s: _IMPACT_ORDER.get(s.impact, 99))
+        # ONE consolidated story per feature
+        story = self._build_consolidated_story(resource_type, rt_df)
+        feature.add_user_story(story)
 
         return feature
 
-    def _build_user_story(
-        self, rec_title: str, guid: str, story_df: pd.DataFrame
+    def _build_consolidated_story(
+        self, resource_type: str, rt_df: pd.DataFrame
     ) -> UserStory:
-        first_row = story_df.iloc[0]
+        """Build a single consolidated UserStory containing all recommendations for a resource type."""
+        waf_pillars: Set[str] = set()
+        highest_impact = "Low"
+        categories: Set[str] = set()
+        sources: Set[str] = set()
+        tasks: list[Task] = []
 
-        # Use _Source from cross-referencer if available, else fallback to APRL Source column
+        for (rec_title, guid), rec_df in rt_df.groupby(
+            [COL_RECOMMENDATION_TITLE, COL_GUID], sort=False
+        ):
+            task = self._build_recommendation_task(
+                _safe_str(rec_title), _safe_str(guid), rec_df
+            )
+            tasks.append(task)
+
+            if task.waf_pillar:
+                waf_pillars.add(task.waf_pillar)
+            if task.category:
+                categories.add(task.category)
+            if task.source:
+                sources.add(task.source)
+            if _IMPACT_ORDER.get(task.impact, 99) < _IMPACT_ORDER.get(highest_impact, 99):
+                highest_impact = task.impact
+
+        # Determine combined source label
+        if sources == {"APRL"} or not sources:
+            combined_source = "APRL"
+        elif sources == {"Advisor"}:
+            combined_source = "Advisor"
+        else:
+            combined_source = "APRL & Advisor"
+
+        unique_ids = rt_df[COL_ID].dropna().unique()
+
+        story = UserStory(
+            title=f"{_friendly_resource_name(resource_type)} - Recommendations",
+            impact=highest_impact,
+            category=", ".join(sorted(categories)) if categories else "",
+            source=combined_source,
+            waf_pillars=waf_pillars,
+            resource_count=len(unique_ids),
+        )
+
+        # Sort tasks by impact priority (High first)
+        tasks.sort(key=lambda t: _IMPACT_ORDER.get(t.impact, 99))
+        for task in tasks:
+            story.add_task(task)
+
+        return story
+
+    def _build_recommendation_task(
+        self, rec_title: str, guid: str, rec_df: pd.DataFrame
+    ) -> Task:
+        """Build a Task representing a single recommendation with its affected resources."""
+        first_row = rec_df.iloc[0]
+
         source_val = _safe_str(first_row.get("_Source")) or _safe_str(first_row.get(COL_SOURCE))
 
         advisor_metadata: Dict[str, str] = {}
@@ -219,7 +269,28 @@ class HierarchyBuilder:
             if val:
                 advisor_metadata[col_name] = val
 
-        story = UserStory(
+        # Build affected resources list
+        affected: list[AffectedResource] = []
+        for _, row in rec_df.iterrows():
+            custom_fields: Dict[str, str] = {}
+            for col in (COL_CUSTOM1, COL_CUSTOM2, COL_CUSTOM3, COL_CUSTOM4, COL_CUSTOM5):
+                val = _safe_str(row.get(col))
+                if val:
+                    custom_fields[col] = val
+
+            affected.append(AffectedResource(
+                resource_name=_safe_str(row.get(COL_NAME)),
+                resource_id=_safe_str(row.get(COL_ID)),
+                resource_group=_safe_str(row.get(COL_RESOURCE_GROUP)),
+                subscription_id=_safe_str(row.get(COL_SUBSCRIPTION_ID)),
+                location=_safe_str(row.get(COL_LOCATION)),
+                validation_status=_safe_str(row.get(COL_REVIEW_STATUS)),
+                notes=_safe_str(row.get(COL_NOTES)),
+                check_name=_safe_str(row.get(COL_CHECK_NAME)),
+                custom_fields=custom_fields,
+            ))
+
+        return Task(
             title=rec_title,
             recommendation_guid=guid,
             impact=_safe_str(first_row.get(COL_IMPACT)),
@@ -231,45 +302,5 @@ class HierarchyBuilder:
             category=_safe_str(first_row.get(COL_CATEGORY)),
             source=source_val,
             advisor_metadata=advisor_metadata,
-        )
-
-        for _, row in story_df.iterrows():
-            task = self._build_task(row)
-            story.add_task(task)
-
-        return story
-
-    def _build_task(self, row: pd.Series) -> Task:
-        custom_fields: Dict[str, str] = {}
-        for col in (COL_CUSTOM1, COL_CUSTOM2, COL_CUSTOM3, COL_CUSTOM4, COL_CUSTOM5):
-            val = _safe_str(row.get(col))
-            if val:
-                custom_fields[col] = val
-
-        source_val = _safe_str(row.get("_Source")) or _safe_str(row.get(COL_SOURCE))
-
-        advisor_metadata: Dict[str, str] = {}
-        for col_name in (
-            "advisor_retirement_date",
-            "advisor_retiring_feature",
-            "advisor_subscription_name",
-            "advisor_updated_date",
-            "advisor_cost_implications",
-        ):
-            val = _safe_str(row.get(col_name))
-            if val:
-                advisor_metadata[col_name] = val
-
-        return Task(
-            resource_name=_safe_str(row.get(COL_NAME)),
-            resource_id=_safe_str(row.get(COL_ID)),
-            resource_group=_safe_str(row.get(COL_RESOURCE_GROUP)),
-            subscription_id=_safe_str(row.get(COL_SUBSCRIPTION_ID)),
-            location=_safe_str(row.get(COL_LOCATION)),
-            validation_status=_safe_str(row.get(COL_REVIEW_STATUS)),
-            custom_fields=custom_fields,
-            notes=_safe_str(row.get(COL_NOTES)),
-            check_name=_safe_str(row.get(COL_CHECK_NAME)),
-            source=source_val,
-            advisor_metadata=advisor_metadata,
+            affected_resources=affected,
         )

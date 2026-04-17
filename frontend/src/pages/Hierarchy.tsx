@@ -31,8 +31,10 @@ export default function Hierarchy() {
             const stories = f.user_stories.filter(
               (s) =>
                 s.title.toLowerCase().includes(q) ||
-                s.long_description?.toLowerCase().includes(q) ||
-                s.tasks.some((t) => t.resource_name.toLowerCase().includes(q))
+                s.tasks.some((t) =>
+                  t.title.toLowerCase().includes(q) ||
+                  t.affected_resources.some((r) => r.resource_name.toLowerCase().includes(q))
+                )
             );
             if (
               f.name.toLowerCase().includes(q) ||
@@ -152,7 +154,7 @@ function FeatureNode({ feature, defaultOpen }: { feature: Feature; defaultOpen: 
       >
         <div className="pl-8 pr-2 pb-2 space-y-1">
           {feature.user_stories.map((s) => (
-            <StoryNode key={s.recommendation_guid || s.title} story={s} defaultOpen={defaultOpen} />
+            <StoryNode key={s.title} story={s} defaultOpen={defaultOpen} />
           ))}
         </div>
       </div>
@@ -172,31 +174,18 @@ function StoryNode({ story, defaultOpen }: { story: UserStory; defaultOpen: bool
         <FileText size={14} className="text-green-500" />
         <span className="text-sm text-gray-700 flex-1 line-clamp-1">{story.title}</span>
         <ImpactBadge impact={story.impact} />
-        <span className="text-xs text-gray-400 ml-1">{story.tasks.length} tasks</span>
+        <span className="text-xs text-gray-400 ml-1">{story.tasks.length} recs · {story.resource_count} resources</span>
       </button>
       <div
         className={`transition-all duration-300 ease-in-out overflow-hidden ${open ? 'max-h-[10000px] opacity-100' : 'max-h-0 opacity-0'}`}
       >
         <div className="pl-10 pr-2 pb-2 space-y-2">
-          {story.long_description && (
-            <p className="text-xs text-gray-500 leading-relaxed">{story.long_description}</p>
-          )}
-          {story.learn_more_link && (
-            <a
-              href={story.learn_more_link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-xs text-blue-500 hover:underline"
-            >
-              Learn more <ExternalLink size={12} />
-            </a>
-          )}
           <p className="text-xs text-gray-400">
-            {story.tasks.length} affected resource{story.tasks.length !== 1 ? 's' : ''}
+            {story.tasks.length} recommendation{story.tasks.length !== 1 ? 's' : ''} · {story.resource_count} affected resource{story.resource_count !== 1 ? 's' : ''}
           </p>
           <div className="space-y-1">
             {story.tasks.map((t, i) => (
-              <TaskNode key={`${t.resource_id}-${i}`} task={t} />
+              <TaskNode key={`${t.recommendation_guid}-${i}`} task={t} />
             ))}
           </div>
         </div>
@@ -214,17 +203,41 @@ function TaskNode({ task }: { task: Task }) {
         className="w-full flex items-center gap-2 px-2 py-1.5 hover:bg-gray-50 transition-colors text-left rounded-md"
       >
         <Server size={12} className="text-gray-400" />
-        <span className="text-xs text-gray-600 flex-1 truncate">{task.resource_name}</span>
-        <span className="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-500">{task.location}</span>
+        <span className="text-xs text-gray-600 flex-1 truncate">{task.title}</span>
+        <ImpactBadge impact={task.impact as 'High' | 'Medium' | 'Low'} />
+        <span className="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-500">{task.affected_resources.length} resources</span>
       </button>
       <div
-        className={`transition-all duration-200 ease-in-out overflow-hidden ${open ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
+        className={`transition-all duration-200 ease-in-out overflow-hidden ${open ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}
       >
         <div className="pl-6 pr-2 pb-2 text-xs text-gray-500 space-y-1">
-          <p><span className="font-medium text-gray-600">Resource ID:</span> {task.resource_id}</p>
-          <p><span className="font-medium text-gray-600">Resource Group:</span> {task.resource_group}</p>
-          <p><span className="font-medium text-gray-600">Subscription:</span> {task.subscription_id}</p>
-          <p><span className="font-medium text-gray-600">Location:</span> {task.location}</p>
+          <p><span className="font-medium text-gray-600">WAF Pillar:</span> {task.waf_pillar}</p>
+          <p><span className="font-medium text-gray-600">Control:</span> {task.recommendation_control}</p>
+          {task.long_description && <p className="leading-relaxed">{task.long_description}</p>}
+          {task.learn_more_link && (
+            <a
+              href={task.learn_more_link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-blue-500 hover:underline"
+            >
+              Learn more <ExternalLink size={12} />
+            </a>
+          )}
+          {task.affected_resources.length > 0 && (
+            <div className="mt-2">
+              <p className="font-medium text-gray-600 mb-1">Affected Resources ({task.affected_resources.length}):</p>
+              <div className="space-y-0.5">
+                {task.affected_resources.map((r, i) => (
+                  <div key={`${r.resource_id}-${i}`} className="flex items-center gap-2 py-0.5">
+                    <span className="text-gray-600">{r.resource_name}</span>
+                    <span className="text-gray-400">({r.resource_group})</span>
+                    <span className="text-[10px] px-1 rounded bg-gray-100">{r.location}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

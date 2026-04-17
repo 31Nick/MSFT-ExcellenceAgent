@@ -4,7 +4,13 @@ from __future__ import annotations
 
 import pytest
 
-from excellence_agent.models import Epic, Feature, Task, UserStory
+from excellence_agent.models import (
+    AffectedResource,
+    Epic,
+    Feature,
+    Task,
+    UserStory,
+)
 
 
 class TestEpicStableKey:
@@ -39,22 +45,12 @@ class TestUserStoryStableKey:
         epic = Epic(name="Data")
         feat = Feature(name="Cosmos", resource_type="microsoft.documentdb/databaseaccounts")
         epic.add_feature(feat)
-        story = UserStory(
-            title="Enable failover",
-            recommendation_guid="AAAA-1111-BBBB-2222",
-            impact="High",
-            recommendation_control="Automated",
-        )
+        story = UserStory(title="Databaseaccounts - Recommendations", impact="High")
         feat.add_user_story(story)
-        assert story.stable_key == "story:aaaa-1111-bbbb-2222:microsoft.documentdb/databaseaccounts"
+        assert story.stable_key == "story:data:microsoft.documentdb/databaseaccounts"
 
     def test_raises_without_parent(self) -> None:
-        story = UserStory(
-            title="rec",
-            recommendation_guid="guid",
-            impact="High",
-            recommendation_control="Automated",
-        )
+        story = UserStory(title="Recs", impact="High")
         with pytest.raises(ValueError, match="parent Feature"):
             _ = story.stable_key
 
@@ -64,49 +60,43 @@ class TestTaskStableKey:
         epic = Epic(name="Networking")
         feat = Feature(name="VNets", resource_type="microsoft.network/virtualNetworks")
         epic.add_feature(feat)
-        story = UserStory(
-            title="Enable DDoS",
+        story = UserStory(title="Virtual Networks - Recommendations", impact="High")
+        feat.add_user_story(story)
+        task = Task(
+            title="Enable DDoS protection",
             recommendation_guid="GUID-001",
             impact="High",
             recommendation_control="Automated",
-        )
-        feat.add_user_story(story)
-        task = Task(
-            resource_name="vnet-hub",
-            resource_id="/subscriptions/SUB/resourceGroups/RG/providers/Microsoft.Network/virtualNetworks/vnet-hub",
-            resource_group="RG",
-            subscription_id="SUB",
-            location="uksouth",
+            affected_resources=[
+                AffectedResource("vnet-hub", "/subs/sub/rg/vnet-hub", "RG", "SUB", "uksouth"),
+            ],
         )
         story.add_task(task)
-        expected = "task:guid-001:/subscriptions/sub/resourcegroups/rg/providers/microsoft.network/virtualnetworks/vnet-hub"
+        expected = "task:guid-001:microsoft.network/virtualnetworks"
         assert task.stable_key == expected
 
     def test_raises_without_parent(self) -> None:
-        task = Task("n", "id", "rg", "sub", "loc")
+        task = Task("rec", "guid", "High", "Automated")
         with pytest.raises(ValueError, match="parent UserStory"):
             _ = task.stable_key
 
-    def test_same_resource_different_stories_no_collision(self) -> None:
-        """Same resource_id under two different recommendations yields distinct keys."""
+    def test_different_guids_different_keys(self) -> None:
+        """Tasks with different recommendation GUIDs yield distinct keys."""
         epic = Epic(name="Net")
         feat = Feature(name="VNets", resource_type="type")
         epic.add_feature(feat)
+        story = UserStory(title="Recs", impact="High")
+        feat.add_user_story(story)
 
-        story_a = UserStory("rec-A", "GUID-A", "High", "Automated")
-        story_b = UserStory("rec-B", "GUID-B", "Medium", "Automated")
-        feat.add_user_story(story_a)
-        feat.add_user_story(story_b)
-
-        task_a = Task("vm", "/subs/x/vm-01", "rg", "sub", "loc")
-        task_b = Task("vm", "/subs/x/vm-01", "rg", "sub", "loc")
-        story_a.add_task(task_a)
-        story_b.add_task(task_b)
+        task_a = Task("rec-A", "GUID-A", "High", "Automated")
+        task_b = Task("rec-B", "GUID-B", "Medium", "Automated")
+        story.add_task(task_a)
+        story.add_task(task_b)
 
         assert task_a.stable_key != task_b.stable_key
 
     def test_add_task_sets_backref(self) -> None:
-        story = UserStory("rec", "guid", "High", "Automated")
-        task = Task("n", "id", "rg", "sub", "loc")
+        story = UserStory(title="Recs", impact="High")
+        task = Task("rec", "guid", "High", "Automated")
         story.add_task(task)
         assert task.user_story is story

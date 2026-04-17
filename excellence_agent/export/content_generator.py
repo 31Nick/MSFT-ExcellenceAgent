@@ -99,40 +99,44 @@ class ContentGenerator:
 
         impact_counter: Counter[str] = Counter()
         locations: set[str] = set()
+        all_tasks = []
         for story in feature.user_stories:
-            impact_counter[story.impact] += 1
             for task in story.tasks:
-                locations.add(task.location)
+                impact_counter[task.impact] += 1
+                for res in task.affected_resources:
+                    locations.add(res.location)
+                all_tasks.append(task)
 
         template = self._env.get_template("feature.md.j2")
         rendered = template.render(
             feature_name=feature.name,
             resource_type=feature.resource_type,
             epic_name=epic_name,
-            story_count=len(feature.user_stories),
+            recommendation_count=len(all_tasks),
             resource_count=feature.resource_count,
             resource_groups=sorted(feature.resource_groups) if feature.resource_groups else ["N/A"],
             subscriptions=sorted(feature.subscriptions) if feature.subscriptions else ["N/A"],
             locations=sorted(locations) if locations else ["N/A"],
             impact_summary=dict(impact_counter),
-            user_stories=feature.user_stories,
+            recommendation_tasks=all_tasks,
         )
         logger.debug("Generated Feature description for '%s'", feature.name)
         return rendered
 
     def generate_feature_acceptance_criteria(self, feature: Feature) -> str:
         """Generate acceptance criteria for a Feature."""
+        all_tasks = [t for s in feature.user_stories for t in s.tasks]
         lines: list[str] = [
-            f"<p>All User Stories for <strong>{feature.resource_type}</strong> are completed. "
+            f"<p>All recommendations for <strong>{feature.resource_type}</strong> are completed. "
             "Resources validated against APRL checks.</p>",
         ]
-        if feature.user_stories:
-            lines.append("<p><strong>User Stories to complete:</strong></p>")
+        if all_tasks:
+            lines.append("<p><strong>Recommendations to complete:</strong></p>")
             lines.append("<ul>")
-            for story in feature.user_stories:
+            for task in all_tasks:
                 lines.append(
-                    f"<li>{story.title} [{story.impact}] &mdash; "
-                    f"{len(story.tasks)} resource(s)</li>"
+                    f"<li>{task.title} [{task.impact}] &mdash; "
+                    f"{len(task.affected_resources)} resource(s)</li>"
                 )
             lines.append("</ul>")
         logger.debug("Generated Feature acceptance criteria for '%s'", feature.name)
@@ -143,51 +147,95 @@ class ContentGenerator:
     # ------------------------------------------------------------------
 
     def generate_story_description(self, story: UserStory) -> str:
-        """Render the User Story description from *user_story.md.j2*."""
+        """Render the consolidated User Story description from *user_story.md.j2*."""
+        resource_type = story.feature.resource_type if story.feature else "Unknown"
         template = self._env.get_template("user_story.md.j2")
         rendered = template.render(
             title=story.title,
-            long_description=story.long_description or "No detailed description available.",
+            resource_type=resource_type,
             impact=story.impact,
-            waf_pillar=story.waf_pillar or "N/A",
-            recommendation_control=story.recommendation_control,
-            potential_benefit=story.potential_benefit or "N/A",
+            waf_pillars=sorted(story.waf_pillars) if story.waf_pillars else ["N/A"],
             source=story.source or "APRL",
-            advisor_metadata=getattr(story, 'advisor_metadata', {}),
-            recommendation_guid=story.recommendation_guid,
-            learn_more_link=story.learn_more_link or "N/A",
+            resource_count=story.resource_count,
             tasks=story.tasks,
         )
         logger.debug("Generated UserStory description for '%s'", story.title)
         return rendered
 
     def generate_story_acceptance_criteria(self, story: UserStory) -> str:
-        """Generate detailed, testable acceptance criteria for a User Story."""
-        task_count = len(story.tasks)
+        """Generate acceptance criteria for a consolidated User Story."""
         lines: list[str] = [
             "<ul>",
-            f"<li>All {task_count} resource(s) have been remediated</li>",
-            f"<li>APRL check <code>{story.recommendation_guid}</code> passes for all resources</li>",
+            f"<li>All {len(story.tasks)} recommendation(s) have been implemented</li>",
+            f"<li>All {story.resource_count} affected resource(s) pass APRL compliance checks</li>",
         ]
 
         if story.tasks:
             lines.append("</ul>")
-            lines.append("<p><strong>Per-resource verification:</strong></p>")
+            lines.append("<p><strong>Per-recommendation verification:</strong></p>")
             lines.append("<ul>")
             for task in story.tasks:
                 lines.append(
-                    f"<li>Resource <strong>{task.resource_name}</strong> in "
-                    f"<code>{task.resource_group}</code> is compliant</li>"
+                    f"<li><strong>{task.title}</strong> [{task.impact}] &mdash; "
+                    f"{len(task.affected_resources)} resource(s) remediated"
+                    f" (GUID: <code>{task.recommendation_guid}</code>)</li>"
                 )
 
-        if story.learn_more_link:
+        lines.append("</ul>")
+        logger.debug("Generated UserStory acceptance criteria for '%s'", story.title)
+        return "\n".join(lines)
+
+    # ------------------------------------------------------------------
+    # Task
+    # ------------------------------------------------------------------
+
+    def generate_task_description(self, task: Task) -> str:
+        """Render the Task (recommendation) description from *task.md.j2*."""
+        template = self._env.get_template("task.md.j2")
+        rendered = template.render(
+            title=task.title,
+            long_description=task.long_description or "No detailed description available.",
+            impact=task.impact,
+            waf_pillar=task.waf_pillar or "N/A",
+            recommendation_control=task.recommendation_control,
+            potential_benefit=task.potential_benefit or "N/A",
+            source=task.source or "APRL",
+            recommendation_guid=task.recommendation_guid,
+            learn_more_link=task.learn_more_link or "N/A",
+            advisor_metadata=task.advisor_metadata,
+            affected_resources=task.affected_resources,
+        )
+        logger.debug("Generated Task description for '%s'", task.title)
+        return rendered
+
+    def generate_task_acceptance_criteria(self, task: Task) -> str:
+        """Generate acceptance criteria for a Task (recommendation)."""
+        lines: list[str] = [
+            "<ul>",
+            f"<li>All {len(task.affected_resources)} resource(s) have been remediated "
+            f"for recommendation <strong>{task.title}</strong></li>",
+            f"<li>APRL check <code>{task.recommendation_guid}</code> passes for all resources</li>",
+        ]
+
+        if task.affected_resources:
+            lines.append("</ul>")
+            lines.append("<p><strong>Per-resource verification:</strong></p>")
+            lines.append("<ul>")
+            for res in task.affected_resources:
+                lines.append(
+                    f"<li>Resource <strong>{res.resource_name}</strong> in "
+                    f"<code>{res.resource_group}</code> is compliant</li>"
+                )
+
+        if task.learn_more_link:
             lines.append(
-                f"<li>Changes verified via <a href=\"{story.learn_more_link}\">{story.learn_more_link}</a></li>"
+                f"<li>Changes verified via <a href=\"{task.learn_more_link}\">{task.learn_more_link}</a></li>"
             )
 
-        if story.source and story.source != "APRL":
-            lines.append(f"<li>Source: <strong>{story.source}</strong></li>")
-        advisor_meta = getattr(story, 'advisor_metadata', {})
+        if task.source and task.source != "APRL":
+            lines.append(f"<li>Source: <strong>{task.source}</strong></li>")
+
+        advisor_meta = task.advisor_metadata or {}
         if advisor_meta.get("advisor_retirement_date"):
             lines.append(
                 f"<li>⚠️ Retirement date: <strong>{advisor_meta['advisor_retirement_date']}</strong></li>"
@@ -198,49 +246,5 @@ class ContentGenerator:
             )
 
         lines.append("</ul>")
-        logger.debug("Generated UserStory acceptance criteria for '%s'", story.title)
-        return "\n".join(lines)
-
-    # ------------------------------------------------------------------
-    # Task
-    # ------------------------------------------------------------------
-
-    def generate_task_description(self, task: Task, story: UserStory) -> str:
-        """Render the Task description from *task.md.j2*."""
-        template = self._env.get_template("task.md.j2")
-        rendered = template.render(
-            resource_name=task.resource_name,
-            resource_id=task.resource_id,
-            resource_group=task.resource_group,
-            subscription_id=task.subscription_id,
-            location=task.location,
-            check_name=task.check_name or "",
-            notes=task.notes or "",
-            recommendation_title=story.title,
-            learn_more_link=story.learn_more_link or "",
-            source=getattr(task, 'source', '') or story.source or "APRL",
-            advisor_metadata=getattr(task, 'advisor_metadata', {}),
-        )
-        logger.debug("Generated Task description for '%s'", task.resource_name)
-        return rendered
-
-    def generate_task_acceptance_criteria(self, task: Task, story: UserStory) -> str:
-        """Generate acceptance criteria for a Task."""
-        check_label = task.check_name or story.title
-        lines: list[str] = [
-            "<ul>",
-            f"<li>Resource <strong>{task.resource_name}</strong> in <code>{task.resource_group}</code> "
-            f"passes APRL check <strong>{check_label}</strong></li>",
-        ]
-
-        if task.notes:
-            lines.append(f"<li>Notes addressed: {task.notes}</li>")
-
-        if story.learn_more_link:
-            lines.append(
-                f"<li>Verified via <a href=\"{story.learn_more_link}\">{story.learn_more_link}</a></li>"
-            )
-
-        lines.append("</ul>")
-        logger.debug("Generated Task acceptance criteria for '%s'", task.resource_name)
+        logger.debug("Generated Task acceptance criteria for '%s'", task.title)
         return "\n".join(lines)

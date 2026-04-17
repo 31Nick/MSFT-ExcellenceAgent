@@ -117,7 +117,7 @@ class AdoSyncService:
                 for story in feat.user_stories:
                     self._plan_story(story, existing, active_keys, sp)
                     for task in story.tasks:
-                        self._plan_task(task, story, existing, active_keys, sp)
+                        self._plan_task(task, existing, active_keys, sp)
 
         # Orphan detection
         for key, item in existing.items():
@@ -225,18 +225,18 @@ class AdoSyncService:
         )
 
     def _plan_task(
-        self, task: Task, story: UserStory, existing: Dict[str, SyncItem],
+        self, task: Task, existing: Dict[str, SyncItem],
         active_keys: Set[str], sp: SyncPlan,
     ) -> None:
-        desc = self._cg.generate_task_description(task, story)
-        ac = self._cg.generate_task_acceptance_criteria(task, story)
-        parent_key = story.stable_key if story.feature else ""
+        desc = self._cg.generate_task_description(task)
+        ac = self._cg.generate_task_acceptance_criteria(task)
+        parent_key = task.user_story.stable_key if task.user_story and task.user_story.feature else ""
         fields = self._base_fields(
-            self._config.type_mapping.task, task.resource_name, desc, ac,
+            self._config.type_mapping.task, task.title, desc, ac,
         )
         self._plan_item(
             task.stable_key, self._config.type_mapping.task,
-            task.resource_name, fields, parent_key, existing, active_keys, sp, task,
+            task.title, fields, parent_key, existing, active_keys, sp, task,
         )
 
     def _base_fields(

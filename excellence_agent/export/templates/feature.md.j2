@@ -3,7 +3,7 @@
 <p>Recommendations for <strong>{{ resource_type }}</strong> resources within the <strong>{{ epic_name }}</strong> domain.</p>
 <h2>Scope</h2>
 <ul>
-<li><strong>Recommendations:</strong> {{ story_count }}</li>
+<li><strong>Recommendations:</strong> {{ recommendation_count }}</li>
 <li><strong>Affected Resources:</strong> {{ resource_count }}</li>
 <li><strong>Resource Groups:</strong> {{ resource_groups | join(', ') }}</li>
 <li><strong>Subscriptions:</strong> {{ subscriptions | join(', ') }}</li>
@@ -17,12 +17,12 @@
 </ul>
 <h2>Recommendations</h2>
 <ol>
-{% for story in user_stories -%}
-<li><strong>{{ story.title }}</strong> [{{ story.impact }}]
+{% for task in recommendation_tasks -%}
+<li><strong>{{ task.title }}</strong> [{{ task.impact }}]
 <ul>
-<li><strong>Control:</strong> {{ story.recommendation_control }}</li>
-<li><strong>Benefit:</strong> {{ story.potential_benefit }}</li>
-<li><strong>Affected Resources:</strong> {{ story.tasks | length }}</li>
+<li><strong>Control:</strong> {{ task.recommendation_control }}</li>
+<li><strong>Benefit:</strong> {{ task.potential_benefit }}</li>
+<li><strong>Affected Resources:</strong> {{ task.affected_resources | length }}</li>
 </ul>
 </li>
 {% endfor -%}

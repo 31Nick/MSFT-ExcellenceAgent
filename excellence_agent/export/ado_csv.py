@@ -97,7 +97,7 @@ class ADOExporter:
                 for story in feature.user_stories:
                     rows.append(self._story_row(story))
                     for task in story.tasks:
-                        rows.append(self._task_row(task, story))
+                        rows.append(self._task_row(task))
         return rows
 
     def _epic_row(self, epic: Epic) -> dict:
@@ -150,7 +150,7 @@ class ADOExporter:
             "Acceptance Criteria": self._content.generate_story_acceptance_criteria(story),
             "Tags": self._build_tags(
                 impact=story.impact,
-                waf_pillar=story.waf_pillar or None,
+                waf_pillars=sorted(story.waf_pillars) if story.waf_pillars else None,
                 category=story.category or None,
                 source=f"Source:{story.source}" if story.source else None,
             ),
@@ -159,22 +159,21 @@ class ADOExporter:
             "Iteration Path": self._config.iteration_path,
         }
 
-    def _task_row(self, task: Task, story: UserStory) -> dict:
-        source_val = getattr(task, 'source', '') or story.source
+    def _task_row(self, task: Task) -> dict:
         return {
             "Work Item Type": self._config.work_item_type_task,
             "Title 1": "",
             "Title 2": "",
             "Title 3": "",
-            "Title 4": task.resource_name,
-            "Description": self._content.generate_task_description(task, story),
-            "Acceptance Criteria": self._content.generate_task_acceptance_criteria(task, story),
+            "Title 4": task.title,
+            "Description": self._content.generate_task_description(task),
+            "Acceptance Criteria": self._content.generate_task_acceptance_criteria(task),
             "Tags": self._build_tags(
-                impact=story.impact,
-                location=task.location or None,
-                source=f"Source:{source_val}" if source_val else None,
+                impact=task.impact,
+                waf_pillar=task.waf_pillar or None,
+                source=f"Source:{task.source}" if task.source else None,
             ),
-            "Priority": story.priority,
+            "Priority": {"High": 1, "Medium": 2, "Low": 3}.get(task.impact, 2),
             "Area Path": self._config.area_path,
             "Iteration Path": self._config.iteration_path,
         }

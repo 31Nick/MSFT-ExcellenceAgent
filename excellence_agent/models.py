@@ -1,7 +1,7 @@
 """
 Dataclass models for the ExcellenceAgent ADO work-item hierarchy.
 
-Hierarchy: Epic → Feature → UserStory → Task
+Hierarchy: Epic → Feature → UserStory (consolidated per resource type) → Task (per recommendation)
 
 Data sourced from APRL v2 (Azure Proactive Resiliency Library) Excel reports.
 """
@@ -13,29 +13,18 @@ from typing import Any, Dict, List, Optional, Set
 
 
 @dataclass
-class Task:
-    """An individual Azure resource that needs remediation."""
+class AffectedResource:
+    """A single Azure resource affected by a recommendation."""
 
     resource_name: str
-    resource_id: str  # full ARM ID
+    resource_id: str
     resource_group: str
     subscription_id: str
     location: str
     validation_status: str = ""
-    custom_fields: Dict[str, str] = field(default_factory=dict)
     notes: str = ""
     check_name: str = ""
-    source: str = ""  # "APRL", "Advisor", or "APRL & Advisor"
-    advisor_metadata: Dict[str, str] = field(default_factory=dict)  # retirement_date, retiring_feature, etc.
-    user_story: Optional[UserStory] = field(default=None, repr=False)
-
-    @property
-    def stable_key(self) -> str:
-        """Identity key for sync: ``task:{recommendation_guid}:{resource_id}``."""
-        if self.user_story is None:
-            raise ValueError("Task.stable_key requires a parent UserStory (set via UserStory.add_task)")
-        guid = self.user_story.recommendation_guid.lower()
-        return f"task:{guid}:{self.resource_id.lower()}"
+    custom_fields: Dict[str, str] = field(default_factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -45,17 +34,15 @@ class Task:
             "subscription_id": self.subscription_id,
             "location": self.location,
             "validation_status": self.validation_status,
-            "custom_fields": dict(self.custom_fields),
             "notes": self.notes,
             "check_name": self.check_name,
-            "source": self.source,
-            "advisor_metadata": dict(self.advisor_metadata),
+            "custom_fields": dict(self.custom_fields),
         }
 
 
 @dataclass
-class UserStory:
-    """A deduplicated APRL recommendation."""
+class Task:
+    """A specific APRL recommendation with its affected resources."""
 
     title: str
     recommendation_guid: str
@@ -66,8 +53,46 @@ class UserStory:
     long_description: str = ""
     waf_pillar: str = ""
     category: str = ""
-    source: str = ""
+    source: str = ""  # "APRL", "Advisor", or "APRL & Advisor"
     advisor_metadata: Dict[str, str] = field(default_factory=dict)
+    affected_resources: List[AffectedResource] = field(default_factory=list)
+    user_story: Optional[UserStory] = field(default=None, repr=False)
+
+    @property
+    def stable_key(self) -> str:
+        """Identity key for sync: ``task:{recommendation_guid}:{resource_type}``."""
+        if self.user_story is None or self.user_story.feature is None:
+            raise ValueError("Task.stable_key requires a parent UserStory with a Feature")
+        rt = self.user_story.feature.resource_type.lower()
+        return f"task:{self.recommendation_guid.lower()}:{rt}"
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "title": self.title,
+            "recommendation_guid": self.recommendation_guid,
+            "impact": self.impact,
+            "recommendation_control": self.recommendation_control,
+            "potential_benefit": self.potential_benefit,
+            "learn_more_link": self.learn_more_link,
+            "long_description": self.long_description,
+            "waf_pillar": self.waf_pillar,
+            "category": self.category,
+            "source": self.source,
+            "advisor_metadata": dict(self.advisor_metadata),
+            "affected_resources": [r.to_dict() for r in self.affected_resources],
+        }
+
+
+@dataclass
+class UserStory:
+    """Consolidated APRL recommendations for a resource type."""
+
+    title: str
+    impact: str  # Highest impact among child tasks: High / Medium / Low
+    category: str = ""
+    source: str = ""
+    waf_pillars: Set[str] = field(default_factory=set)
+    resource_count: int = 0  # unique affected resources across all tasks
     feature: Optional[Feature] = field(default=None, repr=False)
     tasks: List[Task] = field(default_factory=list)
 
@@ -78,30 +103,29 @@ class UserStory:
 
     @property
     def stable_key(self) -> str:
-        """Identity key for sync: ``story:{recommendation_guid}:{resource_type}``."""
+        """Identity key for sync: ``story:{epic_name}:{resource_type}``."""
         if self.feature is None:
             raise ValueError("UserStory.stable_key requires a parent Feature (set via Feature.add_user_story)")
-        rt = self.feature.resource_type.lower()
-        return f"story:{self.recommendation_guid.lower()}:{rt}"
+        epic_name = self.feature.epic.name.lower() if self.feature.epic else ""
+        return f"story:{epic_name}:{self.feature.resource_type.lower()}"
 
     def add_task(self, task: Task) -> None:
         task.user_story = self
         self.tasks.append(task)
 
+    def total_affected_resources(self) -> int:
+        """Total number of individual resources across all recommendation tasks."""
+        return sum(len(t.affected_resources) for t in self.tasks)
+
     def to_dict(self) -> Dict[str, Any]:
         return {
             "title": self.title,
-            "recommendation_guid": self.recommendation_guid,
             "impact": self.impact,
             "priority": self.priority,
-            "recommendation_control": self.recommendation_control,
-            "potential_benefit": self.potential_benefit,
-            "learn_more_link": self.learn_more_link,
-            "long_description": self.long_description,
-            "waf_pillar": self.waf_pillar,
             "category": self.category,
             "source": self.source,
-            "advisor_metadata": dict(self.advisor_metadata),
+            "waf_pillars": sorted(self.waf_pillars),
+            "resource_count": self.resource_count,
             "tasks": [t.to_dict() for t in self.tasks],
         }
 
@@ -130,7 +154,12 @@ class Feature:
         self.user_stories.append(story)
 
     def total_tasks(self) -> int:
+        """Total recommendation tasks across all stories."""
         return sum(len(s.tasks) for s in self.user_stories)
+
+    def total_affected_resources(self) -> int:
+        """Total individual resources across all stories and tasks."""
+        return sum(s.total_affected_resources() for s in self.user_stories)
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -141,6 +170,7 @@ class Feature:
             "resource_count": self.resource_count,
             "user_stories": [s.to_dict() for s in self.user_stories],
             "total_tasks": self.total_tasks(),
+            "total_affected_resources": self.total_affected_resources(),
         }
 
 
@@ -168,7 +198,12 @@ class Epic:
         return sum(len(f.user_stories) for f in self.features)
 
     def total_tasks(self) -> int:
+        """Total recommendation tasks."""
         return sum(f.total_tasks() for f in self.features)
+
+    def total_affected_resources(self) -> int:
+        """Total individual resources across all features."""
+        return sum(f.total_affected_resources() for f in self.features)
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -200,6 +235,9 @@ class WorkItemHierarchy:
 
     def all_tasks(self) -> List[Task]:
         return [t for s in self.all_stories() for t in s.tasks]
+
+    def all_affected_resources(self) -> List[AffectedResource]:
+        return [r for t in self.all_tasks() for r in t.affected_resources]
 
     def summary_stats(self) -> Dict[str, int]:
         return {

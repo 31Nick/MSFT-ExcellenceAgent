@@ -1,20 +1,37 @@
-<h1>Remediate: {{ resource_name }}</h1>
-<h2>Resource Details</h2>
+<h1>{{ title }}</h1>
+<h2>Recommendation</h2>
+<p>{{ long_description }}</p>
+<h2>Details</h2>
 <ul>
-<li><strong>Resource Name:</strong> {{ resource_name }}</li>
-<li><strong>Resource ID:</strong> <code>{{ resource_id }}</code></li>
-<li><strong>Resource Group:</strong> {{ resource_group }}</li>
-<li><strong>Subscription:</strong> {{ subscription_id }}</li>
-<li><strong>Location:</strong> {{ location }}</li>
-{% if check_name %}<li><strong>Check Name:</strong> {{ check_name }}</li>{% endif %}
-{% if notes %}<li><strong>Notes:</strong> {{ notes }}</li>{% endif %}
-{% if source %}<li><strong>Source:</strong> {{ source }}</li>{% endif %}
+<li><strong>Impact:</strong> {{ impact }}</li>
+<li><strong>WAF Pillar:</strong> {{ waf_pillar }}</li>
+<li><strong>Control:</strong> {{ recommendation_control }}</li>
+<li><strong>Potential Benefit:</strong> {{ potential_benefit }}</li>
+<li><strong>Source:</strong> {{ source }}</li>
+<li><strong>APRL Guid:</strong> {{ recommendation_guid }}</li>
 </ul>
-<h2>Action Required</h2>
-<p>Apply the recommendation &quot;{{ recommendation_title }}&quot; to this resource.</p>
-<h2>Verification</h2>
-<p>Confirm the resource passes the APRL compliance check after remediation.</p>
-{% if learn_more_link -%}
-<h2>Reference</h2>
+{% if learn_more_link and learn_more_link != 'N/A' -%}
+<h2>Learn More</h2>
 <p><a href="{{ learn_more_link }}">{{ learn_more_link }}</a></p>
 {% endif -%}
+{% if advisor_metadata -%}
+<h2>Advisor Information</h2>
+<ul>
+{% if advisor_metadata.get('advisor_retirement_date') -%}
+<li><strong>⚠️ Retirement Date:</strong> {{ advisor_metadata['advisor_retirement_date'] }}</li>
+{% endif -%}
+{% if advisor_metadata.get('advisor_retiring_feature') -%}
+<li><strong>Retiring Feature:</strong> {{ advisor_metadata['advisor_retiring_feature'] }}</li>
+{% endif -%}
+{% if advisor_metadata.get('advisor_cost_implications') -%}
+<li><strong>Cost Implications:</strong> {{ advisor_metadata['advisor_cost_implications'] }}</li>
+{% endif -%}
+</ul>
+{% endif -%}
+<h2>Affected Resources ({{ affected_resources | length }})</h2>
+<table>
+<tr><th>#</th><th>Resource Name</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
+{% for res in affected_resources -%}
+<tr><td>{{ loop.index }}</td><td>{{ res.resource_name }}</td><td>{{ res.resource_group }}</td><td>{{ res.location }}</td><td>{{ res.subscription_id }}</td></tr>
+{% endfor -%}
+</table>

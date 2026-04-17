@@ -1,20 +1,19 @@
-export interface Task {
+export interface AffectedResource {
   resource_name: string;
   resource_id: string;
   resource_group: string;
   subscription_id: string;
   location: string;
   validation_status: string;
-  custom_fields: Record<string, string>;
   notes: string;
   check_name: string;
+  custom_fields: Record<string, string>;
 }
 
-export interface UserStory {
+export interface Task {
   title: string;
   recommendation_guid: string;
   impact: 'High' | 'Medium' | 'Low';
-  priority: number;
   recommendation_control: string;
   potential_benefit: string;
   learn_more_link: string;
@@ -22,6 +21,18 @@ export interface UserStory {
   waf_pillar: string;
   category: string;
   source: string;
+  advisor_metadata: Record<string, string>;
+  affected_resources: AffectedResource[];
+}
+
+export interface UserStory {
+  title: string;
+  impact: 'High' | 'Medium' | 'Low';
+  priority: number;
+  category: string;
+  source: string;
+  waf_pillars: string[];
+  resource_count: number;
   tasks: Task[];
 }
 

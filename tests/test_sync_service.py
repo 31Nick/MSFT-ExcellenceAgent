@@ -15,7 +15,14 @@ from excellence_agent.ado.mcp_client import ADOMCPClient, MCPClientError, WorkIt
 from excellence_agent.ado.state_store import SyncItem, SyncStateStore
 from excellence_agent.ado.sync_service import AdoSyncService, SyncPlan
 from excellence_agent.export.content_generator import ContentGenerator
-from excellence_agent.models import Epic, Feature, Task, UserStory, WorkItemHierarchy
+from excellence_agent.models import (
+    AffectedResource,
+    Epic,
+    Feature,
+    Task,
+    UserStory,
+    WorkItemHierarchy,
+)
 
 
 # ── Fixtures ──────────────────────────────────────────────────────────────
@@ -56,6 +63,14 @@ def small_hierarchy() -> WorkItemHierarchy:
     feat = Feature(name="VNets", resource_type="microsoft.network/virtualnetworks")
     epic.add_feature(feat)
     story = UserStory(
+        title="Virtualnetworks - Recommendations",
+        impact="High",
+        category="Security",
+        waf_pillars={"Security"},
+        resource_count=1,
+    )
+    feat.add_user_story(story)
+    task = Task(
         title="Enable DDoS protection",
         recommendation_guid="guid-001",
         impact="High",
@@ -63,15 +78,16 @@ def small_hierarchy() -> WorkItemHierarchy:
         long_description="Enable DDoS on all VNets.",
         waf_pillar="Security",
         learn_more_link="https://aka.ms/ddos",
-    )
-    feat.add_user_story(story)
-    task = Task(
-        resource_name="vnet-hub",
-        resource_id="/subscriptions/sub-1/resourceGroups/rg-net/providers/Microsoft.Network/virtualNetworks/vnet-hub",
-        resource_group="rg-net",
-        subscription_id="sub-1",
-        location="uksouth",
-        check_name="check-ddos",
+        affected_resources=[
+            AffectedResource(
+                resource_name="vnet-hub",
+                resource_id="/subscriptions/sub-1/resourceGroups/rg-net/providers/Microsoft.Network/virtualNetworks/vnet-hub",
+                resource_group="rg-net",
+                subscription_id="sub-1",
+                location="uksouth",
+                check_name="check-ddos",
+            ),
+        ],
     )
     story.add_task(task)
     h.add_epic(epic)

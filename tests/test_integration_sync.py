@@ -17,16 +17,33 @@ from excellence_agent.ado.mcp_client import ADOMCPClient
 from excellence_agent.ado.state_store import SyncStateStore
 from excellence_agent.ado.sync_service import AdoSyncService
 from excellence_agent.export.content_generator import ContentGenerator
-from excellence_agent.models import Epic, Feature, Task, UserStory, WorkItemHierarchy
+from excellence_agent.models import (
+    AffectedResource,
+    Epic,
+    Feature,
+    Task,
+    UserStory,
+    WorkItemHierarchy,
+)
 
 
 def _make_hierarchy() -> WorkItemHierarchy:
-    """Build a small but realistic hierarchy: 1 Epic, 1 Feature, 1 Story, 2 Tasks."""
+    """Build a small but realistic hierarchy: 1 Epic, 1 Feature, 1 Story, 1 Task (2 resources)."""
     epic = Epic(name="Networking", description="Network resilience")
     feat = Feature(name="Virtual Networks", resource_type="microsoft.network/virtualnetworks")
     epic.add_feature(feat)
 
     story = UserStory(
+        title="Virtualnetworks - Recommendations",
+        impact="High",
+        category="Networking",
+        source="APRL",
+        waf_pillars={"Reliability"},
+        resource_count=2,
+    )
+    feat.add_user_story(story)
+
+    task = Task(
         title="Use Standard SKU load balancers",
         recommendation_guid="abc-123",
         impact="High",
@@ -37,27 +54,26 @@ def _make_hierarchy() -> WorkItemHierarchy:
         waf_pillar="Reliability",
         category="Networking",
         source="APRL",
+        affected_resources=[
+            AffectedResource(
+                resource_name="my-lb-01",
+                resource_id="/subs/1/rg/net/providers/Microsoft.Network/loadBalancers/my-lb-01",
+                resource_group="net-rg",
+                subscription_id="sub-1",
+                location="eastus",
+                validation_status="Fail",
+            ),
+            AffectedResource(
+                resource_name="my-lb-02",
+                resource_id="/subs/1/rg/net/providers/Microsoft.Network/loadBalancers/my-lb-02",
+                resource_group="net-rg",
+                subscription_id="sub-1",
+                location="westus",
+                validation_status="Fail",
+            ),
+        ],
     )
-    feat.add_user_story(story)
-
-    t1 = Task(
-        resource_name="my-lb-01",
-        resource_id="/subs/1/rg/net/providers/Microsoft.Network/loadBalancers/my-lb-01",
-        resource_group="net-rg",
-        subscription_id="sub-1",
-        location="eastus",
-        validation_status="Fail",
-    )
-    t2 = Task(
-        resource_name="my-lb-02",
-        resource_id="/subs/1/rg/net/providers/Microsoft.Network/loadBalancers/my-lb-02",
-        resource_group="net-rg",
-        subscription_id="sub-1",
-        location="westus",
-        validation_status="Fail",
-    )
-    story.add_task(t1)
-    story.add_task(t2)
+    story.add_task(task)
 
     return WorkItemHierarchy(epics=[epic])
 
@@ -95,14 +111,14 @@ class TestFullSyncCycle:
 
     def test_first_plan_all_creates(self, service, hierarchy):
         plan = service.plan(hierarchy)
-        assert plan.summary()["create"] == 5  # 1 epic + 1 feat + 1 story + 2 tasks
+        assert plan.summary()["create"] == 4  # 1 epic + 1 feat + 1 story + 1 task
         assert plan.summary()["unchanged"] == 0
 
     @pytest.mark.asyncio
     async def test_push_then_replan_shows_unchanged(self, service, store, config, hierarchy):
         # Plan
         plan = service.plan(hierarchy)
-        assert plan.summary()["create"] == 5
+        assert plan.summary()["create"] == 4
 
         # Mock MCP client
         ado_id_counter = [100]
@@ -122,13 +138,13 @@ class TestFullSyncCycle:
         # Push
         result = await service.push(plan, client)
         assert result.success
-        assert result.run.items_created == 5
+        assert result.run.items_created == 4
         assert result.run.items_failed == 0
 
         # Re-plan should show all unchanged
         plan2 = service.plan(hierarchy)
         assert plan2.summary()["create"] == 0
-        assert plan2.summary()["unchanged"] == 5
+        assert plan2.summary()["unchanged"] == 4
 
     @pytest.mark.asyncio
     async def test_partial_failure_and_retry(self, service, store, config, hierarchy):
@@ -164,7 +180,7 @@ class TestFullSyncCycle:
     def test_state_store_isolation(self, store, service, hierarchy, config):
         """Items for one customer don't leak to another."""
         plan = service.plan(hierarchy)
-        assert plan.summary()["create"] == 5
+        assert plan.summary()["create"] == 4
 
         # Different customer should see no items
         other_items = store.get_items_by_customer("other-customer")
@@ -195,4 +211,4 @@ class TestFullSyncCycle:
         plan2 = service.plan(h2)
         # Epic should be update, rest unchanged
         assert plan2.summary()["update"] >= 1
-        assert plan2.summary()["unchanged"] >= 3
+        assert plan2.summary()["unchanged"] >= 2

@@ -12,6 +12,7 @@ from excellence_agent.config import ADOConfig
 from excellence_agent.export.ado_csv import ADOExporter, _CSV_COLUMNS
 from excellence_agent.export.content_generator import ContentGenerator
 from excellence_agent.models import (
+    AffectedResource,
     Epic,
     Feature,
     Task,
@@ -34,24 +35,32 @@ def exporter(ado_config: ADOConfig, content_generator: ContentGenerator) -> ADOE
 
 
 def _build_small_hierarchy() -> WorkItemHierarchy:
-    """One Epic → one Feature → one Story → one Task."""
+    """One Epic → one Feature → one Story (consolidated) → one Task (recommendation)."""
     h = WorkItemHierarchy()
     epic = Epic(name="Data", description="Data services")
     feat = Feature(name="Cosmos DB", resource_type="microsoft.documentdb/databaseaccounts")
     story = UserStory(
+        title="Databaseaccounts - Recommendations",
+        impact="High",
+        category="Availability",
+        waf_pillars={"Reliability"},
+        resource_count=1,
+    )
+    task = Task(
         title="Enable automatic failover",
         recommendation_guid="aaaa-1111",
         impact="High",
         recommendation_control="Automated",
         waf_pillar="Reliability",
-        category="Availability",
-    )
-    task = Task(
-        resource_name="cosmos-db-01",
-        resource_id="/subscriptions/sub/rg/cosmos-db-01",
-        resource_group="rg-data",
-        subscription_id="sub-001",
-        location="uksouth",
+        affected_resources=[
+            AffectedResource(
+                resource_name="cosmos-db-01",
+                resource_id="/subscriptions/sub/rg/cosmos-db-01",
+                resource_group="rg-data",
+                subscription_id="sub-001",
+                location="uksouth",
+            ),
+        ],
     )
     story.add_task(task)
     feat.add_user_story(story)

@@ -69,7 +69,6 @@ class PatternDetector:
 
     def _cross_epic_controls(self, hierarchy: WorkItemHierarchy) -> List[Pattern]:
         """Same Recommendation Control appearing across multiple Epics."""
-        # control → {epic names}, {feature names}, story count, task count
         control_epics: Dict[str, Set[str]] = defaultdict(set)
         control_features: Dict[str, Set[str]] = defaultdict(set)
         control_stories: Counter[str] = Counter()
@@ -78,13 +77,14 @@ class PatternDetector:
         for epic in hierarchy.epics:
             for feature in epic.features:
                 for story in feature.user_stories:
-                    ctrl = story.recommendation_control
-                    if not ctrl:
-                        continue
-                    control_epics[ctrl].add(epic.name)
-                    control_features[ctrl].add(feature.name)
-                    control_stories[ctrl] += 1
-                    control_tasks[ctrl] += len(story.tasks)
+                    for task in story.tasks:
+                        ctrl = task.recommendation_control
+                        if not ctrl:
+                            continue
+                        control_epics[ctrl].add(epic.name)
+                        control_features[ctrl].add(feature.name)
+                        control_stories[ctrl] += 1
+                        control_tasks[ctrl] += len(task.affected_resources)
 
         patterns: List[Pattern] = []
         for ctrl, epics in sorted(control_epics.items()):
@@ -110,30 +110,32 @@ class PatternDetector:
     # ------------------------------------------------------------------
 
     def _high_impact_clusters(self, hierarchy: WorkItemHierarchy) -> List[Pattern]:
-        """Features or Epics with disproportionately many High-impact stories."""
+        """Features or Epics with disproportionately many High-impact recommendations."""
         patterns: List[Pattern] = []
 
         for epic in hierarchy.epics:
             for feature in epic.features:
-                stories = feature.user_stories
-                if not stories:
+                all_tasks = [t for s in feature.user_stories for t in s.tasks]
+                if not all_tasks:
                     continue
-                high_count = sum(1 for s in stories if s.impact == "High")
-                ratio = high_count / len(stories)
+                high_count = sum(1 for t in all_tasks if t.impact == "High")
+                ratio = high_count / len(all_tasks)
                 if ratio >= _HIGH_IMPACT_THRESHOLD and high_count >= 2:
-                    task_count = sum(len(s.tasks) for s in stories if s.impact == "High")
+                    resource_count = sum(
+                        len(t.affected_resources) for t in all_tasks if t.impact == "High"
+                    )
                     patterns.append(
                         Pattern(
                             name=f"High-Impact Cluster: {feature.name}",
                             description=(
-                                f"{high_count}/{len(stories)} stories "
+                                f"{high_count}/{len(all_tasks)} recommendations "
                                 f"({ratio:.0%}) in '{feature.name}' "
                                 f"(epic '{epic.name}') are High impact."
                             ),
                             affected_epics=[epic.name],
                             affected_features=[feature.name],
                             story_count=high_count,
-                            task_count=task_count,
+                            task_count=resource_count,
                             recommendation_control="",
                         )
                     )
@@ -196,13 +198,14 @@ class PatternDetector:
         for epic in hierarchy.epics:
             for feature in epic.features:
                 for story in feature.user_stories:
-                    pillar = story.waf_pillar
-                    if not pillar:
-                        continue
-                    pillar_epics[pillar].add(epic.name)
-                    pillar_features[pillar].add(feature.name)
-                    pillar_stories[pillar] += 1
-                    pillar_tasks[pillar] += len(story.tasks)
+                    for task in story.tasks:
+                        pillar = task.waf_pillar
+                        if not pillar:
+                            continue
+                        pillar_epics[pillar].add(epic.name)
+                        pillar_features[pillar].add(feature.name)
+                        pillar_stories[pillar] += 1
+                        pillar_tasks[pillar] += len(task.affected_resources)
 
         patterns: List[Pattern] = []
         for pillar, epics in sorted(pillar_epics.items()):

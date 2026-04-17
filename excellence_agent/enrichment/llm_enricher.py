@@ -150,51 +150,58 @@ class LLMEnricher:
     # ------------------------------------------------------------------
 
     def enrich_story_acceptance_criteria(self, story: UserStory) -> Optional[str]:
-        """Generate detailed, testable acceptance criteria for a *UserStory*.
+        """Generate detailed, testable acceptance criteria for a consolidated *UserStory*.
 
-        Uses the story's ``long_description``, ``learn_more_link``, and
-        ``recommendation_control`` to build the prompt.
+        Uses the story's tasks (recommendations) to build the prompt.
 
         Returns
         -------
         str or None
             Markdown-formatted acceptance criteria, or ``None`` on failure.
         """
+        rec_summaries = []
+        for task in story.tasks:
+            rec_summaries.append(f"- {task.title} [{task.impact}]: {task.long_description or 'N/A'}")
+        recs_text = "\n".join(rec_summaries) if rec_summaries else "N/A"
+
         prompt = ACCEPTANCE_CRITERIA_PROMPT.format(
             title=story.title,
-            long_description=story.long_description or "N/A",
-            recommendation_control=story.recommendation_control or "N/A",
-            learn_more_link=story.learn_more_link or "N/A",
+            long_description=recs_text,
+            recommendation_control="Mixed",
+            learn_more_link="See individual recommendations",
         )
         return self._chat(prompt)
 
     def enrich_task_remediation_steps(
-        self, task: Task, story: UserStory
+        self, task: Task
     ) -> Optional[str]:
-        """Generate step-by-step remediation instructions for a specific resource.
+        """Generate step-by-step remediation instructions for a recommendation.
 
         Parameters
         ----------
         task:
-            The ``Task`` representing the non-compliant resource.
-        story:
-            The parent ``UserStory`` providing recommendation context.
+            The ``Task`` representing the recommendation with its affected resources.
 
         Returns
         -------
         str or None
             Numbered remediation steps, or ``None`` on failure.
         """
-        resource_type = task.resource_id.split("/providers/")[-1].split("/")[0] if "/providers/" in task.resource_id else "Unknown"
+        resource_type = ""
+        if task.user_story and task.user_story.feature:
+            resource_type = task.user_story.feature.resource_type
+        resource_names = ", ".join(r.resource_name for r in task.affected_resources[:5])
+        if len(task.affected_resources) > 5:
+            resource_names += f" (+{len(task.affected_resources) - 5} more)"
 
         prompt = REMEDIATION_STEPS_PROMPT.format(
-            resource_name=task.resource_name,
-            resource_id=task.resource_id,
+            resource_name=resource_names,
+            resource_id=resource_type,
             resource_type=resource_type,
-            location=task.location,
-            recommendation_title=story.title,
-            long_description=story.long_description or "N/A",
-            recommendation_control=story.recommendation_control or "N/A",
+            location="multiple",
+            recommendation_title=task.title,
+            long_description=task.long_description or "N/A",
+            recommendation_control=task.recommendation_control or "N/A",
         )
         return self._chat(prompt)
 
@@ -259,18 +266,11 @@ class LLMEnricher:
                 "[%d/%d] Enriching story: %s", idx, total_stories, story.title
             )
 
-            criteria = self.enrich_story_acceptance_criteria(story)
-            if criteria:
-                story.long_description = (
-                    f"{story.long_description}\n\n"
-                    f"## Acceptance Criteria (LLM-generated)\n{criteria}"
-                ).strip()
-
             for task in story.tasks:
-                steps = self.enrich_task_remediation_steps(task, story)
+                steps = self.enrich_task_remediation_steps(task)
                 if steps:
-                    task.notes = (
-                        f"{task.notes}\n\n"
+                    task.long_description = (
+                        f"{task.long_description}\n\n"
                         f"## Remediation Steps (LLM-generated)\n{steps}"
                     ).strip()
 
