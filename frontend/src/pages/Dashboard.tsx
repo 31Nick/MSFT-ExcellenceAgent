@@ -243,8 +243,8 @@ export default function Dashboard() {
           accent="bg-green-100"
         />
         <StatCard
-          title="Tasks"
-          value={stats.tasks}
+          title="Recommendations"
+          value={stats.recommendations}
           icon={<CheckSquare size={22} className="text-orange-600" />}
           accent="bg-orange-100"
         />
@@ -397,7 +397,7 @@ function EpicCards() {
       name: string;
       features: { name: string; user_stories: { impact: string }[] }[];
       total_stories: number;
-      total_tasks: number;
+      total_recommendations: number;
       impact_summary: { High: number; Medium: number; Low: number };
     }[]
   >([]);
@@ -427,7 +427,7 @@ function EpicCards() {
           <div className="mt-3 flex gap-4 text-sm text-gray-500">
             <span>{epic.features?.length ?? 0} features</span>
             <span>{epic.total_stories} stories</span>
-            <span>{epic.total_tasks} tasks</span>
+            <span>{epic.total_recommendations} recommendations</span>
           </div>
           <div className="mt-3 flex gap-1.5 flex-wrap">
             {epic.impact_summary?.High > 0 && <ImpactBadge impact="High" />}

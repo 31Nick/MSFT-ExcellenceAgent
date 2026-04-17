@@ -31,35 +31,35 @@ class TestHierarchyBuilderBuild:
                     f"Feature '{feature.name}' should have 1 story, got {len(feature.user_stories)}"
                 )
 
-    def test_cosmosdb_one_task_two_resources(
+    def test_cosmosdb_one_recommendation_two_resources(
         self, sample_hierarchy: WorkItemHierarchy
     ) -> None:
-        """2 CosmosDB rows with the same Guid → 1 Task with 2 affected resources."""
+        """2 CosmosDB rows with the same Guid → 1 Recommendation with 2 affected resources."""
         data_epic = next(e for e in sample_hierarchy.epics if e.name == "Data")
         cosmos_feature = next(
             f for f in data_epic.features
             if "documentdb" in f.resource_type.lower()
         )
         story = cosmos_feature.user_stories[0]
-        # 1 unique recommendation → 1 task
-        assert len(story.tasks) == 1
+        # 1 unique recommendation
+        assert len(story.recommendations) == 1
         # 2 resources affected
-        assert len(story.tasks[0].affected_resources) == 2
+        assert len(story.recommendations[0].affected_resources) == 2
 
-    def test_network_watchers_two_tasks(
+    def test_network_watchers_two_recommendations(
         self, sample_hierarchy: WorkItemHierarchy
     ) -> None:
-        """3 Network Watcher rows with 2 GUIDs → 2 Tasks."""
+        """3 Network Watcher rows with 2 GUIDs → 2 Recommendations."""
         net_epic = next(e for e in sample_hierarchy.epics if e.name == "Networking")
         nw_feature = next(
             f for f in net_epic.features
             if "networkwatchers" in f.resource_type.lower()
         )
         story = nw_feature.user_stories[0]
-        assert len(story.tasks) == 2
-        # First task ("Enable NSG flow logs") has 2 resources
-        nsg_task = next(t for t in story.tasks if "NSG" in t.title)
-        assert len(nsg_task.affected_resources) == 2
+        assert len(story.recommendations) == 2
+        # First recommendation ("Enable NSG flow logs") has 2 resources
+        nsg_rec = next(r for r in story.recommendations if "NSG" in r.title)
+        assert len(nsg_rec.affected_resources) == 2
 
     def test_feature_sorting_by_resource_count_desc(
         self, sample_hierarchy: WorkItemHierarchy
@@ -68,14 +68,14 @@ class TestHierarchyBuilderBuild:
         counts = [f.resource_count for f in net_epic.features]
         assert counts == sorted(counts, reverse=True)
 
-    def test_task_sorting_by_impact_priority(
+    def test_recommendation_sorting_by_impact_priority(
         self, sample_hierarchy: WorkItemHierarchy
     ) -> None:
-        """Tasks within a story are sorted by impact (High first)."""
+        """Recommendations within a story are sorted by impact (High first)."""
         net_epic = next(e for e in sample_hierarchy.epics if e.name == "Networking")
         for feature in net_epic.features:
             for story in feature.user_stories:
-                impacts = [t.impact for t in story.tasks]
+                impacts = [r.impact for r in story.recommendations]
                 impact_order = {"High": 1, "Medium": 2, "Low": 3}
                 priorities = [impact_order.get(i, 99) for i in impacts]
                 assert priorities == sorted(priorities)
@@ -112,7 +112,7 @@ class TestHierarchyBuilderBuild:
         assert stats["epics"] == 3
         assert stats["features"] == 5
         assert stats["user_stories"] == 5  # 1 per feature
-        assert stats["tasks"] == 8  # 8 unique recommendations
+        assert stats["recommendations"] == 8  # 8 unique recommendations
 
 
 class TestFriendlyResourceName:

@@ -56,30 +56,29 @@ class Deduplicator:
     def analyse(self, hierarchy: WorkItemHierarchy) -> DeduplicationReport:
         """Return a :class:`DeduplicationReport` for *hierarchy*."""
         all_stories = hierarchy.all_stories()
-        all_tasks = hierarchy.all_tasks()
+        all_recs = hierarchy.all_recommendations()
 
-        total_recommendations = len(all_tasks)
+        total_recommendations = len(all_recs)
         total_stories = len(all_stories)
         # Total resource×recommendation pairs (original rows)
-        total_rows = sum(len(t.affected_resources) for t in all_tasks)
+        total_rows = sum(len(r.affected_resources) for r in all_recs)
 
         # Consolidation savings: recommendations that would have been separate stories
         # under the old model, now consolidated per resource type
         consolidation_savings = total_recommendations - total_stories
 
         multi_resource_recs: List[Dict[str, Any]] = []
-        for task in all_tasks:
-            if len(task.affected_resources) > 1:
-                resource_type = ""
-                if task.user_story and task.user_story.feature:
-                    resource_type = task.user_story.feature.resource_type
-                multi_resource_recs.append(
-                    {
-                        "recommendation_title": task.title,
-                        "resource_count": len(task.affected_resources),
-                        "resource_type": resource_type,
-                    }
-                )
+        for story in all_stories:
+            for rec in story.recommendations:
+                if len(rec.affected_resources) > 1:
+                    resource_type = story.feature.resource_type if story.feature else ""
+                    multi_resource_recs.append(
+                        {
+                            "recommendation_title": rec.title,
+                            "resource_count": len(rec.affected_resources),
+                            "resource_type": resource_type,
+                        }
+                    )
 
         # Sort by resource count descending.
         multi_resource_recs.sort(key=lambda e: e["resource_count"], reverse=True)

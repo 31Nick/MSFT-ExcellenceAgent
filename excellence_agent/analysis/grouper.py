@@ -1,4 +1,4 @@
-"""Hierarchy builder — groups a mapped APRL DataFrame into the Epic→Feature→UserStory→Task tree."""
+"""Hierarchy builder — groups a mapped APRL DataFrame into the Epic→Feature→UserStory tree."""
 
 from __future__ import annotations
 
@@ -38,15 +38,19 @@ from excellence_agent.models import (
     AffectedResource,
     Epic,
     Feature,
-    Task,
+    Recommendation,
     UserStory,
     WorkItemHierarchy,
+    normalize_resource_type,
 )
 
 logger = logging.getLogger(__name__)
 
 # Column added by ResourceMapper — not part of the raw APRL schema.
 COL_MATRIX_CATEGORY = "MatrixCategory"
+
+# Normalised resource type column (added by build()).
+_COL_RT_NORM = "_rt_norm"
 
 # Impact ordering for sorting (High first).
 _IMPACT_ORDER = {"High": 1, "Medium": 2, "Low": 3}
@@ -62,7 +66,8 @@ def _safe_str(val: object) -> str:
 def _friendly_resource_name(resource_type: str) -> str:
     """Turn an ARM resource type into a human-friendly name.
 
-    ``"microsoft.network/networkwatchers"`` → ``"Network Watchers"``
+    ``"microsoft.network/networkwatchers"`` → ``"Networkwatchers"``
+    ``"microsoft.network/virtualNetworks"`` → ``"Virtual Networks"``
     """
     if not resource_type:
         return "Unknown Resource"
@@ -77,18 +82,21 @@ def _friendly_resource_name(resource_type: str) -> str:
     return spaced.replace("_", " ").title()
 
 
+def _best_display_variant(resource_types: pd.Series) -> str:
+    """Pick the resource type variant with the most camelCase info for display."""
+    variants = resource_types.dropna().unique()
+    if len(variants) == 0:
+        return ""
+    return max(variants, key=lambda v: sum(1 for c in str(v) if c.isupper()))
+
+
 class HierarchyBuilder:
-    """Builds the Epic→Feature→UserStory→Task tree from a mapped DataFrame."""
+    """Builds the Epic→Feature→UserStory tree from a mapped DataFrame."""
 
     def __init__(
         self,
         category_descriptions: Optional[Dict[str, str]] = None,
     ) -> None:
-        """
-        Args:
-            category_descriptions: mapping of category name → description
-                                   (from resource_matrix.yaml).
-        """
         self._category_descriptions = category_descriptions or {}
 
     # ------------------------------------------------------------------
@@ -98,22 +106,25 @@ class HierarchyBuilder:
     def build(self, df: pd.DataFrame) -> WorkItemHierarchy:
         """Build the full hierarchy from the mapped DataFrame.
 
-        The DataFrame **must** have a ``MatrixCategory`` column (added by
-        :class:`ResourceMapper`).
-
         Grouping logic:
 
-        1. Group rows by *MatrixCategory* → creates **Epics**.
-        2. Within each Epic, group by *Resource Type* → creates **Features**.
-        3. Within each Feature, group by *(Recommendation Title, Guid)* →
-           creates **UserStories** (deduplication!).
-        4. Each row becomes a **Task** under its UserStory.
+        1. Normalize resource types to prevent fuzzy duplicates.
+        2. Group rows by *MatrixCategory* → creates **Epics**.
+        3. Within each Epic, group by normalised *Resource Type* → creates **Features**.
+        4. Within each Feature, ONE consolidated **UserStory** containing
+           all **Recommendations** (grouped by title+guid).
         """
         if COL_MATRIX_CATEGORY not in df.columns:
             raise ValueError(
                 f"DataFrame is missing the '{COL_MATRIX_CATEGORY}' column. "
                 "Run ResourceMapper before building the hierarchy."
             )
+
+        # Normalise resource types once for consistent grouping
+        df = df.copy()
+        df[_COL_RT_NORM] = df[COL_RESOURCE_TYPE].apply(
+            lambda v: normalize_resource_type(str(v)) if pd.notna(v) else ""
+        )
 
         hierarchy = WorkItemHierarchy()
 
@@ -125,11 +136,11 @@ class HierarchyBuilder:
         hierarchy.epics.sort(key=lambda e: e.name.lower())
 
         logger.info(
-            "Built hierarchy: %d epics, %d features, %d stories, %d tasks",
+            "Built hierarchy: %d epics, %d features, %d stories, %d recommendations",
             len(hierarchy.epics),
             len(hierarchy.all_features()),
             len(hierarchy.all_stories()),
-            len(hierarchy.all_tasks()),
+            len(hierarchy.all_recommendations()),
         )
         return hierarchy
 
@@ -147,16 +158,16 @@ class HierarchyBuilder:
         waf_pillars: Set[str] = set()
         total_resources = 0
 
-        for resource_type, rt_df in category_df.groupby(COL_RESOURCE_TYPE, sort=False):
-            feature = self._build_feature(str(resource_type), rt_df)
+        for rt_norm, rt_df in category_df.groupby(_COL_RT_NORM, sort=False):
+            feature = self._build_feature(str(rt_norm), rt_df)
             epic.add_feature(feature)
             total_resources += feature.resource_count
 
             for story in feature.user_stories:
-                for task in story.tasks:
-                    impact_counter[task.impact] += 1
-                    if task.waf_pillar:
-                        waf_pillars.add(task.waf_pillar)
+                for rec in story.recommendations:
+                    impact_counter[rec.impact] += 1
+                    if rec.waf_pillar:
+                        waf_pillars.add(rec.waf_pillar)
 
         epic.total_resource_count = total_resources
         epic.impact_summary = dict(impact_counter)
@@ -167,10 +178,14 @@ class HierarchyBuilder:
 
         return epic
 
-    def _build_feature(self, resource_type: str, rt_df: pd.DataFrame) -> Feature:
+    def _build_feature(self, rt_norm: str, rt_df: pd.DataFrame) -> Feature:
+        # Use the best display variant for the friendly name
+        display_variant = _best_display_variant(rt_df[COL_RESOURCE_TYPE])
+        friendly = _friendly_resource_name(display_variant) if display_variant else _friendly_resource_name(rt_norm)
+
         feature = Feature(
-            name=_friendly_resource_name(resource_type),
-            resource_type=resource_type,
+            name=friendly,
+            resource_type=rt_norm,  # canonical lowercase
         )
 
         resource_groups: Set[str] = set()
@@ -186,42 +201,41 @@ class HierarchyBuilder:
 
         feature.resource_groups = resource_groups
         feature.subscriptions = subscriptions
-        # Unique resource count (a resource may appear in multiple recommendations)
         unique_ids = rt_df[COL_ID].dropna().unique()
         feature.resource_count = len(unique_ids)
 
         # ONE consolidated story per feature
-        story = self._build_consolidated_story(resource_type, rt_df)
+        story = self._build_consolidated_story(friendly, rt_norm, rt_df)
         feature.add_user_story(story)
 
         return feature
 
     def _build_consolidated_story(
-        self, resource_type: str, rt_df: pd.DataFrame
+        self, friendly_name: str, rt_norm: str, rt_df: pd.DataFrame
     ) -> UserStory:
         """Build a single consolidated UserStory containing all recommendations for a resource type."""
         waf_pillars: Set[str] = set()
         highest_impact = "Low"
         categories: Set[str] = set()
         sources: Set[str] = set()
-        tasks: list[Task] = []
+        recs: list[Recommendation] = []
 
         for (rec_title, guid), rec_df in rt_df.groupby(
             [COL_RECOMMENDATION_TITLE, COL_GUID], sort=False
         ):
-            task = self._build_recommendation_task(
+            rec = self._build_recommendation(
                 _safe_str(rec_title), _safe_str(guid), rec_df
             )
-            tasks.append(task)
+            recs.append(rec)
 
-            if task.waf_pillar:
-                waf_pillars.add(task.waf_pillar)
-            if task.category:
-                categories.add(task.category)
-            if task.source:
-                sources.add(task.source)
-            if _IMPACT_ORDER.get(task.impact, 99) < _IMPACT_ORDER.get(highest_impact, 99):
-                highest_impact = task.impact
+            if rec.waf_pillar:
+                waf_pillars.add(rec.waf_pillar)
+            if rec.category:
+                categories.add(rec.category)
+            if rec.source:
+                sources.add(rec.source)
+            if _IMPACT_ORDER.get(rec.impact, 99) < _IMPACT_ORDER.get(highest_impact, 99):
+                highest_impact = rec.impact
 
         # Determine combined source label
         if sources == {"APRL"} or not sources:
@@ -234,7 +248,7 @@ class HierarchyBuilder:
         unique_ids = rt_df[COL_ID].dropna().unique()
 
         story = UserStory(
-            title=f"{_friendly_resource_name(resource_type)} - Recommendations",
+            title=f"{friendly_name} - Recommendations",
             impact=highest_impact,
             category=", ".join(sorted(categories)) if categories else "",
             source=combined_source,
@@ -242,17 +256,17 @@ class HierarchyBuilder:
             resource_count=len(unique_ids),
         )
 
-        # Sort tasks by impact priority (High first)
-        tasks.sort(key=lambda t: _IMPACT_ORDER.get(t.impact, 99))
-        for task in tasks:
-            story.add_task(task)
+        # Sort recommendations by impact then title for deterministic ordering
+        recs.sort(key=lambda r: (_IMPACT_ORDER.get(r.impact, 99), r.title.lower(), r.recommendation_guid.lower()))
+        for rec in recs:
+            story.add_recommendation(rec)
 
         return story
 
-    def _build_recommendation_task(
+    def _build_recommendation(
         self, rec_title: str, guid: str, rec_df: pd.DataFrame
-    ) -> Task:
-        """Build a Task representing a single recommendation with its affected resources."""
+    ) -> Recommendation:
+        """Build a Recommendation with its affected resources."""
         first_row = rec_df.iloc[0]
 
         source_val = _safe_str(first_row.get("_Source")) or _safe_str(first_row.get(COL_SOURCE))
@@ -269,7 +283,7 @@ class HierarchyBuilder:
             if val:
                 advisor_metadata[col_name] = val
 
-        # Build affected resources list
+        # Build affected resources list (sorted by resource_id for deterministic hashing)
         affected: list[AffectedResource] = []
         for _, row in rec_df.iterrows():
             custom_fields: Dict[str, str] = {}
@@ -290,7 +304,9 @@ class HierarchyBuilder:
                 custom_fields=custom_fields,
             ))
 
-        return Task(
+        affected.sort(key=lambda a: a.resource_id.lower())
+
+        return Recommendation(
             title=rec_title,
             recommendation_guid=guid,
             impact=_safe_str(first_row.get(COL_IMPACT)),

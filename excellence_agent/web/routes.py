@@ -210,14 +210,14 @@ def hierarchy_epics():
                 "resource_type": f.resource_type,
                 "resource_count": f.resource_count,
                 "story_count": len(f.user_stories),
-                "total_tasks": f.total_tasks(),
+                "total_recommendations": f.total_recommendations(),
             })
         epics.append({
             "name": epic.name,
             "description": epic.description,
             "total_resource_count": epic.total_resource_count,
             "total_stories": epic.total_stories(),
-            "total_tasks": epic.total_tasks(),
+            "total_recommendations": epic.total_recommendations(),
             "waf_pillars": sorted(epic.waf_pillars),
             "impact_summary": dict(epic.impact_summary),
             "features": features,

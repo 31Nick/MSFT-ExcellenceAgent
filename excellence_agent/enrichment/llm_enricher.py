@@ -15,7 +15,7 @@ from typing import Any, Dict, List, Optional
 from openai import AzureOpenAI, APIError, APITimeoutError, RateLimitError
 
 from excellence_agent.config import AzureOpenAIConfig
-from excellence_agent.models import Task, UserStory, WorkItemHierarchy
+from excellence_agent.models import Recommendation, UserStory, WorkItemHierarchy
 
 logger = logging.getLogger(__name__)
 
@@ -152,7 +152,7 @@ class LLMEnricher:
     def enrich_story_acceptance_criteria(self, story: UserStory) -> Optional[str]:
         """Generate detailed, testable acceptance criteria for a consolidated *UserStory*.
 
-        Uses the story's tasks (recommendations) to build the prompt.
+        Uses the story's recommendations to build the prompt.
 
         Returns
         -------
@@ -160,8 +160,8 @@ class LLMEnricher:
             Markdown-formatted acceptance criteria, or ``None`` on failure.
         """
         rec_summaries = []
-        for task in story.tasks:
-            rec_summaries.append(f"- {task.title} [{task.impact}]: {task.long_description or 'N/A'}")
+        for rec in story.recommendations:
+            rec_summaries.append(f"- {rec.title} [{rec.impact}]: {rec.long_description or 'N/A'}")
         recs_text = "\n".join(rec_summaries) if rec_summaries else "N/A"
 
         prompt = ACCEPTANCE_CRITERIA_PROMPT.format(
@@ -172,36 +172,35 @@ class LLMEnricher:
         )
         return self._chat(prompt)
 
-    def enrich_task_remediation_steps(
-        self, task: Task
+    def enrich_recommendation_remediation_steps(
+        self, rec: Recommendation, resource_type: str = ""
     ) -> Optional[str]:
         """Generate step-by-step remediation instructions for a recommendation.
 
         Parameters
         ----------
-        task:
-            The ``Task`` representing the recommendation with its affected resources.
+        rec:
+            The ``Recommendation`` with its affected resources.
+        resource_type:
+            ARM resource type for context.
 
         Returns
         -------
         str or None
             Numbered remediation steps, or ``None`` on failure.
         """
-        resource_type = ""
-        if task.user_story and task.user_story.feature:
-            resource_type = task.user_story.feature.resource_type
-        resource_names = ", ".join(r.resource_name for r in task.affected_resources[:5])
-        if len(task.affected_resources) > 5:
-            resource_names += f" (+{len(task.affected_resources) - 5} more)"
+        resource_names = ", ".join(r.resource_name for r in rec.affected_resources[:5])
+        if len(rec.affected_resources) > 5:
+            resource_names += f" (+{len(rec.affected_resources) - 5} more)"
 
         prompt = REMEDIATION_STEPS_PROMPT.format(
             resource_name=resource_names,
             resource_id=resource_type,
             resource_type=resource_type,
             location="multiple",
-            recommendation_title=task.title,
-            long_description=task.long_description or "N/A",
-            recommendation_control=task.recommendation_control or "N/A",
+            recommendation_title=rec.title,
+            long_description=rec.long_description or "N/A",
+            recommendation_control=rec.recommendation_control or "N/A",
         )
         return self._chat(prompt)
 
@@ -221,8 +220,8 @@ class LLMEnricher:
 
         lines: list[str] = []
         for idx, s in enumerate(stories, 1):
-            desc = s.long_description or s.potential_benefit or ""
-            lines.append(f"{idx}. **{s.title}** — {desc[:200]}")
+            rec_titles = ", ".join(r.title for r in s.recommendations[:3])
+            lines.append(f"{idx}. **{s.title}** — {rec_titles}")
 
         prompt = SEMANTIC_GROUPING_PROMPT.format(stories_block="\n".join(lines))
         raw = self._chat(prompt, temperature=0.5)
@@ -266,11 +265,12 @@ class LLMEnricher:
                 "[%d/%d] Enriching story: %s", idx, total_stories, story.title
             )
 
-            for task in story.tasks:
-                steps = self.enrich_task_remediation_steps(task)
+            resource_type = story.feature.resource_type if story.feature else ""
+            for rec in story.recommendations:
+                steps = self.enrich_recommendation_remediation_steps(rec, resource_type)
                 if steps:
-                    task.long_description = (
-                        f"{task.long_description}\n\n"
+                    rec.long_description = (
+                        f"{rec.long_description}\n\n"
                         f"## Remediation Steps (LLM-generated)\n{steps}"
                     ).strip()
 

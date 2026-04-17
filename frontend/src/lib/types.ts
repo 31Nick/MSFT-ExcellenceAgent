@@ -10,7 +10,7 @@ export interface AffectedResource {
   custom_fields: Record<string, string>;
 }
 
-export interface Task {
+export interface Recommendation {
   title: string;
   recommendation_guid: string;
   impact: 'High' | 'Medium' | 'Low';
@@ -33,7 +33,7 @@ export interface UserStory {
   source: string;
   waf_pillars: string[];
   resource_count: number;
-  tasks: Task[];
+  recommendations: Recommendation[];
 }
 
 export interface Feature {
@@ -43,7 +43,7 @@ export interface Feature {
   subscriptions: string[];
   resource_count: number;
   user_stories: UserStory[];
-  total_tasks: number;
+  total_recommendations: number;
 }
 
 export interface Epic {
@@ -54,7 +54,7 @@ export interface Epic {
   impact_summary: { High: number; Medium: number; Low: number };
   features: Feature[];
   total_stories: number;
-  total_tasks: number;
+  total_recommendations: number;
 }
 
 export interface WorkItemHierarchy {
@@ -63,7 +63,7 @@ export interface WorkItemHierarchy {
     epics: number;
     features: number;
     user_stories: number;
-    tasks: number;
+    recommendations: number;
   };
 }
 
@@ -71,7 +71,7 @@ export interface Stats {
   epics: number;
   features: number;
   user_stories: number;
-  tasks: number;
+  recommendations: number;
   impact_counts: { High: number; Medium: number; Low: number };
   has_data: boolean;
 }
@@ -92,7 +92,7 @@ export interface Pattern {
   description: string;
   affected_epics: string[];
   story_count: number;
-  task_count: number;
+  recommendation_count: number;
   is_cross_epic: boolean;
   recommendations: string[];
 }

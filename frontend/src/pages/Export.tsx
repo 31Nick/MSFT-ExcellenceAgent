@@ -74,8 +74,8 @@ export default function Export() {
               <p className="text-xs text-green-500">User Stories</p>
             </div>
             <div className="bg-orange-50 rounded-lg p-3">
-              <p className="text-xl font-bold text-orange-700">{stats.tasks}</p>
-              <p className="text-xs text-orange-500">Tasks</p>
+              <p className="text-xl font-bold text-orange-700">{stats.recommendations}</p>
+              <p className="text-xs text-orange-500">Recommendations</p>
             </div>
           </div>
         </div>

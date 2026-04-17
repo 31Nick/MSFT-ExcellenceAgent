@@ -4,7 +4,7 @@ import {
   ChevronRight, ChevronDown, Search, ExternalLink, AlertTriangle,
 } from 'lucide-react';
 import { getHierarchy } from '../lib/api';
-import type { WorkItemHierarchy, Epic, Feature, UserStory, Task } from '../lib/types';
+import type { WorkItemHierarchy, Epic, Feature, UserStory, Recommendation } from '../lib/types';
 import ImpactBadge from '../components/ImpactBadge';
 import Spinner from '../components/Spinner';
 
@@ -31,9 +31,9 @@ export default function Hierarchy() {
             const stories = f.user_stories.filter(
               (s) =>
                 s.title.toLowerCase().includes(q) ||
-                s.tasks.some((t) =>
-                  t.title.toLowerCase().includes(q) ||
-                  t.affected_resources.some((r) => r.resource_name.toLowerCase().includes(q))
+                s.recommendations.some((r) =>
+                  r.title.toLowerCase().includes(q) ||
+                  r.affected_resources.some((ar) => ar.resource_name.toLowerCase().includes(q))
                 )
             );
             if (
@@ -81,7 +81,7 @@ export default function Hierarchy() {
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Work Item Hierarchy</h1>
         <p className="text-gray-500 mt-1">
-          {hierarchy.summary.epics} Epics · {hierarchy.summary.features} Features · {hierarchy.summary.user_stories} Stories · {hierarchy.summary.tasks} Tasks
+          {hierarchy.summary.epics} Epics · {hierarchy.summary.features} Features · {hierarchy.summary.user_stories} Stories · {hierarchy.summary.recommendations} Recommendations
         </p>
       </div>
 
@@ -90,7 +90,7 @@ export default function Hierarchy() {
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
         <input
           type="text"
-          placeholder="Search epics, features, stories, tasks…"
+          placeholder="Search epics, features, stories, recommendations…"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
@@ -147,7 +147,7 @@ function FeatureNode({ feature, defaultOpen }: { feature: Feature; defaultOpen: 
         {open ? <ChevronDown size={16} className="text-gray-400" /> : <ChevronRight size={16} className="text-gray-400" />}
         <Box size={16} className="text-blue-500" />
         <span className="font-medium text-gray-800 flex-1 text-sm">{feature.name}</span>
-        <span className="text-xs text-gray-400">{feature.user_stories.length} stories · {feature.total_tasks} tasks</span>
+        <span className="text-xs text-gray-400">{feature.user_stories.length} stories · {feature.total_recommendations} recs</span>
       </button>
       <div
         className={`transition-all duration-300 ease-in-out overflow-hidden ${open ? 'max-h-[10000px] opacity-100' : 'max-h-0 opacity-0'}`}
@@ -174,18 +174,18 @@ function StoryNode({ story, defaultOpen }: { story: UserStory; defaultOpen: bool
         <FileText size={14} className="text-green-500" />
         <span className="text-sm text-gray-700 flex-1 line-clamp-1">{story.title}</span>
         <ImpactBadge impact={story.impact} />
-        <span className="text-xs text-gray-400 ml-1">{story.tasks.length} recs · {story.resource_count} resources</span>
+        <span className="text-xs text-gray-400 ml-1">{story.recommendations.length} recs · {story.resource_count} resources</span>
       </button>
       <div
         className={`transition-all duration-300 ease-in-out overflow-hidden ${open ? 'max-h-[10000px] opacity-100' : 'max-h-0 opacity-0'}`}
       >
         <div className="pl-10 pr-2 pb-2 space-y-2">
           <p className="text-xs text-gray-400">
-            {story.tasks.length} recommendation{story.tasks.length !== 1 ? 's' : ''} · {story.resource_count} affected resource{story.resource_count !== 1 ? 's' : ''}
+            {story.recommendations.length} recommendation{story.recommendations.length !== 1 ? 's' : ''} · {story.resource_count} affected resource{story.resource_count !== 1 ? 's' : ''}
           </p>
           <div className="space-y-1">
-            {story.tasks.map((t, i) => (
-              <TaskNode key={`${t.recommendation_guid}-${i}`} task={t} />
+            {story.recommendations.map((rec, i) => (
+              <RecommendationNode key={`${rec.recommendation_guid}-${i}`} rec={rec} />
             ))}
           </div>
         </div>
@@ -194,7 +194,7 @@ function StoryNode({ story, defaultOpen }: { story: UserStory; defaultOpen: bool
   );
 }
 
-function TaskNode({ task }: { task: Task }) {
+function RecommendationNode({ rec }: { rec: Recommendation }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="rounded-md">
@@ -203,20 +203,20 @@ function TaskNode({ task }: { task: Task }) {
         className="w-full flex items-center gap-2 px-2 py-1.5 hover:bg-gray-50 transition-colors text-left rounded-md"
       >
         <Server size={12} className="text-gray-400" />
-        <span className="text-xs text-gray-600 flex-1 truncate">{task.title}</span>
-        <ImpactBadge impact={task.impact as 'High' | 'Medium' | 'Low'} />
-        <span className="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-500">{task.affected_resources.length} resources</span>
+        <span className="text-xs text-gray-600 flex-1 truncate">{rec.title}</span>
+        <ImpactBadge impact={rec.impact as 'High' | 'Medium' | 'Low'} />
+        <span className="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-500">{rec.affected_resources.length} resources</span>
       </button>
       <div
         className={`transition-all duration-200 ease-in-out overflow-hidden ${open ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}
       >
         <div className="pl-6 pr-2 pb-2 text-xs text-gray-500 space-y-1">
-          <p><span className="font-medium text-gray-600">WAF Pillar:</span> {task.waf_pillar}</p>
-          <p><span className="font-medium text-gray-600">Control:</span> {task.recommendation_control}</p>
-          {task.long_description && <p className="leading-relaxed">{task.long_description}</p>}
-          {task.learn_more_link && (
+          <p><span className="font-medium text-gray-600">WAF Pillar:</span> {rec.waf_pillar}</p>
+          <p><span className="font-medium text-gray-600">Control:</span> {rec.recommendation_control}</p>
+          {rec.long_description && <p className="leading-relaxed">{rec.long_description}</p>}
+          {rec.learn_more_link && (
             <a
-              href={task.learn_more_link}
+              href={rec.learn_more_link}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 text-blue-500 hover:underline"
@@ -224,11 +224,11 @@ function TaskNode({ task }: { task: Task }) {
               Learn more <ExternalLink size={12} />
             </a>
           )}
-          {task.affected_resources.length > 0 && (
+          {rec.affected_resources.length > 0 && (
             <div className="mt-2">
-              <p className="font-medium text-gray-600 mb-1">Affected Resources ({task.affected_resources.length}):</p>
+              <p className="font-medium text-gray-600 mb-1">Affected Resources ({rec.affected_resources.length}):</p>
               <div className="space-y-0.5">
-                {task.affected_resources.map((r, i) => (
+                {rec.affected_resources.map((r, i) => (
                   <div key={`${r.resource_id}-${i}`} className="flex items-center gap-2 py-0.5">
                     <span className="text-gray-600">{r.resource_name}</span>
                     <span className="text-gray-400">({r.resource_group})</span>

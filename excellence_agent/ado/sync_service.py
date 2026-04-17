@@ -2,8 +2,8 @@
 
 The sync service sits between the in-memory ``WorkItemHierarchy`` and the
 ADO MCP client.  It computes a diff against the local state store, builds
-a plan, and pushes changes top-down (Epic → Feature → Story → Task) so
-that parent ADO IDs are available before children are created.
+a plan, and pushes changes top-down (Epic → Feature → Story) so that
+parent ADO IDs are available before children are created.
 """
 
 from __future__ import annotations
@@ -22,7 +22,7 @@ from excellence_agent.ado.state_store import (
     compute_content_hash,
 )
 from excellence_agent.export.content_generator import ContentGenerator
-from excellence_agent.models import Epic, Feature, Task, UserStory, WorkItemHierarchy
+from excellence_agent.models import Epic, Feature, UserStory, WorkItemHierarchy
 
 logger = logging.getLogger(__name__)
 
@@ -41,7 +41,7 @@ class PlannedItem:
     parent_stable_key: str = ""
     fields: Dict[str, str] = field(default_factory=dict)
     existing: Optional[SyncItem] = None
-    model: Any = None  # reference to Epic/Feature/UserStory/Task
+    model: Any = None  # reference to Epic/Feature/UserStory
 
 
 @dataclass
@@ -116,8 +116,6 @@ class AdoSyncService:
                 self._plan_feature(feat, existing, active_keys, sp)
                 for story in feat.user_stories:
                     self._plan_story(story, existing, active_keys, sp)
-                    for task in story.tasks:
-                        self._plan_task(task, existing, active_keys, sp)
 
         # Orphan detection
         for key, item in existing.items():
@@ -224,21 +222,6 @@ class AdoSyncService:
             story.title, fields, parent_key, existing, active_keys, sp, story,
         )
 
-    def _plan_task(
-        self, task: Task, existing: Dict[str, SyncItem],
-        active_keys: Set[str], sp: SyncPlan,
-    ) -> None:
-        desc = self._cg.generate_task_description(task)
-        ac = self._cg.generate_task_acceptance_criteria(task)
-        parent_key = task.user_story.stable_key if task.user_story and task.user_story.feature else ""
-        fields = self._base_fields(
-            self._config.type_mapping.task, task.title, desc, ac,
-        )
-        self._plan_item(
-            task.stable_key, self._config.type_mapping.task,
-            task.title, fields, parent_key, existing, active_keys, sp, task,
-        )
-
     def _base_fields(
         self,
         work_item_type: str,
@@ -280,7 +263,7 @@ class AdoSyncService:
         for pi in plan.unchanged:
             run.items_unchanged += 1
 
-        # Process in hierarchy order: Epics, Features, Stories, Tasks
+        # Process in hierarchy order: Epics, Features, Stories
         type_order = {
             self._config.type_mapping.epic: 0,
             self._config.type_mapping.feature: 1,

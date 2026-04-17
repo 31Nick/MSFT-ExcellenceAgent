@@ -77,14 +77,14 @@ class PatternDetector:
         for epic in hierarchy.epics:
             for feature in epic.features:
                 for story in feature.user_stories:
-                    for task in story.tasks:
-                        ctrl = task.recommendation_control
+                    for rec in story.recommendations:
+                        ctrl = rec.recommendation_control
                         if not ctrl:
                             continue
                         control_epics[ctrl].add(epic.name)
                         control_features[ctrl].add(feature.name)
                         control_stories[ctrl] += 1
-                        control_tasks[ctrl] += len(task.affected_resources)
+                        control_tasks[ctrl] += len(rec.affected_resources)
 
         patterns: List[Pattern] = []
         for ctrl, epics in sorted(control_epics.items()):
@@ -115,20 +115,20 @@ class PatternDetector:
 
         for epic in hierarchy.epics:
             for feature in epic.features:
-                all_tasks = [t for s in feature.user_stories for t in s.tasks]
-                if not all_tasks:
+                all_recs = [r for s in feature.user_stories for r in s.recommendations]
+                if not all_recs:
                     continue
-                high_count = sum(1 for t in all_tasks if t.impact == "High")
-                ratio = high_count / len(all_tasks)
+                high_count = sum(1 for r in all_recs if r.impact == "High")
+                ratio = high_count / len(all_recs)
                 if ratio >= _HIGH_IMPACT_THRESHOLD and high_count >= 2:
                     resource_count = sum(
-                        len(t.affected_resources) for t in all_tasks if t.impact == "High"
+                        len(r.affected_resources) for r in all_recs if r.impact == "High"
                     )
                     patterns.append(
                         Pattern(
                             name=f"High-Impact Cluster: {feature.name}",
                             description=(
-                                f"{high_count}/{len(all_tasks)} recommendations "
+                                f"{high_count}/{len(all_recs)} recommendations "
                                 f"({ratio:.0%}) in '{feature.name}' "
                                 f"(epic '{epic.name}') are High impact."
                             ),
@@ -161,7 +161,7 @@ class PatternDetector:
                     rg_features[rg].add(feature.name)
                     rg_epics[rg].add(epic.name)
                     rg_stories[rg] += len(feature.user_stories)
-                    rg_tasks[rg] += feature.total_tasks()
+                    rg_tasks[rg] += feature.total_recommendations()
 
         patterns: List[Pattern] = []
         for rg, features in sorted(rg_features.items()):
@@ -198,14 +198,14 @@ class PatternDetector:
         for epic in hierarchy.epics:
             for feature in epic.features:
                 for story in feature.user_stories:
-                    for task in story.tasks:
-                        pillar = task.waf_pillar
+                    for rec in story.recommendations:
+                        pillar = rec.waf_pillar
                         if not pillar:
                             continue
                         pillar_epics[pillar].add(epic.name)
                         pillar_features[pillar].add(feature.name)
                         pillar_stories[pillar] += 1
-                        pillar_tasks[pillar] += len(task.affected_resources)
+                        pillar_tasks[pillar] += len(rec.affected_resources)
 
         patterns: List[Pattern] = []
         for pillar, epics in sorted(pillar_epics.items()):

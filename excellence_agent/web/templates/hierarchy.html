@@ -12,7 +12,7 @@
     <details class="tree-epic">
       <summary>
         <strong>Epic:</strong> {{ epic.name }}
-        <span class="text-muted ms-2">({{ epic.features | length }} features, {{ epic.total_tasks() }} tasks)</span>
+        <span class="text-muted ms-2">({{ epic.features | length }} features, {{ epic.total_recommendations() }} recommendations)</span>
       </summary>
 
       {% for feature in epic.features %}
@@ -29,9 +29,9 @@
             <span class="badge-impact badge-{{ story.impact | lower }}">{{ story.impact }}</span>
           </summary>
           <div class="tree-story-detail">
-            <p class="mb-1"><strong>{{ story.tasks | length }}</strong> recommendation(s), <strong>{{ story.resource_count }}</strong> resource(s)</p>
+            <p class="mb-1"><strong>{{ story.recommendations | length }}</strong> recommendation(s), <strong>{{ story.resource_count }}</strong> resource(s)</p>
 
-            {% if story.tasks %}
+            {% if story.recommendations %}
             <table class="table table-sm table-bordered mb-0">
               <thead>
                 <tr>
@@ -42,12 +42,12 @@
                 </tr>
               </thead>
               <tbody>
-                {% for task in story.tasks %}
+                {% for rec in story.recommendations %}
                 <tr>
-                  <td>{{ task.title }}</td>
-                  <td>{{ task.impact }}</td>
-                  <td>{{ task.waf_pillar }}</td>
-                  <td>{{ task.affected_resources | length }}</td>
+                  <td>{{ rec.title }}</td>
+                  <td>{{ rec.impact }}</td>
+                  <td>{{ rec.waf_pillar }}</td>
+                  <td>{{ rec.affected_resources | length }}</td>
                 </tr>
                 {% endfor %}
               </tbody>

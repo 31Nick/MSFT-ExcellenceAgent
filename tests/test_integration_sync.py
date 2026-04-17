@@ -21,14 +21,14 @@ from excellence_agent.models import (
     AffectedResource,
     Epic,
     Feature,
-    Task,
+    Recommendation,
     UserStory,
     WorkItemHierarchy,
 )
 
 
 def _make_hierarchy() -> WorkItemHierarchy:
-    """Build a small but realistic hierarchy: 1 Epic, 1 Feature, 1 Story, 1 Task (2 resources)."""
+    """Build a small but realistic hierarchy: 1 Epic, 1 Feature, 1 Story with 1 Recommendation (2 resources)."""
     epic = Epic(name="Networking", description="Network resilience")
     feat = Feature(name="Virtual Networks", resource_type="microsoft.network/virtualnetworks")
     epic.add_feature(feat)
@@ -43,7 +43,7 @@ def _make_hierarchy() -> WorkItemHierarchy:
     )
     feat.add_user_story(story)
 
-    task = Task(
+    rec = Recommendation(
         title="Use Standard SKU load balancers",
         recommendation_guid="abc-123",
         impact="High",
@@ -73,7 +73,7 @@ def _make_hierarchy() -> WorkItemHierarchy:
             ),
         ],
     )
-    story.add_task(task)
+    story.add_recommendation(rec)
 
     return WorkItemHierarchy(epics=[epic])
 
@@ -111,14 +111,14 @@ class TestFullSyncCycle:
 
     def test_first_plan_all_creates(self, service, hierarchy):
         plan = service.plan(hierarchy)
-        assert plan.summary()["create"] == 4  # 1 epic + 1 feat + 1 story + 1 task
+        assert plan.summary()["create"] == 3  # 1 epic + 1 feat + 1 story
         assert plan.summary()["unchanged"] == 0
 
     @pytest.mark.asyncio
     async def test_push_then_replan_shows_unchanged(self, service, store, config, hierarchy):
         # Plan
         plan = service.plan(hierarchy)
-        assert plan.summary()["create"] == 4
+        assert plan.summary()["create"] == 3
 
         # Mock MCP client
         ado_id_counter = [100]
@@ -138,13 +138,13 @@ class TestFullSyncCycle:
         # Push
         result = await service.push(plan, client)
         assert result.success
-        assert result.run.items_created == 4
+        assert result.run.items_created == 3
         assert result.run.items_failed == 0
 
         # Re-plan should show all unchanged
         plan2 = service.plan(hierarchy)
         assert plan2.summary()["create"] == 0
-        assert plan2.summary()["unchanged"] == 4
+        assert plan2.summary()["unchanged"] == 3
 
     @pytest.mark.asyncio
     async def test_partial_failure_and_retry(self, service, store, config, hierarchy):
@@ -180,7 +180,7 @@ class TestFullSyncCycle:
     def test_state_store_isolation(self, store, service, hierarchy, config):
         """Items for one customer don't leak to another."""
         plan = service.plan(hierarchy)
-        assert plan.summary()["create"] == 4
+        assert plan.summary()["create"] == 3
 
         # Different customer should see no items
         other_items = store.get_items_by_customer("other-customer")

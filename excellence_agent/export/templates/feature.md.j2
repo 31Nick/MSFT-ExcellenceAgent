@@ -17,12 +17,12 @@
 </ul>
 <h2>Recommendations</h2>
 <ol>
-{% for task in recommendation_tasks -%}
-<li><strong>{{ task.title }}</strong> [{{ task.impact }}]
+{% for rec in recommendations -%}
+<li><strong>{{ rec.title }}</strong> [{{ rec.impact }}]
 <ul>
-<li><strong>Control:</strong> {{ task.recommendation_control }}</li>
-<li><strong>Benefit:</strong> {{ task.potential_benefit }}</li>
-<li><strong>Affected Resources:</strong> {{ task.affected_resources | length }}</li>
+<li><strong>Control:</strong> {{ rec.recommendation_control }}</li>
+<li><strong>Benefit:</strong> {{ rec.potential_benefit }}</li>
+<li><strong>Affected Resources:</strong> {{ rec.affected_resources | length }}</li>
 </ul>
 </li>
 {% endfor -%}

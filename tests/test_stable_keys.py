@@ -5,10 +5,8 @@ from __future__ import annotations
 import pytest
 
 from excellence_agent.models import (
-    AffectedResource,
     Epic,
     Feature,
-    Task,
     UserStory,
 )
 
@@ -53,50 +51,3 @@ class TestUserStoryStableKey:
         story = UserStory(title="Recs", impact="High")
         with pytest.raises(ValueError, match="parent Feature"):
             _ = story.stable_key
-
-
-class TestTaskStableKey:
-    def test_basic(self) -> None:
-        epic = Epic(name="Networking")
-        feat = Feature(name="VNets", resource_type="microsoft.network/virtualNetworks")
-        epic.add_feature(feat)
-        story = UserStory(title="Virtual Networks - Recommendations", impact="High")
-        feat.add_user_story(story)
-        task = Task(
-            title="Enable DDoS protection",
-            recommendation_guid="GUID-001",
-            impact="High",
-            recommendation_control="Automated",
-            affected_resources=[
-                AffectedResource("vnet-hub", "/subs/sub/rg/vnet-hub", "RG", "SUB", "uksouth"),
-            ],
-        )
-        story.add_task(task)
-        expected = "task:guid-001:microsoft.network/virtualnetworks"
-        assert task.stable_key == expected
-
-    def test_raises_without_parent(self) -> None:
-        task = Task("rec", "guid", "High", "Automated")
-        with pytest.raises(ValueError, match="parent UserStory"):
-            _ = task.stable_key
-
-    def test_different_guids_different_keys(self) -> None:
-        """Tasks with different recommendation GUIDs yield distinct keys."""
-        epic = Epic(name="Net")
-        feat = Feature(name="VNets", resource_type="type")
-        epic.add_feature(feat)
-        story = UserStory(title="Recs", impact="High")
-        feat.add_user_story(story)
-
-        task_a = Task("rec-A", "GUID-A", "High", "Automated")
-        task_b = Task("rec-B", "GUID-B", "Medium", "Automated")
-        story.add_task(task_a)
-        story.add_task(task_b)
-
-        assert task_a.stable_key != task_b.stable_key
-
-    def test_add_task_sets_backref(self) -> None:
-        story = UserStory(title="Recs", impact="High")
-        task = Task("rec", "guid", "High", "Automated")
-        story.add_task(task)
-        assert task.user_story is story

@@ -8,7 +8,7 @@ from excellence_agent.models import (
     AffectedResource,
     Epic,
     Feature,
-    Task,
+    Recommendation,
     UserStory,
     WorkItemHierarchy,
 )
@@ -49,12 +49,12 @@ class TestAffectedResource:
         assert res.custom_fields["custom1"] == "a"
 
 
-# ── Task ──────────────────────────────────────────────────────────────────
+# ── Recommendation ────────────────────────────────────────────────────────
 
 
-class TestTask:
+class TestRecommendation:
     def test_to_dict_contains_all_fields(self) -> None:
-        task = Task(
+        rec = Recommendation(
             title="Enable automatic failover",
             recommendation_guid="guid-123",
             impact="High",
@@ -69,7 +69,7 @@ class TestTask:
                 AffectedResource("vm-01", "id-1", "rg", "sub", "uksouth"),
             ],
         )
-        d = task.to_dict()
+        d = rec.to_dict()
         assert d["title"] == "Enable automatic failover"
         assert d["recommendation_guid"] == "guid-123"
         assert d["impact"] == "High"
@@ -95,25 +95,24 @@ class TestUserStory:
         story = UserStory(title="Recs", impact="Unknown")
         assert story.priority == 3
 
-    def test_add_task_sets_backref(self) -> None:
+    def test_add_recommendation(self) -> None:
         story = UserStory(title="Recs", impact="High")
-        task = Task("rec1", "guid-1", "High", "Automated")
-        story.add_task(task)
-        assert len(story.tasks) == 1
-        assert story.tasks[0] is task
-        assert task.user_story is story
+        rec = Recommendation("rec1", "guid-1", "High", "Automated")
+        story.add_recommendation(rec)
+        assert len(story.recommendations) == 1
+        assert story.recommendations[0] is rec
 
     def test_total_affected_resources(self) -> None:
         story = UserStory(title="Recs", impact="High")
-        t1 = Task("rec1", "g1", "High", "Automated", affected_resources=[
+        r1 = Recommendation("rec1", "g1", "High", "Automated", affected_resources=[
             AffectedResource("r1", "id1", "rg", "sub", "loc"),
             AffectedResource("r2", "id2", "rg", "sub", "loc"),
         ])
-        t2 = Task("rec2", "g2", "Medium", "Automated", affected_resources=[
+        r2 = Recommendation("rec2", "g2", "Medium", "Automated", affected_resources=[
             AffectedResource("r3", "id3", "rg", "sub", "loc"),
         ])
-        story.add_task(t1)
-        story.add_task(t2)
+        story.add_recommendation(r1)
+        story.add_recommendation(r2)
         assert story.total_affected_resources() == 3
 
 
@@ -131,22 +130,22 @@ class TestFeature:
         assert story.feature is feat
         assert len(feat.user_stories) == 1
 
-    def test_total_tasks(self) -> None:
+    def test_total_recommendations(self) -> None:
         feat = self._make_feature()
         story = UserStory(title="Recs", impact="High")
-        story.add_task(Task("rec1", "g1", "High", "Automated"))
-        story.add_task(Task("rec2", "g2", "Medium", "Automated"))
+        story.add_recommendation(Recommendation("rec1", "g1", "High", "Automated"))
+        story.add_recommendation(Recommendation("rec2", "g2", "Medium", "Automated"))
         feat.add_user_story(story)
-        assert feat.total_tasks() == 2
+        assert feat.total_recommendations() == 2
 
     def test_total_affected_resources(self) -> None:
         feat = self._make_feature()
         story = UserStory(title="Recs", impact="High")
-        t1 = Task("rec1", "g1", "High", "Automated", affected_resources=[
+        r1 = Recommendation("rec1", "g1", "High", "Automated", affected_resources=[
             AffectedResource("r1", "id1", "rg", "sub", "loc"),
             AffectedResource("r2", "id2", "rg", "sub", "loc"),
         ])
-        story.add_task(t1)
+        story.add_recommendation(r1)
         feat.add_user_story(story)
         assert feat.total_affected_resources() == 2
 
@@ -159,7 +158,7 @@ class TestEpic:
         epic = Epic(name="Data", description="Data services")
         feat = Feature(name="Cosmos DB", resource_type="microsoft.documentdb/databaseaccounts")
         story = UserStory(title="Recs", impact="High")
-        story.add_task(Task("rec1", "g1", "High", "Automated", affected_resources=[
+        story.add_recommendation(Recommendation("rec1", "g1", "High", "Automated", affected_resources=[
             AffectedResource("r1", "id1", "rg", "sub", "loc"),
             AffectedResource("r2", "id2", "rg", "sub", "loc"),
         ]))
@@ -178,9 +177,9 @@ class TestEpic:
         epic = self._make_epic()
         assert epic.total_stories() == 1
 
-    def test_total_tasks(self) -> None:
+    def test_total_recommendations(self) -> None:
         epic = self._make_epic()
-        assert epic.total_tasks() == 1
+        assert epic.total_recommendations() == 1
 
     def test_total_affected_resources(self) -> None:
         epic = self._make_epic()
@@ -193,9 +192,9 @@ class TestEpic:
 class TestWorkItemHierarchy:
     def test_summary_stats(self, sample_hierarchy: WorkItemHierarchy) -> None:
         stats = sample_hierarchy.summary_stats()
-        assert set(stats.keys()) == {"epics", "features", "user_stories", "tasks"}
-        # 8 unique recommendations → 8 tasks (not 10 rows)
-        assert stats["tasks"] == 8
+        assert set(stats.keys()) == {"epics", "features", "user_stories", "recommendations"}
+        # 8 unique recommendations
+        assert stats["recommendations"] == 8
         # 5 features, each with 1 story
         assert stats["user_stories"] == 5
         assert stats["epics"] == 3
@@ -207,9 +206,9 @@ class TestWorkItemHierarchy:
             "epics": 0,
             "features": 0,
             "user_stories": 0,
-            "tasks": 0,
+            "recommendations": 0,
         }
 
     def test_all_affected_resources(self, sample_hierarchy: WorkItemHierarchy) -> None:
-        """10 input rows → 10 affected resources across all tasks."""
+        """10 input rows → 10 affected resources across all recommendations."""
         assert len(sample_hierarchy.all_affected_resources()) == 10

@@ -61,8 +61,8 @@
     <div class="col-sm-6 col-lg-3">
       <div class="card stat-card text-center">
         <div class="card-body">
-          <div class="stat-value">{{ stats.tasks }}</div>
-          <div class="stat-label">Tasks</div>
+          <div class="stat-value">{{ stats.recommendations }}</div>
+          <div class="stat-label">Recommendations</div>
         </div>
       </div>
     </div>
@@ -90,7 +90,7 @@
             <th>Epic</th>
             <th class="text-end">Features</th>
             <th class="text-end">Stories</th>
-            <th class="text-end">Tasks</th>
+            <th class="text-end">Recommendations</th>
           </tr>
         </thead>
         <tbody>
@@ -99,7 +99,7 @@
             <td>{{ epic.name }}</td>
             <td class="text-end">{{ epic.features | length }}</td>
             <td class="text-end">{{ epic.total_stories() }}</td>
-            <td class="text-end">{{ epic.total_tasks() }}</td>
+            <td class="text-end">{{ epic.total_recommendations() }}</td>
           </tr>
           {% endfor %}
         </tbody>

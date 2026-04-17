@@ -19,7 +19,7 @@ from excellence_agent.models import (
     AffectedResource,
     Epic,
     Feature,
-    Task,
+    Recommendation,
     UserStory,
     WorkItemHierarchy,
 )
@@ -57,7 +57,7 @@ def service(store: SyncStateStore, cg: ContentGenerator, config: CustomerConfig)
 
 @pytest.fixture()
 def small_hierarchy() -> WorkItemHierarchy:
-    """Build a minimal hierarchy: 1 Epic → 1 Feature → 1 Story → 1 Task."""
+    """Build a minimal hierarchy: 1 Epic → 1 Feature → 1 Story with 1 Recommendation."""
     h = WorkItemHierarchy()
     epic = Epic(name="Networking", description="Network resources")
     feat = Feature(name="VNets", resource_type="microsoft.network/virtualnetworks")
@@ -70,7 +70,7 @@ def small_hierarchy() -> WorkItemHierarchy:
         resource_count=1,
     )
     feat.add_user_story(story)
-    task = Task(
+    rec = Recommendation(
         title="Enable DDoS protection",
         recommendation_guid="guid-001",
         impact="High",
@@ -89,7 +89,7 @@ def small_hierarchy() -> WorkItemHierarchy:
             ),
         ],
     )
-    story.add_task(task)
+    story.add_recommendation(rec)
     h.add_epic(epic)
     return h
 
@@ -124,7 +124,7 @@ class TestPlan:
         self, service: AdoSyncService, small_hierarchy: WorkItemHierarchy
     ) -> None:
         plan = service.plan(small_hierarchy)
-        assert len(plan.to_create) == 4  # Epic + Feature + Story + Task
+        assert len(plan.to_create) == 3  # Epic + Feature + Story
         assert len(plan.to_update) == 0
         assert len(plan.unchanged) == 0
         assert len(plan.orphaned) == 0
@@ -133,7 +133,6 @@ class TestPlan:
         assert "Epic" in types
         assert "Feature" in types
         assert "User Story" in types
-        assert "Task" in types
 
     def test_second_run_unchanged(
         self, service: AdoSyncService, store: SyncStateStore,
@@ -141,7 +140,7 @@ class TestPlan:
     ) -> None:
         # First plan → all creates
         plan1 = service.plan(small_hierarchy)
-        assert len(plan1.to_create) == 4
+        assert len(plan1.to_create) == 3
 
         # Simulate that they were synced (save state with correct hashes)
         for pi in plan1.to_create:
@@ -160,7 +159,7 @@ class TestPlan:
         plan2 = service.plan(small_hierarchy)
         assert len(plan2.to_create) == 0
         assert len(plan2.to_update) == 0
-        assert len(plan2.unchanged) == 4
+        assert len(plan2.unchanged) == 3
 
     def test_change_triggers_update(
         self, service: AdoSyncService, store: SyncStateStore,
@@ -181,7 +180,7 @@ class TestPlan:
             ))
 
         plan2 = service.plan(small_hierarchy)
-        assert len(plan2.to_update) == 4
+        assert len(plan2.to_update) == 3
         assert len(plan2.to_create) == 0
 
     def test_orphan_detection(
@@ -209,8 +208,8 @@ class TestPlan:
     ) -> None:
         plan = service.plan(small_hierarchy)
         s = plan.summary()
-        assert s["create"] == 4
-        assert s["total"] == 4
+        assert s["create"] == 3
+        assert s["total"] == 3
 
 
 # ── Push tests ────────────────────────────────────────────────────────────
@@ -226,13 +225,13 @@ class TestPush:
         result = await service.push(plan, mock_mcp)
 
         assert result.success
-        assert result.run.items_created == 4
+        assert result.run.items_created == 3
         assert result.run.items_failed == 0
         assert result.run.status == "completed"
 
         # Verify state store was updated
         items = store.get_items_by_customer("test-customer")
-        assert len(items) == 4
+        assert len(items) == 3
         assert all(i.ado_work_item_id is not None for i in items)
         assert all(i.sync_status == "created" for i in items)
 
@@ -244,8 +243,8 @@ class TestPush:
         plan = service.plan(small_hierarchy)
         await service.push(plan, mock_mcp)
 
-        # Feature, Story, Task should each trigger a link call (3 children)
-        assert mock_mcp.link_work_items.await_count == 3
+        # Feature and Story should each trigger a link call (2 children)
+        assert mock_mcp.link_work_items.await_count == 2
 
     @pytest.mark.asyncio
     async def test_push_handles_partial_failure(
@@ -265,7 +264,7 @@ class TestPush:
         result = await service.push(plan, mock_mcp)
 
         assert not result.success
-        assert result.run.items_created == 3
+        assert result.run.items_created == 2
         assert result.run.items_failed == 1
         assert result.run.status == "failed"
         assert len(result.errors) == 1
@@ -295,11 +294,11 @@ class TestPush:
             ))
 
         plan2 = service.plan(small_hierarchy)
-        assert len(plan2.to_update) == 4
+        assert len(plan2.to_update) == 3
 
         result = await service.push(plan2, mock_mcp)
         assert result.success
-        assert result.run.items_updated == 4
+        assert result.run.items_updated == 3
 
     @pytest.mark.asyncio
     async def test_push_marks_orphans(
