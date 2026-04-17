@@ -131,7 +131,7 @@ def upload():
             f"Pipeline complete — {stats['epics']} Epics, "
             f"{stats['features']} Features, "
             f"{stats['user_stories']} User Stories, "
-            f"{stats['tasks']} Tasks."
+            f"{stats['recommendations']} Recommendations."
         )
         if xref_report:
             message += (
@@ -176,7 +176,7 @@ def stats():
             epics=0,
             features=0,
             user_stories=0,
-            tasks=0,
+            recommendations=0,
             impact_counts={"High": 0, "Medium": 0, "Low": 0},
         )
     summary = hierarchy.summary_stats()
@@ -196,7 +196,7 @@ def hierarchy():
 
 @api_bp.route("/hierarchy/epics", methods=["GET"])
 def hierarchy_epics():
-    """Return a lighter-weight list of epics with nested features (no stories/tasks)."""
+    """Return a lighter-weight list of epics with nested features (no stories/recommendations)."""
     h = _get_hierarchy()
     if h is None:
         return _error("No data loaded. Upload an APRL file first.", 404)
