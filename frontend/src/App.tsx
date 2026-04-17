@@ -1,15 +1,17 @@
 import { BrowserRouter, Routes, Route, NavLink, Navigate } from 'react-router-dom';
-import { LayoutDashboard, GitBranch, Puzzle, Download, Shield } from 'lucide-react';
+import { LayoutDashboard, GitBranch, Puzzle, Download, Shield, RefreshCw } from 'lucide-react';
 import Dashboard from './pages/Dashboard';
 import Hierarchy from './pages/Hierarchy';
 import Patterns from './pages/Patterns';
 import Export from './pages/Export';
+import Sync from './pages/Sync';
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { to: '/hierarchy', label: 'Hierarchy', icon: GitBranch },
   { to: '/patterns', label: 'Patterns', icon: Puzzle },
   { to: '/export', label: 'Export', icon: Download },
+  { to: '/sync', label: 'Sync', icon: RefreshCw },
 ];
 
 export default function App() {
@@ -64,6 +66,7 @@ export default function App() {
               <Route path="/hierarchy" element={<Hierarchy />} />
               <Route path="/patterns" element={<Patterns />} />
               <Route path="/export" element={<Export />} />
+              <Route path="/sync" element={<Sync />} />
             </Routes>
           </div>
         </main>

@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
-import { Download, CheckCircle, AlertTriangle, FileDown } from 'lucide-react';
+import { Download, CheckCircle, AlertTriangle, FileDown, RefreshCw } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { getStats, exportCsv } from '../lib/api';
 import type { Stats } from '../lib/types';
 import Spinner from '../components/Spinner';
@@ -46,7 +47,13 @@ export default function Export() {
     <div className="space-y-6 max-w-2xl">
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Export to Azure DevOps</h1>
-        <p className="text-gray-500 mt-1">Generate a CSV file for importing work items into ADO</p>
+        <p className="text-gray-500 mt-1">
+          Generate a CSV file for importing work items into ADO, or{' '}
+          <Link to="/sync" className="text-blue-600 hover:underline inline-flex items-center gap-1">
+            <RefreshCw size={14} />
+            sync directly via MCP
+          </Link>
+        </p>
       </div>
 
       {/* Preview */}

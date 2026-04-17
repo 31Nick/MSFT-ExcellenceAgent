@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import logging
 import time
 from collections import Counter
@@ -337,6 +338,304 @@ def serve(port: int) -> None:
 
     app = create_app()
     app.run(host="0.0.0.0", port=port)
+
+
+# ---------------------------------------------------------------------------
+# customers
+# ---------------------------------------------------------------------------
+
+@cli.group()
+def customers() -> None:
+    """Manage per-customer ADO configurations."""
+
+
+@customers.command("list")
+def customers_list() -> None:
+    """List available customer configurations."""
+    from excellence_agent.ado.customer_config import list_customer_configs
+
+    configs = list_customer_configs()
+    if not configs:
+        click.echo("No customer configs found in customers/ directory.")
+        click.echo("Create one from customers/example.yaml")
+        return
+
+    click.echo(click.style(f"Found {len(configs)} customer config(s):\n", fg="cyan"))
+    for c in configs:
+        click.echo(f"  {click.style(c['slug'], fg='green')}  —  {c['customer_name']}")
+
+
+@customers.command("validate")
+@click.argument("slug")
+def customers_validate(slug: str) -> None:
+    """Validate a customer config (loads YAML + checks PAT)."""
+    from excellence_agent.ado.customer_config import CustomerConfigError, load_customer_config
+
+    try:
+        cfg = load_customer_config(slug)
+    except CustomerConfigError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    click.echo(click.style(f"✔ Config valid for '{slug}'", fg="green"))
+    click.echo(f"  Organization: {cfg.organization}")
+    click.echo(f"  Project:      {cfg.project}")
+    click.echo(f"  Team:         {cfg.team or '(default)'}")
+    click.echo(f"  Area path:    {cfg.area_path or '(none)'}")
+    click.echo(f"  PAT:          {'*' * 8}…{cfg.pat[-4:]}")
+
+
+# ---------------------------------------------------------------------------
+# sync
+# ---------------------------------------------------------------------------
+
+@cli.group()
+def sync() -> None:
+    """Sync work items to Azure DevOps via MCP."""
+
+
+def _sync_options(fn):
+    """Common options for sync commands that need report + customer."""
+    fn = click.argument("slug")(fn)
+    fn = click.option(
+        "--report", required=True,
+        type=click.Path(exists=True, dir_okay=False),
+        help="Path to the APRL v2 Excel report.",
+    )(fn)
+    fn = click.option(
+        "--advisor", default=None,
+        type=click.Path(exists=True, dir_okay=False),
+        help="Optional Advisor CSV export.",
+    )(fn)
+    fn = click.option(
+        "--matrix", default=_DEFAULT_MATRIX,
+        type=click.Path(exists=True, dir_okay=False),
+        show_default=True,
+    )(fn)
+    return fn
+
+
+def _load_sync_deps(slug: str, report: str, advisor: str | None, matrix: str):
+    """Load customer config, build hierarchy, create sync service."""
+    from excellence_agent.ado.customer_config import CustomerConfigError, load_customer_config
+    from excellence_agent.ado.state_store import SyncStateStore
+    from excellence_agent.ado.sync_service import AdoSyncService
+    from excellence_agent.export.content_generator import ContentGenerator
+    from excellence_agent.pipeline import build_hierarchy
+
+    try:
+        config = load_customer_config(slug)
+    except CustomerConfigError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    click.echo(click.style(f"▶ Building hierarchy from {report} …", fg="cyan"))
+    try:
+        hierarchy, stats = build_hierarchy(report, matrix, advisor_path=advisor)
+    except Exception as exc:
+        raise click.ClickException(f"Pipeline error: {exc}") from exc
+
+    click.echo(
+        f"  {stats['epics']} Epics, {stats['features']} Features, "
+        f"{stats['user_stories']} Stories, {stats['tasks']} Tasks"
+    )
+
+    store = SyncStateStore()
+    cg = ContentGenerator()
+    service = AdoSyncService(state_store=store, content_generator=cg, config=config)
+    return config, hierarchy, store, service
+
+
+@sync.command("plan")
+@_sync_options
+def sync_plan(slug: str, report: str, advisor: str | None, matrix: str) -> None:
+    """Preview what would be synced (dry run)."""
+    config, hierarchy, store, service = _load_sync_deps(slug, report, advisor, matrix)
+
+    click.echo(click.style("▶ Computing sync plan …", fg="cyan"))
+    plan = service.plan(hierarchy)
+    s = plan.summary()
+
+    click.echo(click.style(f"\n✔ Sync plan for '{slug}'", fg="green"))
+    click.echo(f"  Create:    {s['create']}")
+    click.echo(f"  Update:    {s['update']}")
+    click.echo(f"  Relink:    {s['relink']}")
+    click.echo(f"  Unchanged: {s['unchanged']}")
+    click.echo(f"  Orphaned:  {s['orphaned']}")
+    click.echo(f"  Total:     {s['total']}")
+
+    if plan.to_create:
+        click.echo(click.style("\n  Items to create:", fg="yellow"))
+        for item in plan.to_create[:20]:
+            click.echo(f"    + [{item.work_item_type}] {item.title}")
+        if len(plan.to_create) > 20:
+            click.echo(f"    … and {len(plan.to_create) - 20} more")
+
+    if plan.to_update:
+        click.echo(click.style("\n  Items to update:", fg="yellow"))
+        for item in plan.to_update[:20]:
+            click.echo(f"    ~ [{item.work_item_type}] {item.title}")
+        if len(plan.to_update) > 20:
+            click.echo(f"    … and {len(plan.to_update) - 20} more")
+
+
+@sync.command("push")
+@_sync_options
+@click.option("--yes", "-y", is_flag=True, help="Skip confirmation prompt.")
+def sync_push(slug: str, report: str, advisor: str | None, matrix: str, yes: bool) -> None:
+    """Sync work items to Azure DevOps."""
+    config, hierarchy, store, service = _load_sync_deps(slug, report, advisor, matrix)
+
+    click.echo(click.style("▶ Computing sync plan …", fg="cyan"))
+    plan = service.plan(hierarchy)
+    s = plan.summary()
+
+    actionable = s["create"] + s["update"] + s["relink"]
+    if actionable == 0:
+        click.echo(click.style("✔ Nothing to sync — all items up to date.", fg="green"))
+        return
+
+    click.echo(f"  Create: {s['create']}  Update: {s['update']}  Relink: {s['relink']}  Orphaned: {s['orphaned']}")
+
+    if not yes:
+        click.confirm(f"Push {actionable} items to {config.organization}/{config.project}?", abort=True)
+
+    click.echo(click.style("▶ Pushing to ADO via MCP …", fg="cyan"))
+
+    async def _push():
+        from excellence_agent.ado.mcp_client import ADOMCPClient
+
+        with store.customer_lock(config.slug):
+            async with ADOMCPClient(config) as client:
+                return await service.push(plan, client)
+
+    start = time.time()
+    result = asyncio.run(_push())
+
+    run = result.run
+    if result.success:
+        click.echo(click.style(f"\n✔ Sync complete (run #{run.id})", fg="green"))
+    else:
+        click.echo(click.style(f"\n✘ Sync finished with errors (run #{run.id})", fg="red"))
+
+    click.echo(f"  Created:   {run.items_created}")
+    click.echo(f"  Updated:   {run.items_updated}")
+    click.echo(f"  Linked:    {run.items_linked}")
+    click.echo(f"  Unchanged: {run.items_unchanged}")
+    click.echo(f"  Failed:    {run.items_failed}")
+    click.echo(f"  Orphaned:  {run.items_orphaned}")
+
+    if result.errors:
+        click.echo(click.style("\n  Errors:", fg="red"))
+        for err in result.errors:
+            click.echo(f"    ✘ {err}")
+
+    click.echo(f"\n  Elapsed: {_elapsed(start)}")
+
+
+@sync.command("status")
+@click.argument("slug")
+def sync_status(slug: str) -> None:
+    """Show sync status for a customer."""
+    from excellence_agent.ado.customer_config import CustomerConfigError, load_customer_config
+    from excellence_agent.ado.state_store import SyncStateStore
+
+    try:
+        config = load_customer_config(slug)
+    except CustomerConfigError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    store = SyncStateStore()
+    items = store.get_items_by_customer(config.slug)
+    runs = store.get_runs(config.slug, limit=5)
+
+    if not items and not runs:
+        click.echo(f"No sync data for '{slug}'.")
+        return
+
+    # Status breakdown
+    from collections import Counter
+    status_counts = Counter(i.sync_status for i in items)
+    click.echo(click.style(f"Sync status for '{slug}' ({len(items)} tracked items):", fg="cyan"))
+    for st, cnt in sorted(status_counts.items()):
+        color = {"created": "green", "updated": "green", "failed": "red", "orphaned": "yellow"}.get(st, "white")
+        click.echo(f"  {click.style(st, fg=color)}: {cnt}")
+
+    if runs:
+        click.echo(click.style(f"\nRecent runs:", fg="cyan"))
+        for r in runs:
+            status_color = "green" if r.status == "completed" else "red"
+            click.echo(
+                f"  #{r.id}  {click.style(r.status, fg=status_color)}  "
+                f"started={r.started_at[:19]}  "
+                f"C:{r.items_created} U:{r.items_updated} F:{r.items_failed}"
+            )
+
+
+@sync.command("retry")
+@_sync_options
+@click.option("--run-id", type=int, default=None, help="Retry from specific run.")
+@click.option("--yes", "-y", is_flag=True, help="Skip confirmation prompt.")
+def sync_retry(
+    slug: str, report: str, advisor: str | None, matrix: str,
+    run_id: int | None, yes: bool,
+) -> None:
+    """Retry failed sync items."""
+    config, hierarchy, store, service = _load_sync_deps(slug, report, advisor, matrix)
+
+    failed = store.get_items_for_retry(config.slug, run_id)
+    if not failed:
+        click.echo(click.style("✔ No failed items to retry.", fg="green"))
+        return
+
+    click.echo(f"Found {len(failed)} failed item(s):")
+    for item in failed[:10]:
+        click.echo(f"  ✘ [{item.work_item_type}] {item.title}: {item.error_message}")
+    if len(failed) > 10:
+        click.echo(f"  … and {len(failed) - 10} more")
+
+    if not yes:
+        click.confirm(f"Retry {len(failed)} failed items?", abort=True)
+
+    # Re-plan to get correct fields, then push only previously-failed items
+    click.echo(click.style("▶ Re-planning with current hierarchy …", fg="cyan"))
+    plan = service.plan(hierarchy)
+
+    # Filter plan to only include items that were previously failed
+    failed_keys = {i.stable_key for i in failed}
+    from excellence_agent.ado.sync_service import SyncPlan
+
+    retry_plan = SyncPlan(customer=plan.customer)
+    for item in plan.to_create:
+        if item.stable_key in failed_keys:
+            retry_plan.to_create.append(item)
+    for item in plan.to_update:
+        if item.stable_key in failed_keys:
+            retry_plan.to_update.append(item)
+
+    actionable = len(retry_plan.to_create) + len(retry_plan.to_update)
+    if actionable == 0:
+        click.echo(click.style("✔ No actionable retry items found after re-plan.", fg="green"))
+        return
+
+    click.echo(click.style(f"▶ Retrying {actionable} items …", fg="cyan"))
+
+    async def _retry():
+        from excellence_agent.ado.mcp_client import ADOMCPClient
+
+        with store.customer_lock(config.slug):
+            async with ADOMCPClient(config) as client:
+                return await service.push(retry_plan, client)
+
+    start = time.time()
+    result = asyncio.run(_retry())
+
+    run = result.run
+    if result.success:
+        click.echo(click.style(f"\n✔ Retry complete (run #{run.id})", fg="green"))
+    else:
+        click.echo(click.style(f"\n✘ Retry finished with errors (run #{run.id})", fg="red"))
+
+    click.echo(f"  Created: {run.items_created}  Updated: {run.items_updated}  Failed: {run.items_failed}")
+    click.echo(f"\n  Elapsed: {_elapsed(start)}")
 
 
 # ---------------------------------------------------------------------------

@@ -12,7 +12,9 @@ ExcellenceAgent ingests [Azure Proactive Resiliency Library (APRL) v2](https://a
 - **Deduplication** — Identical recommendations across multiple resources collapse into single User Stories with child Tasks
 - **Pattern Detection** — Identifies cross-domain patterns, high-impact clusters, and resource-group hotspots
 - **ADO CSV Export** — UTF-8 BOM CSV with indented title columns for direct ADO bulk import
-- **Web Dashboard** — Flask-based UI for visual hierarchy exploration, pattern insights, and export configuration
+- **ADO Live Sync** — Push work items directly to Azure DevOps via MCP (Model Context Protocol) with full CRUD, change detection, and retry support
+- **Per-Customer Configs** — Portable YAML configs for multi-customer environments (PAT-secured, gitignored)
+- **Web Dashboard** — Flask-based UI for visual hierarchy exploration, pattern insights, export, and sync dashboard
 - **Azure Advisor Cross-Reference** (Optional) — Upload Advisor CSV exports to cross-reference and identify overlapping insights between APRL and Advisor recommendations
 - **LLM Enrichment** (Optional) — Azure OpenAI integration for enhanced acceptance criteria, remediation steps, and semantic clustering
 
@@ -85,6 +87,75 @@ Add `-v` for verbose logging on any command:
 excellence-agent -v analyse --report path/to/report.xlsx
 ```
 
+### ADO Live Sync (via MCP)
+
+ExcellenceAgent can push work items directly to Azure DevOps using the [ADO Local MCP Server](https://www.npmjs.com/package/@azure-devops/mcp). This provides full CRUD operations with change detection and retry support.
+
+#### Prerequisites
+
+- Node.js 18+ (for `npx`)
+- An Azure DevOps Personal Access Token (PAT) with **Work Items (Read & Write)** scope
+
+#### Setup
+
+1. **Create a customer config** — Copy the template and fill in your ADO details:
+
+```bash
+cp customers/example.yaml customers/myorg.yaml
+```
+
+Edit `customers/myorg.yaml`:
+
+```yaml
+customer_name: "My Organisation"
+ado:
+  organization: my-org        # ADO org name (from dev.azure.com/my-org)
+  project: My-Project          # ADO project name
+  area_path: ""                # Optional — e.g. "My-Project\Infrastructure"
+  iteration_path: ""           # Optional — e.g. "My-Project\Sprint 1"
+```
+
+2. **Set the PAT** — Add to your `.env` file:
+
+```env
+ADO_PAT=your-personal-access-token
+# Or per-customer: ADO_PAT_MYORG=token-for-myorg
+```
+
+#### CLI Sync Commands
+
+```bash
+# List available customer configs
+excellence-agent customers list
+
+# Validate a config (checks YAML + PAT resolution)
+excellence-agent customers validate myorg
+
+# Preview what would be synced (dry run)
+excellence-agent sync plan myorg --report path/to/report.xlsx
+
+# Push work items to ADO
+excellence-agent sync push myorg --report path/to/report.xlsx
+
+# Push without confirmation prompt
+excellence-agent sync push myorg --report path/to/report.xlsx --yes
+
+# Check sync status
+excellence-agent sync status myorg
+
+# Retry failed items
+excellence-agent sync retry myorg --report path/to/report.xlsx
+```
+
+#### How It Works
+
+1. **Plan** — Diffs the APRL hierarchy against the local SQLite state store (`.state/sync.db`)
+2. **Push** — Creates/updates work items top-down (Epic → Feature → Story → Task) via MCP, auto-linking parent-child relationships
+3. **Re-sync** — On subsequent runs, only changed items are updated; unchanged items are skipped
+4. **Retry** — Failed items are tracked and can be retried without re-pushing everything
+
+The sync state is stored locally in `.state/sync.db` (gitignored). Each customer's data is isolated by slug.
+
 ### Web Dashboard
 
 ```bash
@@ -97,8 +168,9 @@ Open `http://localhost:5000` in your browser. Upload an APRL Excel report to exp
 2. **Hierarchy** — Explore the interactive Epic → Feature → User Story → Task tree
 3. **Patterns** — Review cross-domain pattern insights
 4. **Export** — Configure Area/Iteration paths and download the ADO CSV
+5. **Sync** — Select a customer, preview the sync plan, push to ADO, and view run history
 
-#### Azure Advisor Cross-Reference (Optional)
+#### Azure Advisor Cross-Reference(Optional)
 
 To overlay Azure Advisor recommendations alongside APRL:
 
@@ -226,20 +298,31 @@ Enable by setting the Azure OpenAI environment variables in `.env`, then use the
 ## Project Structure
 
 ```
-MSFT-ExcellenceAgent-v3/
+MSFT-ExcellenceAgent/
 ├── resource_matrix.yaml          # Resource type → Epic category mapping
 ├── requirements.txt
 ├── .env.example
+├── customers/                    # Per-customer YAML configs (gitignored)
+│   ├── .gitkeep
+│   └── example.yaml              # Template
+├── .state/                       # Sync state DB (gitignored, auto-created)
 ├── excellence_agent/
-│   ├── cli.py                    # Click CLI
+│   ├── cli.py                    # Click CLI (ingest, analyse, export, customers, sync)
 │   ├── config.py                 # Configuration management
 │   ├── models.py                 # Epic, Feature, UserStory, Task dataclasses
+│   ├── pipeline.py               # Shared ingest → map → build pipeline
 │   ├── ingest/                   # Excel parsing & validation
 │   ├── analysis/                 # Grouping, deduplication, patterns
 │   ├── enrichment/               # Azure OpenAI integration
 │   ├── export/                   # ADO CSV generation & content templates
-│   └── web/                      # Flask dashboard
-└── tests/                        # pytest test suite
+│   ├── ado/                      # ADO MCP integration layer
+│   │   ├── customer_config.py    # Per-customer YAML config loader
+│   │   ├── mcp_client.py         # Typed async MCP client wrapper
+│   │   ├── state_store.py        # SQLite sync state tracking
+│   │   └── sync_service.py       # Sync orchestrator: plan, push, retry
+│   └── web/                      # Flask dashboard + React SPA
+├── frontend/                     # React + Vite + TypeScript frontend
+└── tests/                        # pytest test suite (136 tests)
 ```
 
 ## Running Tests

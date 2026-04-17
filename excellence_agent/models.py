@@ -27,6 +27,15 @@ class Task:
     check_name: str = ""
     source: str = ""  # "APRL", "Advisor", or "APRL & Advisor"
     advisor_metadata: Dict[str, str] = field(default_factory=dict)  # retirement_date, retiring_feature, etc.
+    user_story: Optional[UserStory] = field(default=None, repr=False)
+
+    @property
+    def stable_key(self) -> str:
+        """Identity key for sync: ``task:{recommendation_guid}:{resource_id}``."""
+        if self.user_story is None:
+            raise ValueError("Task.stable_key requires a parent UserStory (set via UserStory.add_task)")
+        guid = self.user_story.recommendation_guid.lower()
+        return f"task:{guid}:{self.resource_id.lower()}"
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -67,7 +76,16 @@ class UserStory:
         """Map Impact to integer: High=1, Medium=2, Low=3."""
         return {"High": 1, "Medium": 2, "Low": 3}.get(self.impact, 3)
 
+    @property
+    def stable_key(self) -> str:
+        """Identity key for sync: ``story:{recommendation_guid}:{resource_type}``."""
+        if self.feature is None:
+            raise ValueError("UserStory.stable_key requires a parent Feature (set via Feature.add_user_story)")
+        rt = self.feature.resource_type.lower()
+        return f"story:{self.recommendation_guid.lower()}:{rt}"
+
     def add_task(self, task: Task) -> None:
+        task.user_story = self
         self.tasks.append(task)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -100,6 +118,13 @@ class Feature:
     subscriptions: Set[str] = field(default_factory=set)
     resource_count: int = 0
 
+    @property
+    def stable_key(self) -> str:
+        """Identity key for sync: ``feature:{category}:{resource_type}``."""
+        if self.epic is None:
+            raise ValueError("Feature.stable_key requires a parent Epic (set via Epic.add_feature)")
+        return f"feature:{self.epic.name.lower()}:{self.resource_type.lower()}"
+
     def add_user_story(self, story: UserStory) -> None:
         story.feature = self
         self.user_stories.append(story)
@@ -129,6 +154,11 @@ class Epic:
     total_resource_count: int = 0
     waf_pillars: Set[str] = field(default_factory=set)
     impact_summary: Dict[str, int] = field(default_factory=dict)
+
+    @property
+    def stable_key(self) -> str:
+        """Identity key for sync: ``epic:{name}``."""
+        return f"epic:{self.name.lower()}"
 
     def add_feature(self, feature: Feature) -> None:
         feature.epic = self

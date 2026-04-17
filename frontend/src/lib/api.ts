@@ -6,6 +6,12 @@ import type {
   UploadResponse,
   ExportRequest,
   CrossReferenceReport,
+  CustomerInfo,
+  CustomerDetail,
+  SyncPlanResponse,
+  SyncPushResponse,
+  SyncStatusResponse,
+  SyncRunInfo,
 } from './types';
 
 class ApiError extends Error {
@@ -99,4 +105,46 @@ export async function exportCsv(params: ExportRequest): Promise<void> {
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+}
+
+// ── Sync API ────────────────────────────────────────────────────────────
+
+export async function getCustomers(): Promise<CustomerInfo[]> {
+  return request<CustomerInfo[]>('/api/customers');
+}
+
+export async function getCustomer(slug: string): Promise<CustomerDetail> {
+  return request<CustomerDetail>(`/api/customers/${slug}`);
+}
+
+export async function getSyncPlan(customer: string): Promise<SyncPlanResponse> {
+  return request<SyncPlanResponse>('/api/sync/plan', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ customer }),
+  });
+}
+
+export async function pushSync(customer: string): Promise<SyncPushResponse> {
+  return request<SyncPushResponse>('/api/sync/push', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ customer }),
+  });
+}
+
+export async function getSyncStatus(slug: string): Promise<SyncStatusResponse> {
+  return request<SyncStatusResponse>(`/api/sync/status/${slug}`);
+}
+
+export async function getSyncHistory(slug: string): Promise<SyncRunInfo[]> {
+  return request<SyncRunInfo[]>(`/api/sync/history/${slug}`);
+}
+
+export async function retrySync(customer: string, runId?: number): Promise<SyncPushResponse> {
+  return request<SyncPushResponse>('/api/sync/retry', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ customer, run_id: runId }),
+  });
 }

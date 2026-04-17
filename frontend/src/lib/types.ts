@@ -117,3 +117,83 @@ export interface ExportRequest {
   area_path: string;
   iteration_path: string;
 }
+
+// ── Sync types ──────────────────────────────────────────────────────────
+
+export interface CustomerInfo {
+  slug: string;
+  customer_name: string;
+}
+
+export interface CustomerDetail extends CustomerInfo {
+  organization: string;
+  project: string;
+  team: string;
+  area_path: string;
+  iteration_path: string;
+  pat_configured: boolean;
+  type_mapping: {
+    epic: string;
+    feature: string;
+    story: string;
+    task: string;
+  };
+}
+
+export interface PlannedItemInfo {
+  stable_key: string;
+  work_item_type: string;
+  title: string;
+  action: string;
+  parent_stable_key: string;
+}
+
+export interface SyncPlanResponse {
+  customer: string;
+  summary: {
+    create: number;
+    update: number;
+    relink: number;
+    unchanged: number;
+    orphaned: number;
+    total: number;
+  };
+  to_create: PlannedItemInfo[];
+  to_update: PlannedItemInfo[];
+  to_relink: PlannedItemInfo[];
+  unchanged: PlannedItemInfo[];
+  orphaned: PlannedItemInfo[];
+}
+
+export interface SyncPushResponse {
+  success: boolean;
+  run_id: number;
+  status: string;
+  items_created: number;
+  items_updated: number;
+  items_linked: number;
+  items_unchanged: number;
+  items_failed: number;
+  items_orphaned: number;
+  errors: string[];
+}
+
+export interface SyncRunInfo {
+  id: number;
+  status: string;
+  started_at: string;
+  completed_at: string | null;
+  items_created: number;
+  items_updated: number;
+  items_linked: number;
+  items_unchanged: number;
+  items_failed: number;
+  items_orphaned: number;
+}
+
+export interface SyncStatusResponse {
+  customer: string;
+  total_items: number;
+  status_counts: Record<string, number>;
+  latest_run: SyncRunInfo | null;
+}

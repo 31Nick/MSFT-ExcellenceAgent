@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import os
 
 from flask import (
@@ -284,3 +285,296 @@ def export_csv():
         )
     except Exception as exc:
         return _error(f"Export error: {exc}", 500)
+
+
+# ---------------------------------------------------------------------------
+# Customer config endpoints
+# ---------------------------------------------------------------------------
+
+@api_bp.route("/customers", methods=["GET"])
+def list_customers():
+    """List available customer configurations."""
+    from excellence_agent.ado.customer_config import list_customer_configs
+
+    return jsonify(list_customer_configs())
+
+
+@api_bp.route("/customers/<slug>", methods=["GET"])
+def get_customer(slug: str):
+    """Get a customer config (PAT redacted)."""
+    from excellence_agent.ado.customer_config import CustomerConfigError, load_customer_config
+
+    try:
+        cfg = load_customer_config(slug)
+    except CustomerConfigError as exc:
+        return _error(str(exc), 404)
+
+    return jsonify({
+        "slug": cfg.slug,
+        "customer_name": cfg.customer_name,
+        "organization": cfg.organization,
+        "project": cfg.project,
+        "team": cfg.team,
+        "area_path": cfg.area_path,
+        "iteration_path": cfg.iteration_path,
+        "pat_configured": True,
+        "type_mapping": {
+            "epic": cfg.type_mapping.epic,
+            "feature": cfg.type_mapping.feature,
+            "story": cfg.type_mapping.story,
+            "task": cfg.type_mapping.task,
+        },
+    })
+
+
+# ---------------------------------------------------------------------------
+# Sync endpoints
+# ---------------------------------------------------------------------------
+
+def _get_sync_store():
+    """Lazily create/return a SyncStateStore singleton on the app."""
+    store = current_app.config.get("EA_SYNC_STORE")
+    if store is None:
+        from excellence_agent.ado.state_store import SyncStateStore
+
+        store = SyncStateStore()
+        current_app.config["EA_SYNC_STORE"] = store
+    return store
+
+
+@api_bp.route("/sync/plan", methods=["POST"])
+def sync_plan():
+    """Compute a sync plan for a customer using the loaded hierarchy."""
+    data = request.get_json(silent=True) or {}
+    slug = data.get("customer")
+    if not slug:
+        return _error("Missing 'customer' field.", 400)
+
+    hierarchy = _get_hierarchy()
+    if hierarchy is None:
+        return _error("No hierarchy loaded. Upload an APRL file first.", 404)
+
+    from excellence_agent.ado.customer_config import CustomerConfigError, load_customer_config
+    from excellence_agent.ado.sync_service import AdoSyncService
+    from excellence_agent.export.content_generator import ContentGenerator
+
+    try:
+        config = load_customer_config(slug)
+    except CustomerConfigError as exc:
+        return _error(str(exc), 404)
+
+    store = _get_sync_store()
+    cg = ContentGenerator()
+    service = AdoSyncService(state_store=store, content_generator=cg, config=config)
+    plan = service.plan(hierarchy)
+
+    def _items_json(items):
+        return [
+            {
+                "stable_key": i.stable_key,
+                "work_item_type": i.work_item_type,
+                "title": i.title,
+                "action": i.action,
+                "parent_stable_key": i.parent_stable_key,
+            }
+            for i in items
+        ]
+
+    return jsonify({
+        "customer": slug,
+        "summary": plan.summary(),
+        "to_create": _items_json(plan.to_create),
+        "to_update": _items_json(plan.to_update),
+        "to_relink": _items_json(plan.to_relink),
+        "unchanged": _items_json(plan.unchanged),
+        "orphaned": _items_json(plan.orphaned),
+    })
+
+
+@api_bp.route("/sync/push", methods=["POST"])
+def sync_push():
+    """Execute sync push for a customer."""
+    data = request.get_json(silent=True) or {}
+    slug = data.get("customer")
+    if not slug:
+        return _error("Missing 'customer' field.", 400)
+
+    hierarchy = _get_hierarchy()
+    if hierarchy is None:
+        return _error("No hierarchy loaded. Upload an APRL file first.", 404)
+
+    from excellence_agent.ado.customer_config import CustomerConfigError, load_customer_config
+    from excellence_agent.ado.mcp_client import ADOMCPClient
+    from excellence_agent.ado.sync_service import AdoSyncService
+    from excellence_agent.export.content_generator import ContentGenerator
+    from filelock import Timeout
+
+    try:
+        config = load_customer_config(slug)
+    except CustomerConfigError as exc:
+        return _error(str(exc), 404)
+
+    store = _get_sync_store()
+    cg = ContentGenerator()
+    service = AdoSyncService(state_store=store, content_generator=cg, config=config)
+
+    async def _do_push():
+        plan = service.plan(hierarchy)
+        async with ADOMCPClient(config) as client:
+            return await service.push(plan, client)
+
+    try:
+        with store.customer_lock(config.slug):
+            result = asyncio.run(_do_push())
+    except Timeout:
+        return _error(f"Sync already running for '{slug}'.", 409)
+    except Exception as exc:
+        return _error(f"Sync error: {exc}", 500)
+
+    run = result.run
+    return jsonify({
+        "success": result.success,
+        "run_id": run.id,
+        "status": run.status,
+        "items_created": run.items_created,
+        "items_updated": run.items_updated,
+        "items_linked": run.items_linked,
+        "items_unchanged": run.items_unchanged,
+        "items_failed": run.items_failed,
+        "items_orphaned": run.items_orphaned,
+        "errors": result.errors,
+    })
+
+
+@api_bp.route("/sync/status/<slug>", methods=["GET"])
+def sync_status(slug: str):
+    """Get sync status for a customer (latest run + item breakdown)."""
+    from excellence_agent.ado.customer_config import CustomerConfigError, load_customer_config
+
+    try:
+        load_customer_config(slug)
+    except CustomerConfigError as exc:
+        return _error(str(exc), 404)
+
+    store = _get_sync_store()
+    items = store.get_items_by_customer(slug)
+    runs = store.get_runs(slug, limit=1)
+
+    status_counts: dict[str, int] = {}
+    for item in items:
+        status_counts[item.sync_status] = status_counts.get(item.sync_status, 0) + 1
+
+    latest_run = None
+    if runs:
+        r = runs[0]
+        latest_run = {
+            "id": r.id,
+            "status": r.status,
+            "started_at": r.started_at,
+            "completed_at": r.completed_at,
+            "items_created": r.items_created,
+            "items_updated": r.items_updated,
+            "items_linked": r.items_linked,
+            "items_unchanged": r.items_unchanged,
+            "items_failed": r.items_failed,
+            "items_orphaned": r.items_orphaned,
+        }
+
+    return jsonify({
+        "customer": slug,
+        "total_items": len(items),
+        "status_counts": status_counts,
+        "latest_run": latest_run,
+    })
+
+
+@api_bp.route("/sync/history/<slug>", methods=["GET"])
+def sync_history(slug: str):
+    """Get sync run history for a customer."""
+    store = _get_sync_store()
+    limit = request.args.get("limit", 20, type=int)
+    runs = store.get_runs(slug, limit=min(limit, 100))
+
+    return jsonify([
+        {
+            "id": r.id,
+            "status": r.status,
+            "started_at": r.started_at,
+            "completed_at": r.completed_at,
+            "items_created": r.items_created,
+            "items_updated": r.items_updated,
+            "items_linked": r.items_linked,
+            "items_unchanged": r.items_unchanged,
+            "items_failed": r.items_failed,
+            "items_orphaned": r.items_orphaned,
+        }
+        for r in runs
+    ])
+
+
+@api_bp.route("/sync/retry", methods=["POST"])
+def sync_retry():
+    """Retry failed sync items for a customer."""
+    data = request.get_json(silent=True) or {}
+    slug = data.get("customer")
+    if not slug:
+        return _error("Missing 'customer' field.", 400)
+
+    hierarchy = _get_hierarchy()
+    if hierarchy is None:
+        return _error("No hierarchy loaded. Upload an APRL file first.", 404)
+
+    from excellence_agent.ado.customer_config import CustomerConfigError, load_customer_config
+    from excellence_agent.ado.mcp_client import ADOMCPClient
+    from excellence_agent.ado.sync_service import AdoSyncService, SyncPlan
+    from excellence_agent.export.content_generator import ContentGenerator
+    from filelock import Timeout
+
+    run_id = data.get("run_id")
+
+    try:
+        config = load_customer_config(slug)
+    except CustomerConfigError as exc:
+        return _error(str(exc), 404)
+
+    store = _get_sync_store()
+    cg = ContentGenerator()
+    service = AdoSyncService(state_store=store, content_generator=cg, config=config)
+
+    failed = store.get_items_for_retry(slug, run_id)
+    if not failed:
+        return jsonify({"success": True, "message": "No failed items to retry."})
+
+    failed_keys = {i.stable_key for i in failed}
+    plan = service.plan(hierarchy)
+
+    retry_plan = SyncPlan(customer=plan.customer)
+    for item in plan.to_create:
+        if item.stable_key in failed_keys:
+            retry_plan.to_create.append(item)
+    for item in plan.to_update:
+        if item.stable_key in failed_keys:
+            retry_plan.to_update.append(item)
+
+    async def _do_retry():
+        async with ADOMCPClient(config) as client:
+            return await service.push(retry_plan, client)
+
+    try:
+        with store.customer_lock(config.slug):
+            result = asyncio.run(_do_retry())
+    except Timeout:
+        return _error(f"Sync already running for '{slug}'.", 409)
+    except Exception as exc:
+        return _error(f"Retry error: {exc}", 500)
+
+    run = result.run
+    return jsonify({
+        "success": result.success,
+        "run_id": run.id,
+        "status": run.status,
+        "items_created": run.items_created,
+        "items_updated": run.items_updated,
+        "items_failed": run.items_failed,
+        "errors": result.errors,
+    })
