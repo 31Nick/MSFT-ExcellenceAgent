@@ -578,3 +578,151 @@ def sync_retry():
         "items_failed": run.items_failed,
         "errors": result.errors,
     })
+
+
+# ---------------------------------------------------------------------------
+# Application registry endpoints
+# ---------------------------------------------------------------------------
+
+@api_bp.route("/apps", methods=["GET"])
+def list_apps():
+    """List registered applications."""
+    from excellence_agent.applications import load_app_registry
+
+    registry = load_app_registry()
+    return jsonify([
+        {
+            "name": app.name,
+            "description": app.description,
+            "environments": app.environments,
+            "subscriptions": app.subscriptions,
+        }
+        for app in registry.list_apps()
+    ])
+
+
+@api_bp.route("/apps", methods=["POST"])
+def add_app():
+    """Add an application to the registry."""
+    from excellence_agent.applications import load_app_registry
+
+    data = request.get_json(silent=True) or {}
+    name = data.get("name", "").strip()
+    if not name:
+        return _error("Missing 'name' field.", 400)
+
+    registry = load_app_registry()
+    entry = registry.add_app(name, description=data.get("description", ""))
+    registry.save()
+    return jsonify({"success": True, "app": {"name": entry.name, "description": entry.description}})
+
+
+@api_bp.route("/apps/<name>", methods=["DELETE"])
+def remove_app(name: str):
+    """Remove an application from the registry."""
+    from excellence_agent.applications import load_app_registry
+
+    registry = load_app_registry()
+    if registry.remove_app(name):
+        registry.save()
+        return jsonify({"success": True, "removed": name})
+    return _error(f"Application '{name}' not found.", 404)
+
+
+# ---------------------------------------------------------------------------
+# Incremental pipeline endpoints
+# ---------------------------------------------------------------------------
+
+@api_bp.route("/incremental/run", methods=["POST"])
+def incremental_run():
+    """Run the incremental pipeline on an uploaded file or specified directory.
+
+    Accepts JSON body with:
+      - report_path (str): path to single Excel file
+      - input_dir (str): path to batch directory (alternative to report_path)
+      - customer (str, required): customer identifier
+      - reviewed_only (bool, default True): filter to reviewed items only
+      - env_filter (str, default "All"): "All", "Prod", or "OtherEnvs"
+      - app_name (str, optional): override app name for single-file mode
+    """
+    from excellence_agent.pipeline_v2 import build_hierarchy_incremental
+
+    data = request.get_json(silent=True) or {}
+    customer = data.get("customer", "").strip()
+    if not customer:
+        return _error("Missing 'customer' field.", 400)
+
+    report_path = data.get("report_path") or data.get("input_dir")
+    if not report_path:
+        return _error("Provide 'report_path' or 'input_dir'.", 400)
+
+    config = _get_config()
+
+    try:
+        result = build_hierarchy_incremental(
+            report_path=report_path,
+            matrix_path=config.matrix_path,
+            customer=customer,
+            reviewed_only=data.get("reviewed_only", True),
+            env_filter=data.get("env_filter", "All"),
+            app_name=data.get("app_name"),
+            advisor_path=data.get("advisor_path"),
+        )
+    except Exception as exc:
+        return _error(f"Pipeline error: {exc}", 500)
+
+    # Store in app config for subsequent export
+    current_app.config["EA_INCREMENTAL_RESULT"] = result
+
+    return jsonify({
+        "success": True,
+        "apps_processed": result.apps_processed,
+        "new_apps_detected": result.new_apps_detected,
+        "new_items_processed": result.new_items_processed,
+        "items_skipped_duplicate": result.items_skipped_duplicate,
+        "stats": result.stats,
+        "errors": result.errors,
+    })
+
+
+@api_bp.route("/incremental/export", methods=["POST"])
+def incremental_export():
+    """Export the last incremental pipeline result as CSV."""
+    result = current_app.config.get("EA_INCREMENTAL_RESULT")
+    if result is None:
+        return _error("No incremental result available. Run /api/incremental/run first.", 404)
+
+    hierarchy = result.hierarchy
+    if not hierarchy.all_stories():
+        return _error("No stories to export (all items were already processed).", 404)
+
+    config = _get_config()
+    data = request.get_json(silent=True) or {}
+    area_path = data.get("area_path", config.ado.area_path)
+    iteration_path = data.get("iteration_path", config.ado.iteration_path)
+
+    from excellence_agent.cli import _convert_v2_to_v1
+    from excellence_agent.config import ADOConfig
+    from excellence_agent.export import ContentGenerator
+    from excellence_agent.export.ado_csv import ADOExporter
+
+    ado_config = ADOConfig(area_path=area_path, iteration_path=iteration_path)
+    v1_hierarchy = _convert_v2_to_v1(hierarchy)
+    generator = ContentGenerator()
+    exporter = ADOExporter(ado_config, generator)
+
+    output_dir = os.path.abspath(config.output_dir)
+    os.makedirs(output_dir, exist_ok=True)
+    output_path = os.path.join(output_dir, "ado_incremental_export.csv")
+
+    try:
+        result_path = exporter.export(v1_hierarchy, output_path)
+    except Exception as exc:
+        return _error(f"Export error: {exc}", 500)
+
+    return send_file(
+        result_path,
+        mimetype="text/csv",
+        as_attachment=True,
+        download_name="ado_incremental_export.csv",
+    )
