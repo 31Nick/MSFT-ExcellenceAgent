@@ -26,7 +26,7 @@
 <ul>
 <li>Serverfarms (microsoft.web/serverfarms) &mdash; 3 recommendation(s), 6 resource(s)</li>
 <li>Sites (microsoft.web/sites) &mdash; 13 recommendation(s), 6 resource(s)</li>
-</ul>","Reliability; Apps","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","Reliability; Apps","2","",""
 "Feature","","Serverfarms","","","<h1>Serverfarms (microsoft.web/serverfarms)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>microsoft.web/serverfarms</strong> resources within the <strong>Apps</strong> domain.</p>
@@ -73,7 +73,7 @@
 <li>Create separate App Service plans for production and test [High] &mdash; 3 resource(s)</li>
 <li>Use zone-supported App Service Plan [High] &mdash; 3 resource(s)</li>
 <li>Enable Autoscale/Automatic scaling to ensure adequate resources are available to service requests [Medium] &mdash; 3 resource(s)</li>
-</ul>","microsoft.web/serverfarms; Apps","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","microsoft.web/serverfarms; Apps","1","",""
 "User Story","","","Serverfarms - Recommendations","","<h1>Serverfarms - Recommendations</h1>
 <h2>Overview</h2>
 <p>Consolidated APRL recommendations for <strong>microsoft.web/serverfarms</strong> resources.</p>
@@ -141,7 +141,7 @@
 <li><strong>Create separate App Service plans for production and test</strong> [High] &mdash; 3 resource(s) remediated (GUID: <code>dbe3fd66-fb2a-9d46-b162-1791e21da236</code>)</li>
 <li><strong>Use zone-supported App Service Plan</strong> [High] &mdash; 3 resource(s) remediated (GUID: <code>fac3022a-eda5-44b9-b54d-cb500d1d01dd</code>)</li>
 <li><strong>Enable Autoscale/Automatic scaling to ensure adequate resources are available to service requests</strong> [Medium] &mdash; 3 resource(s) remediated (GUID: <code>6320abf6-f917-1843-b2ae-4779c35985ae</code>)</li>
-</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","",""
 "Feature","","Sites","","","<h1>Sites (microsoft.web/sites)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>microsoft.web/sites</strong> resources within the <strong>Apps</strong> domain.</p>
@@ -269,7 +269,7 @@
 <li>Enable diagnostics logging [Low] &mdash; 2 resource(s)</li>
 <li>Ensure unique hostid set for Function App [Low] &mdash; 2 resource(s)</li>
 <li>Separate web apps from web APIs [Low] &mdash; 2 resource(s)</li>
-</ul>","microsoft.web/sites; Apps","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","microsoft.web/sites; Apps","1","",""
 "User Story","","","Sites - Recommendations","","<h1>Sites - Recommendations</h1>
 <h2>Overview</h2>
 <p>Consolidated APRL recommendations for <strong>microsoft.web/sites</strong> resources.</p>
@@ -491,7 +491,7 @@
 <li><strong>Enable diagnostics logging</strong> [Low] &mdash; 2 resource(s) remediated (GUID: <code>493f6079-3bb6-4a56-96ba-ab3248474cb1</code>)</li>
 <li><strong>Ensure unique hostid set for Function App</strong> [Low] &mdash; 2 resource(s) remediated (GUID: <code>0b06a688-0dd6-4d73-9f72-6666ff853ca9</code>)</li>
 <li><strong>Separate web apps from web APIs</strong> [Low] &mdash; 2 resource(s) remediated (GUID: <code>78a5c033-ff51-4332-8a71-83464c34494b</code>)</li>
-</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","",""
 "Epic","Compute","","","","<h1>Compute</h1>
 <h2>Overview</h2>
 <p>Virtual machines, scale sets, containers, and orchestration</p>
@@ -519,7 +519,7 @@
 <ul>
 <li>Virtual Machines (microsoft.compute/virtualmachines) &mdash; 11 recommendation(s), 6 resource(s)</li>
 <li>Disks (microsoft.compute/disks) &mdash; 2 recommendation(s), 3 resource(s)</li>
-</ul>","Reliability; Compute","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","Reliability; Compute","2","",""
 "Feature","","Virtual Machines","","","<h1>Virtual Machines (microsoft.compute/virtualmachines)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>microsoft.compute/virtualmachines</strong> resources within the <strong>Compute</strong> domain.</p>
@@ -631,7 +631,7 @@
 <li>Use Azure Boost VMs for Maintenance sensitive workload VMs [Medium] &mdash; 3 resource(s)</li>
 <li>Convert Standard to Premium disk for higher uptime [Low] &mdash; 2 resource(s)</li>
 <li>Enable VM Insights [Low] &mdash; 3 resource(s)</li>
-</ul>","microsoft.compute/virtualmachines; Compute","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","microsoft.compute/virtualmachines; Compute","1","",""
 "User Story","","","Virtual Machines - Recommendations","","<h1>Virtual Machines - Recommendations</h1>
 <h2>Overview</h2>
 <p>Consolidated APRL recommendations for <strong>microsoft.compute/virtualmachines</strong> resources.</p>
@@ -822,7 +822,7 @@
 <li><strong>Use Azure Boost VMs for Maintenance sensitive workload VMs</strong> [Medium] &mdash; 3 resource(s) remediated (GUID: <code>9ab499d8-8844-424d-a2d4-8f53690eb8f8</code>)</li>
 <li><strong>Convert Standard to Premium disk for higher uptime</strong> [Low] &mdash; 2 resource(s) remediated (GUID: <code>2b5cf6e5-2792-49b2-9ec0-0e901be6488b</code>)</li>
 <li><strong>Enable VM Insights</strong> [Low] &mdash; 3 resource(s) remediated (GUID: <code>b72214bb-e879-5f4b-b9cd-642db84f36f4</code>)</li>
-</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","",""
 "Feature","","Disks","","","<h1>Disks (microsoft.compute/disks)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>microsoft.compute/disks</strong> resources within the <strong>Compute</strong> domain.</p>
@@ -861,7 +861,7 @@
 <ul>
 <li>Ensure Azure Disks are in the same zone as your VM for higher resiliency and availability [High] &mdash; 3 resource(s)</li>
 <li>Migrate Standard HDD OS Disks to SSD [Medium] &mdash; 3 resource(s)</li>
-</ul>","microsoft.compute/disks; Compute","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","microsoft.compute/disks; Compute","1","",""
 "User Story","","","Disks - Recommendations","","<h1>Disks - Recommendations</h1>
 <h2>Overview</h2>
 <p>Consolidated APRL recommendations for <strong>microsoft.compute/disks</strong> resources.</p>
@@ -911,7 +911,7 @@
 <ul>
 <li><strong>Ensure Azure Disks are in the same zone as your VM for higher resiliency and availability</strong> [High] &mdash; 3 resource(s) remediated (GUID: <code>d4102c0f-ebe3-4b22-8fe0-e488866a87af</code>)</li>
 <li><strong>Migrate Standard HDD OS Disks to SSD</strong> [Medium] &mdash; 3 resource(s) remediated (GUID: <code>6885dc91-c4d1-4695-be6f-f64be575769f</code>)</li>
-</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","",""
 "Epic","Data","","","","<h1>Data</h1>
 <h2>Overview</h2>
 <p>Databases, storage, and data services</p>
@@ -941,7 +941,7 @@
 <li>Storage Accounts (microsoft.storage/storageaccounts) &mdash; 5 recommendation(s), 6 resource(s)</li>
 <li>Database Accounts (microsoft.documentdb/databaseaccounts) &mdash; 5 recommendation(s), 3 resource(s)</li>
 <li>Servers (microsoft.sql/servers) &mdash; 3 recommendation(s), 1 resource(s)</li>
-</ul>","Reliability; Data","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","Reliability; Data","2","",""
 "Feature","","Storage Accounts","","","<h1>Storage Accounts (microsoft.storage/storageaccounts)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>microsoft.storage/storageaccounts</strong> resources within the <strong>Data</strong> domain.</p>
@@ -1004,7 +1004,7 @@
 <li>Enable point-in-time restore for GPv2 accounts to safeguard against data loss [Low] &mdash; 3 resource(s)</li>
 <li>Enable versioning for accidental modification and keep the number of versions below 1000 [Low] &mdash; 3 resource(s)</li>
 <li>Monitor all blob storage accounts [Low] &mdash; 3 resource(s)</li>
-</ul>","microsoft.storage/storageaccounts; Data","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","microsoft.storage/storageaccounts; Data","1","",""
 "User Story","","","Storage Accounts - Recommendations","","<h1>Storage Accounts - Recommendations</h1>
 <h2>Overview</h2>
 <p>Consolidated APRL recommendations for <strong>microsoft.storage/storageaccounts</strong> resources.</p>
@@ -1106,7 +1106,7 @@
 <li><strong>Enable point-in-time restore for GPv2 accounts to safeguard against data loss</strong> [Low] &mdash; 3 resource(s) remediated (GUID: <code>1b965cb9-7629-214e-b682-6bf6e450a100</code>)</li>
 <li><strong>Enable versioning for accidental modification and keep the number of versions below 1000</strong> [Low] &mdash; 3 resource(s) remediated (GUID: <code>8ebda7c0-e0e1-ed45-af59-2d7ea9a1c05d</code>)</li>
 <li><strong>Monitor all blob storage accounts</strong> [Low] &mdash; 3 resource(s) remediated (GUID: <code>96cb8331-6b06-8242-8ce8-4e2f665dc679</code>)</li>
-</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","",""
 "Feature","","Database Accounts","","","<h1>Database Accounts (microsoft.documentdb/databaseaccounts)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>microsoft.documentdb/databaseaccounts</strong> resources within the <strong>Data</strong> domain.</p>
@@ -1169,7 +1169,7 @@
 <li>Enable zone redundancy for multi-region Cosmos DB accounts [High] &mdash; 1 resource(s)</li>
 <li>Improve resiliency by migrating your Azure Cosmos DB accounts to continuous backup [Medium] &mdash; 1 resource(s)</li>
 <li>Monitor Cosmos DB health and set up alerts [Medium] &mdash; 2 resource(s)</li>
-</ul>","microsoft.documentdb/databaseaccounts; Data","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","microsoft.documentdb/databaseaccounts; Data","1","",""
 "User Story","","","Database Accounts - Recommendations","","<h1>Database Accounts - Recommendations</h1>
 <h2>Overview</h2>
 <p>Consolidated APRL recommendations for <strong>microsoft.documentdb/databaseaccounts</strong> resources.</p>
@@ -1262,7 +1262,7 @@
 <li><strong>Enable zone redundancy for multi-region Cosmos DB accounts</strong> [High] &mdash; 1 resource(s) remediated (GUID: <code>687f83d3-db01-4ab1-a77b-b31e99f16d33</code>)</li>
 <li><strong>Improve resiliency by migrating your Azure Cosmos DB accounts to continuous backup</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>52fef986-5897-4359-8b92-0f22749f0d73</code>)</li>
 <li><strong>Monitor Cosmos DB health and set up alerts</strong> [Medium] &mdash; 2 resource(s) remediated (GUID: <code>deaea200-013c-414b-ac9f-bfa7a7fb13f0</code>)</li>
-</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","",""
 "Feature","","Servers","","","<h1>Servers (microsoft.sql/servers)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>microsoft.sql/servers</strong> resources within the <strong>Data</strong> domain.</p>
@@ -1309,7 +1309,7 @@
 <li>Use failover group customer managed policy [High] &mdash; 1 resource(s)</li>
 <li>Use Failover Group endpoints for database connections [High] &mdash; 1 resource(s)</li>
 <li>Back Up Your Keys [Medium] &mdash; 1 resource(s)</li>
-</ul>","microsoft.sql/servers; Data","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","microsoft.sql/servers; Data","1","",""
 "User Story","","","Servers - Recommendations","","<h1>Servers - Recommendations</h1>
 <h2>Overview</h2>
 <p>Consolidated APRL recommendations for <strong>microsoft.sql/servers</strong> resources.</p>
@@ -1372,7 +1372,7 @@
 <li><strong>Use failover group customer managed policy</strong> [High] &mdash; 1 resource(s) remediated (GUID: <code>0f838324-ffe3-4b8a-b7a2-d983be8f9fa9</code>)</li>
 <li><strong>Use Failover Group endpoints for database connections</strong> [High] &mdash; 1 resource(s) remediated (GUID: <code>de266d8a-a9f3-4cb9-be95-9306001fceea</code>)</li>
 <li><strong>Back Up Your Keys</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>d6ef87aa-574e-584e-a955-3e6bb8b5425b</code>)</li>
-</ul>","High; Reliability; Azure Service; Source:APRL","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","High; Reliability; Azure Service; Source:APRL","1","",""
 "Epic","Networking","","","","<h1>Networking</h1>
 <h2>Overview</h2>
 <p>Virtual networks, gateways, load balancers, and connectivity</p>
@@ -1401,7 +1401,7 @@
 <li>Network Security Groups (microsoft.network/networksecuritygroups) &mdash; 2 recommendation(s), 11 resource(s)</li>
 <li>Networkwatchers (microsoft.network/networkwatchers) &mdash; 2 recommendation(s), 2 resource(s)</li>
 <li>Virtual Networks (microsoft.network/virtualnetworks) &mdash; 2 recommendation(s), 2 resource(s)</li>
-</ul>","Reliability; Networking","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","Reliability; Networking","2","",""
 "Feature","","Network Security Groups","","","<h1>Network Security Groups (microsoft.network/networksecuritygroups)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>microsoft.network/networksecuritygroups</strong> resources within the <strong>Networking</strong> domain.</p>
@@ -1440,7 +1440,7 @@
 <ul>
 <li>Configure Diagnostic Settings for all network security groups [Medium] &mdash; 11 resource(s)</li>
 <li>Monitor changes in Network Security Groups with Azure Monitor [Low] &mdash; 11 resource(s)</li>
-</ul>","microsoft.network/networksecuritygroups; Networking","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","microsoft.network/networksecuritygroups; Networking","2","",""
 "User Story","","","Network Security Groups - Recommendations","","<h1>Network Security Groups - Recommendations</h1>
 <h2>Overview</h2>
 <p>Consolidated APRL recommendations for <strong>microsoft.network/networksecuritygroups</strong> resources.</p>
@@ -1508,7 +1508,7 @@
 <ul>
 <li><strong>Configure Diagnostic Settings for all network security groups</strong> [Medium] &mdash; 11 resource(s) remediated (GUID: <code>d2976d3e-294b-4b49-a1f0-c42566a3758f</code>)</li>
 <li><strong>Monitor changes in Network Security Groups with Azure Monitor</strong> [Low] &mdash; 11 resource(s) remediated (GUID: <code>8bb4a57b-55e4-d24e-9c19-2679d8bc779f</code>)</li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
 "Feature","","Networkwatchers","","","<h1>Networkwatchers (microsoft.network/networkwatchers)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>microsoft.network/networkwatchers</strong> resources within the <strong>Networking</strong> domain.</p>
@@ -1547,7 +1547,7 @@
 <ul>
 <li>Configure Network Watcher Connection monitor [Medium] &mdash; 2 resource(s)</li>
 <li>Deploy Network Watcher in all regions where you have networking services [Low] &mdash; 2 resource(s)</li>
-</ul>","microsoft.network/networkwatchers; Networking","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","microsoft.network/networkwatchers; Networking","2","",""
 "User Story","","","Networkwatchers - Recommendations","","<h1>Networkwatchers - Recommendations</h1>
 <h2>Overview</h2>
 <p>Consolidated APRL recommendations for <strong>microsoft.network/networkwatchers</strong> resources.</p>
@@ -1597,7 +1597,7 @@
 <ul>
 <li><strong>Configure Network Watcher Connection monitor</strong> [Medium] &mdash; 2 resource(s) remediated (GUID: <code>1e28bbc1-1eb7-486f-8d7f-93943f40219c</code>)</li>
 <li><strong>Deploy Network Watcher in all regions where you have networking services</strong> [Low] &mdash; 2 resource(s) remediated (GUID: <code>4e133bd0-8762-bc40-a95b-b29142427d73</code>)</li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
 "Feature","","Virtual Networks","","","<h1>Virtual Networks (microsoft.network/virtualnetworks)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>microsoft.network/virtualnetworks</strong> resources within the <strong>Networking</strong> domain.</p>
@@ -1635,7 +1635,7 @@
 <ul>
 <li>Enable Virtual Network Flow Logs [Medium] &mdash; 2 resource(s)</li>
 <li>Use NAT gateway for outbound connectivity [Medium] &mdash; 2 resource(s)</li>
-</ul>","microsoft.network/virtualnetworks; Networking","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","microsoft.network/virtualnetworks; Networking","2","",""
 "User Story","","","Virtual Networks - Recommendations","","<h1>Virtual Networks - Recommendations</h1>
 <h2>Overview</h2>
 <p>Consolidated APRL recommendations for <strong>microsoft.network/virtualnetworks</strong> resources.</p>
@@ -1684,7 +1684,7 @@
 <ul>
 <li><strong>Enable Virtual Network Flow Logs</strong> [Medium] &mdash; 2 resource(s) remediated (GUID: <code>06b77be9-56a3-4d41-b362-8b295c5a283d</code>)</li>
 <li><strong>Use NAT gateway for outbound connectivity</strong> [Medium] &mdash; 2 resource(s) remediated (GUID: <code>56f0c458-521d-4b8b-a704-c0a099483d19</code>)</li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL & Advisor","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","Medium; Reliability; Azure Service; Source:APRL & Advisor","2","",""
 "Epic","Observability","","","","<h1>Observability</h1>
 <h2>Overview</h2>
 <p>Monitoring, logging, and diagnostics resources</p>
@@ -1711,7 +1711,7 @@
 <ul>
 <li>Workspaces (microsoft.operationalinsights/workspaces) &mdash; 2 recommendation(s), 4 resource(s)</li>
 <li>Components (microsoft.insights/components) &mdash; 1 recommendation(s), 2 resource(s)</li>
-</ul>","Reliability; Observability","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","Reliability; Observability","2","",""
 "Feature","","Workspaces","","","<h1>Workspaces (microsoft.operationalinsights/workspaces)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>microsoft.operationalinsights/workspaces</strong> resources within the <strong>Observability</strong> domain.</p>
@@ -1750,7 +1750,7 @@
 <ul>
 <li>Enable Log Analytics data export to GRS or GZRS [Medium] &mdash; 4 resource(s)</li>
 <li>Create a health status alert rule for your Log Analytics workspace [Low] &mdash; 4 resource(s)</li>
-</ul>","microsoft.operationalinsights/workspaces; Observability","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","microsoft.operationalinsights/workspaces; Observability","2","",""
 "User Story","","","Workspaces - Recommendations","","<h1>Workspaces - Recommendations</h1>
 <h2>Overview</h2>
 <p>Consolidated APRL recommendations for <strong>microsoft.operationalinsights/workspaces</strong> resources.</p>
@@ -1804,7 +1804,7 @@
 <ul>
 <li><strong>Enable Log Analytics data export to GRS or GZRS</strong> [Medium] &mdash; 4 resource(s) remediated (GUID: <code>b36fd2ac-dd83-664a-ab48-ff7b8d3b189d</code>)</li>
 <li><strong>Create a health status alert rule for your Log Analytics workspace</strong> [Low] &mdash; 4 resource(s) remediated (GUID: <code>4b77191c-cc3c-8c4e-844b-0f56d0927890</code>)</li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
 "Feature","","Components","","","<h1>Components (microsoft.insights/components)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>microsoft.insights/components</strong> resources within the <strong>Observability</strong> domain.</p>
@@ -1834,7 +1834,7 @@
 <p><strong>Recommendations to complete:</strong></p>
 <ul>
 <li>Migrate from Application Insights instrumentation keys to connection strings [Medium] &mdash; 2 resource(s)</li>
-</ul>","microsoft.insights/components; Observability","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","microsoft.insights/components; Observability","2","",""
 "User Story","","","Components - Recommendations","","<h1>Components - Recommendations</h1>
 <h2>Overview</h2>
 <p>Consolidated APRL recommendations for <strong>microsoft.insights/components</strong> resources.</p>
@@ -1868,7 +1868,7 @@
 <p><strong>Per-recommendation verification:</strong></p>
 <ul>
 <li><strong>Migrate from Application Insights instrumentation keys to connection strings</strong> [Medium] &mdash; 2 resource(s) remediated (GUID: <code>092f5c85-bffb-48b0-b85d-d543c6b54800</code>)</li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
 "Epic","Platform","","","","<h1>Platform</h1>
 <h2>Overview</h2>
 <p>Core platform services — identity, secrets, governance</p>
@@ -1898,7 +1898,7 @@
 <li>Systemtopics (microsoft.eventgrid/systemtopics) &mdash; 0 recommendation(s), 3 resource(s)</li>
 <li>Vaults (microsoft.keyvault/vaults) &mdash; 3 recommendation(s), 2 resource(s)</li>
 <li>Subscriptions (microsoft.subscription/subscriptions) &mdash; 13 recommendation(s), 0 resource(s)</li>
-</ul>","Reliability; Platform","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","Reliability; Platform","2","",""
 "Feature","","Systemtopics","","","<h1>Systemtopics (microsoft.eventgrid/systemtopics)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>microsoft.eventgrid/systemtopics</strong> resources within the <strong>Platform</strong> domain.</p>
@@ -1916,7 +1916,7 @@
 <h2>Recommendations</h2>
 <ol>
 </ol>
-","<p>All recommendations for <strong>microsoft.eventgrid/systemtopics</strong> are completed. Resources validated against APRL checks.</p>","microsoft.eventgrid/systemtopics; Platform","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+","<p>All recommendations for <strong>microsoft.eventgrid/systemtopics</strong> are completed. Resources validated against APRL checks.</p>","microsoft.eventgrid/systemtopics; Platform","3","",""
 "User Story","","","Systemtopics - Recommendations","","<h1>Systemtopics - Recommendations</h1>
 <h2>Overview</h2>
 <p>Consolidated APRL recommendations for <strong>microsoft.eventgrid/systemtopics</strong> resources.</p>
@@ -1931,7 +1931,7 @@
 ","<ul>
 <li>All 0 recommendation(s) have been implemented</li>
 <li>All 3 affected resource(s) pass APRL compliance checks</li>
-</ul>","Low; Source:APRL","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","Low; Source:APRL","3","",""
 "Feature","","Vaults","","","<h1>Vaults (microsoft.keyvault/vaults)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>microsoft.keyvault/vaults</strong> resources within the <strong>Platform</strong> domain.</p>
@@ -1979,7 +1979,7 @@
 <li>Azure Key Vault API versions prior to 2026-02-01 are being retired [High] &mdash; 1 resource(s)</li>
 <li>Key vaults should have purge protection enabled [Medium] &mdash; 1 resource(s)</li>
 <li>Diagnostic logs in Key Vault should be enabled [Low] &mdash; 1 resource(s)</li>
-</ul>","microsoft.keyvault/vaults; Platform","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","microsoft.keyvault/vaults; Platform","1","",""
 "User Story","","","Vaults - Recommendations","","<h1>Vaults - Recommendations</h1>
 <h2>Overview</h2>
 <p>Consolidated APRL recommendations for <strong>microsoft.keyvault/vaults</strong> resources.</p>
@@ -2041,7 +2041,7 @@
 <li><strong>Azure Key Vault API versions prior to 2026-02-01 are being retired</strong> [High] &mdash; 1 resource(s) remediated (GUID: <code>7ff06874-39e9-41be-9552-fa1ae2a83c88</code>)</li>
 <li><strong>Key vaults should have purge protection enabled</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>70fcfe6d-00e9-5544-a63a-fff42b9f2edb</code>)</li>
 <li><strong>Diagnostic logs in Key Vault should be enabled</strong> [Low] &mdash; 1 resource(s) remediated (GUID: <code>1dc0821d-4f14-7644-bab4-ba208ff5f7fa</code>)</li>
-</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","",""
 "Feature","","Subscriptions","","","<h1>Subscriptions (microsoft.subscription/subscriptions)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>microsoft.subscription/subscriptions</strong> resources within the <strong>Platform</strong> domain.</p>
@@ -2167,7 +2167,7 @@
 <li>RE:08 Design a reliability testing strategy [Medium] &mdash; 1 resource(s)</li>
 <li>RE:09 Implement business continuity and disaster recovery plan [Medium] &mdash; 1 resource(s)</li>
 <li>RE:10 Design a reliable monitoring and alerting strategy [Medium] &mdash; 1 resource(s)</li>
-</ul>","microsoft.subscription/subscriptions; Platform","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","microsoft.subscription/subscriptions; Platform","2","",""
 "User Story","","","Subscriptions - Recommendations","","<h1>Subscriptions - Recommendations</h1>
 <h2>Overview</h2>
 <p>Consolidated APRL recommendations for <strong>microsoft.subscription/subscriptions</strong> resources.</p>
@@ -2380,7 +2380,7 @@
 <li><strong>RE:08 Design a reliability testing strategy</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>7db74a6a-4062-46a8-a0cd-18684fb0ec08</code>)</li>
 <li><strong>RE:09 Implement business continuity and disaster recovery plan</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>5f95df03-cae2-4761-90b7-7afd657ac124</code>)</li>
 <li><strong>RE:10 Design a reliable monitoring and alerting strategy</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>90adebf7-bc90-4939-9aa8-119c46bee0fc</code>)</li>
-</ul>","Medium; Well Architected; Source:APRL","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","Medium; Well Architected; Source:APRL","2","",""
 "Epic","Uncategorised","","","","<h1>Uncategorised</h1>
 <h2>Overview</h2>
 <p>Azure Excellence recommendations for the Uncategorised domain.</p>
@@ -2405,7 +2405,7 @@
 <p><strong>Features to complete:</strong></p>
 <ul>
 <li>Vaults (microsoft.recoveryservices/vaults) &mdash; 5 recommendation(s), 2 resource(s)</li>
-</ul>","Reliability; Uncategorised","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","Reliability; Uncategorised","2","",""
 "Feature","","Vaults","","","<h1>Vaults (microsoft.recoveryservices/vaults)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>microsoft.recoveryservices/vaults</strong> resources within the <strong>Uncategorised</strong> domain.</p>
@@ -2468,7 +2468,7 @@
 <li>Enable Soft Delete for Recovery Services Vaults in Azure Backup [Medium] &mdash; 1 resource(s)</li>
 <li>Enable soft delete for your Recovery Services vaults [Medium] &mdash; 1 resource(s)</li>
 <li>Migrate from classic alerts to built-in Azure Monitor alerts for Azure Recovery Services Vaults [Medium] &mdash; 1 resource(s)</li>
-</ul>","microsoft.recoveryservices/vaults; Uncategorised","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","microsoft.recoveryservices/vaults; Uncategorised","1","",""
 "User Story","","","Vaults - Recommendations","","<h1>Vaults - Recommendations</h1>
 <h2>Overview</h2>
 <p>Consolidated APRL recommendations for <strong>microsoft.recoveryservices/vaults</strong> resources.</p>
@@ -2559,4 +2559,4 @@
 <li><strong>Enable Soft Delete for Recovery Services Vaults in Azure Backup</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>9e39919b-78af-4a0b-b70f-c548dae97c25</code>)</li>
 <li><strong>Enable soft delete for your Recovery Services vaults</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>3ebfaf53-4d8c-4e67-a948-017bbbf59de6</code>)</li>
 <li><strong>Migrate from classic alerts to built-in Azure Monitor alerts for Azure Recovery Services Vaults</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>2912472d-0198-4bdc-aa90-37f145790edc</code>)</li>
-</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog4"
+</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","",""
