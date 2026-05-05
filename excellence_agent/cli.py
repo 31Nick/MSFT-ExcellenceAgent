@@ -639,6 +639,276 @@ def sync_retry(
 
 
 # ---------------------------------------------------------------------------
+# apps
+# ---------------------------------------------------------------------------
+
+@cli.group()
+def apps() -> None:
+    """Manage the application registry (applications.yaml)."""
+
+
+@apps.command("list")
+@click.option(
+    "--config", "config_path", default=None,
+    type=click.Path(dir_okay=False),
+    help="Path to applications.yaml (default: project root).",
+)
+def apps_list(config_path: str | None) -> None:
+    """List all registered applications."""
+    from excellence_agent.applications import load_app_registry
+
+    registry = load_app_registry(config_path)
+    app_list = registry.list_apps()
+
+    if not app_list:
+        click.echo("No applications registered.")
+        click.echo("Use 'ea apps add <name>' or run incremental export with --input-dir to auto-detect.")
+        return
+
+    click.echo(click.style(f"Registered applications ({len(app_list)}):\n", fg="cyan"))
+    for app in app_list:
+        envs = ", ".join(app.environments) if app.environments else "(none)"
+        click.echo(f"  {click.style(app.name, fg='green')}  envs: {envs}")
+        if app.description:
+            click.echo(f"    {app.description}")
+
+
+@apps.command("add")
+@click.argument("name")
+@click.option("--description", "-d", default="", help="Application description.")
+@click.option(
+    "--config", "config_path", default=None,
+    type=click.Path(dir_okay=False),
+    help="Path to applications.yaml.",
+)
+def apps_add(name: str, description: str, config_path: str | None) -> None:
+    """Add an application to the registry."""
+    from excellence_agent.applications import load_app_registry
+
+    registry = load_app_registry(config_path)
+    entry = registry.add_app(name, description=description)
+    registry.save()
+    click.echo(click.style(f"✔ Added application: {entry.name}", fg="green"))
+
+
+@apps.command("remove")
+@click.argument("name")
+@click.option(
+    "--config", "config_path", default=None,
+    type=click.Path(dir_okay=False),
+    help="Path to applications.yaml.",
+)
+def apps_remove(name: str, config_path: str | None) -> None:
+    """Remove an application from the registry."""
+    from excellence_agent.applications import load_app_registry
+
+    registry = load_app_registry(config_path)
+    if registry.remove_app(name):
+        registry.save()
+        click.echo(click.style(f"✔ Removed application: {name}", fg="green"))
+    else:
+        click.echo(click.style(f"✘ Application '{name}' not found.", fg="red"))
+
+
+# ---------------------------------------------------------------------------
+# export-incremental
+# ---------------------------------------------------------------------------
+
+@cli.command("export-incremental")
+@click.option(
+    "--report",
+    default=None,
+    type=click.Path(exists=True, dir_okay=False),
+    help="Path to a single APRL Expert Analysis file.",
+)
+@click.option(
+    "--input-dir",
+    default=None,
+    type=click.Path(exists=True, file_okay=False),
+    help="Path to batch assessment output directory.",
+)
+@click.option(
+    "--matrix",
+    default=_DEFAULT_MATRIX,
+    type=click.Path(exists=True, dir_okay=False),
+    show_default=True,
+    help="Path to resource_matrix.yaml.",
+)
+@click.option(
+    "--customer",
+    required=True,
+    help="Customer identifier for tracking processed items.",
+)
+@click.option(
+    "--app",
+    "app_name",
+    default=None,
+    help="Application name (for single-file mode; auto-detected for directories).",
+)
+@click.option(
+    "--reviewed-only/--all-items",
+    default=True,
+    show_default=True,
+    help="Only process items with REVIEW STATUS = 'Reviewed'.",
+)
+@click.option(
+    "--env-filter",
+    type=click.Choice(["All", "Prod", "OtherEnvs"], case_sensitive=False),
+    default="All",
+    show_default=True,
+    help="Filter by environment.",
+)
+@click.option(
+    "--output",
+    default="output/ado_import_incremental.csv",
+    show_default=True,
+    help="Output CSV file path.",
+)
+@click.option("--area-path", default="", help="ADO Area Path.")
+@click.option("--iteration-path", default="", help="ADO Iteration Path.")
+@click.option("--advisor", default=None, type=click.Path(exists=True, dir_okay=False))
+@click.option(
+    "--state-dir",
+    default=None,
+    type=click.Path(file_okay=False),
+    help="State directory (default: .state/).",
+)
+def export_incremental(
+    report: str | None,
+    input_dir: str | None,
+    matrix: str,
+    customer: str,
+    app_name: str | None,
+    reviewed_only: bool,
+    env_filter: str,
+    output: str,
+    area_path: str,
+    iteration_path: str,
+    advisor: str | None,
+    state_dir: str | None,
+) -> None:
+    """Run incremental pipeline and export ADO-compatible CSV.
+
+    Processes only reviewed items not already handled in previous runs.
+    Creates new numbered user stories per resource type per app.
+
+    Use --report for a single file or --input-dir for a batch directory.
+    """
+    if not report and not input_dir:
+        raise click.ClickException("Provide either --report or --input-dir.")
+    if report and input_dir:
+        raise click.ClickException("Provide only one of --report or --input-dir.")
+
+    from excellence_agent.pipeline_v2 import build_hierarchy_incremental
+
+    start = time.time()
+    report_path = input_dir or report
+
+    click.echo(click.style("▶ Running incremental pipeline …", fg="cyan"))
+    click.echo(f"  Input:         {report_path}")
+    click.echo(f"  Customer:      {customer}")
+    click.echo(f"  Reviewed only: {reviewed_only}")
+    click.echo(f"  Env filter:    {env_filter}")
+    click.echo()
+
+    try:
+        result = build_hierarchy_incremental(
+            report_path=report_path,
+            matrix_path=matrix,
+            customer=customer,
+            reviewed_only=reviewed_only,
+            env_filter=env_filter,
+            app_name=app_name,
+            state_dir=state_dir,
+            advisor_path=advisor,
+        )
+    except Exception as exc:
+        raise click.ClickException(f"Pipeline error: {exc}") from exc
+
+    hierarchy = result.hierarchy
+
+    if not hierarchy.all_stories():
+        click.echo(click.style("ℹ No new items to process.", fg="yellow"))
+        click.echo(f"  Items skipped (already processed): {result.items_skipped_duplicate}")
+        click.echo(f"\n  Elapsed: {_elapsed(start)}")
+        return
+
+    # Export to CSV
+    click.echo(click.style("▶ Exporting to CSV …", fg="cyan"))
+    from excellence_agent.config import ADOConfig
+    from excellence_agent.export.ado_csv import ADOExporter
+    from excellence_agent.export.content_generator import ContentGenerator
+
+    ado_config = ADOConfig(area_path=area_path, iteration_path=iteration_path)
+    content_gen = ContentGenerator()
+    exporter = ADOExporter(config=ado_config, content_generator=content_gen)
+
+    # Convert V2 hierarchy to V1 for export compatibility
+    from excellence_agent.models import Epic, Feature, UserStory, WorkItemHierarchy
+
+    v1_hierarchy = _convert_v2_to_v1(hierarchy)
+
+    try:
+        out_path = exporter.export(v1_hierarchy, output)
+    except Exception as exc:
+        raise click.ClickException(f"Export failed: {exc}") from exc
+
+    # Summary
+    stats = result.stats
+    click.echo(click.style(f"\n✔ Incremental export complete → {out_path}", fg="green"))
+    click.echo(f"  Apps processed:     {', '.join(result.apps_processed)}")
+    click.echo(f"  New stories:        {stats.get('user_stories', 0)}")
+    click.echo(f"  Items recorded:     {result.new_items_processed}")
+    click.echo(f"  Items skipped:      {result.items_skipped_duplicate}")
+
+    if result.new_apps_detected:
+        click.echo(f"  New apps detected:  {', '.join(result.new_apps_detected)}")
+    if result.errors:
+        click.echo(click.style(f"\n  Warnings: {len(result.errors)} file(s) had errors", fg="yellow"))
+
+    click.echo(f"\n  Elapsed: {_elapsed(start)}")
+
+
+def _convert_v2_to_v1(hierarchy_v2) -> "WorkItemHierarchy":
+    """Convert a V2 hierarchy to V1 format for CSV export compatibility."""
+    from excellence_agent.models import Epic, Feature, UserStory, WorkItemHierarchy
+
+    v1 = WorkItemHierarchy()
+    for epic_v2 in hierarchy_v2.epics:
+        epic = Epic(name=epic_v2.app_name, description=epic_v2.description)
+        epic.total_resource_count = epic_v2.total_resource_count
+        epic.waf_pillars = epic_v2.waf_pillars
+        epic.impact_summary = epic_v2.impact_summary
+
+        for feat_v2 in epic_v2.features:
+            # Use the first resource type as a representative for the V1 Feature
+            feature = Feature(
+                name=feat_v2.category_name,
+                resource_type=feat_v2.category_key,
+            )
+            feature.resource_groups = feat_v2.resource_groups
+            feature.subscriptions = feat_v2.subscriptions
+            feature.resource_count = feat_v2.resource_count
+
+            for story_v2 in feat_v2.user_stories:
+                story = UserStory(
+                    title=story_v2.title,
+                    impact=story_v2.impact,
+                    category=story_v2.category,
+                    source=story_v2.source,
+                    waf_pillars=story_v2.waf_pillars,
+                    resource_count=story_v2.resource_count,
+                )
+                for rec in story_v2.recommendations:
+                    story.add_recommendation(rec)
+                feature.add_user_story(story)
+
+            epic.add_feature(feature)
+        v1.add_epic(epic)
+    return v1
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 

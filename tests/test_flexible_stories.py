@@ -405,3 +405,93 @@ class TestHierarchyBuilderV2:
         # Should have two features (Compute, Storage) with one story each
         assert len(hierarchy.all_features()) == 2
         assert len(hierarchy.all_stories()) == 2
+
+
+# ---------------------------------------------------------------------------
+# CLI Integration Tests
+# ---------------------------------------------------------------------------
+
+class TestCLIApps:
+    """Test the `apps` CLI command group."""
+
+    def test_apps_list_empty(self, tmp_path):
+        from click.testing import CliRunner
+        from excellence_agent.cli import cli
+
+        config_file = tmp_path / "applications.yaml"
+        runner = CliRunner()
+        result = runner.invoke(cli, ["apps", "list", "--config", str(config_file)])
+        assert result.exit_code == 0
+        assert "No applications registered" in result.output
+
+    def test_apps_add_and_list(self, tmp_path):
+        from click.testing import CliRunner
+        from excellence_agent.cli import cli
+
+        config_file = tmp_path / "applications.yaml"
+        runner = CliRunner()
+
+        # Add an app
+        result = runner.invoke(cli, ["apps", "add", "MyApp", "-d", "Test app", "--config", str(config_file)])
+        assert result.exit_code == 0
+        assert "Added application: MyApp" in result.output
+
+        # List apps
+        result = runner.invoke(cli, ["apps", "list", "--config", str(config_file)])
+        assert result.exit_code == 0
+        assert "MyApp" in result.output
+
+    def test_apps_remove(self, tmp_path):
+        from click.testing import CliRunner
+        from excellence_agent.cli import cli
+
+        config_file = tmp_path / "applications.yaml"
+        runner = CliRunner()
+
+        runner.invoke(cli, ["apps", "add", "ToRemove", "--config", str(config_file)])
+        result = runner.invoke(cli, ["apps", "remove", "ToRemove", "--config", str(config_file)])
+        assert result.exit_code == 0
+        assert "Removed application: ToRemove" in result.output
+
+    def test_apps_remove_not_found(self, tmp_path):
+        from click.testing import CliRunner
+        from excellence_agent.cli import cli
+
+        config_file = tmp_path / "applications.yaml"
+        runner = CliRunner()
+        result = runner.invoke(cli, ["apps", "remove", "Ghost", "--config", str(config_file)])
+        assert result.exit_code == 0
+        assert "not found" in result.output
+
+
+class TestCLIExportIncremental:
+    """Test the `export-incremental` CLI command."""
+
+    def test_no_input_source_error(self):
+        from click.testing import CliRunner
+        from excellence_agent.cli import cli
+
+        runner = CliRunner()
+        result = runner.invoke(cli, ["export-incremental", "--customer", "test"])
+        assert result.exit_code != 0
+        assert "Provide either --report or --input-dir" in result.output
+
+    def test_both_input_sources_error(self, tmp_path):
+        from click.testing import CliRunner
+        from excellence_agent.cli import cli
+
+        # Create a dummy file and dir
+        dummy_file = tmp_path / "report.xlsx"
+        dummy_file.write_text("")
+        dummy_dir = tmp_path / "batch"
+        dummy_dir.mkdir()
+
+        runner = CliRunner()
+        result = runner.invoke(cli, [
+            "export-incremental",
+            "--customer", "test",
+            "--report", str(dummy_file),
+            "--input-dir", str(dummy_dir),
+        ])
+        assert result.exit_code != 0
+        assert "Provide only one" in result.output
