@@ -736,14 +736,16 @@ def apps_remove(name: str, config_path: str | None) -> None:
 )
 @click.option(
     "--customer",
-    required=True,
-    help="Customer identifier for tracking processed items.",
+    default="_default",
+    show_default=True,
+    help="Customer scope for the processing ledger (usually left as default).",
 )
 @click.option(
     "--app",
     "app_name",
-    default=None,
-    help="Application name (for single-file mode; auto-detected for directories).",
+    default="ChangeMe-AppName",
+    show_default=True,
+    help="Application name (required for single-file mode; auto-detected for directories).",
 )
 @click.option(
     "--reviewed-only/--all-items",

@@ -22,6 +22,8 @@ export default function Dashboard() {
   // Staging state: files selected but not yet processed
   const [stagedAprlFile, setStagedAprlFile] = useState<File | null>(null);
   const [advisorFile, setAdvisorFile] = useState<File | null>(null);
+  const [appName, setAppName] = useState('ChangeMe-AppName');
+  const [reviewedOnly, setReviewedOnly] = useState(true);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -56,7 +58,7 @@ export default function Dashboard() {
     setUploadProgress(0);
     setError('');
     try {
-      await uploadFile(stagedAprlFile, setUploadProgress, advisorFile);
+      await uploadFile(stagedAprlFile, setUploadProgress, advisorFile, appName, reviewedOnly);
       setStagedAprlFile(null);
       setAdvisorFile(null);
       await fetchData();
@@ -66,7 +68,7 @@ export default function Dashboard() {
     } finally {
       setUploading(false);
     }
-  }, [stagedAprlFile, advisorFile, fetchData]);
+  }, [stagedAprlFile, advisorFile, appName, reviewedOnly, fetchData]);
 
   if (loading) {
     return (
@@ -160,6 +162,46 @@ export default function Dashboard() {
                   />
                 </label>
               )}
+            </div>
+
+            {/* Step 3: Pipeline Settings */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-green-600 text-white text-xs font-bold">3</div>
+                <h3 className="text-sm font-semibold text-gray-700">Pipeline Settings</h3>
+              </div>
+
+              {/* App Name */}
+              <div className="mb-4">
+                <label className="block text-xs font-medium text-gray-600 mb-1">
+                  Application Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={appName}
+                  onChange={(e) => setAppName(e.target.value)}
+                  placeholder="ChangeMe-AppName"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                />
+                <p className="text-xs text-gray-400 mt-1">
+                  The application name becomes the Epic. Auto-detected from batch directories, but can always be overridden.
+                </p>
+              </div>
+
+              {/* Reviewed Only Toggle */}
+              <div className="flex items-center gap-3">
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={reviewedOnly}
+                    onChange={(e) => setReviewedOnly(e.target.checked)}
+                    className="sr-only peer"
+                  />
+                  <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+                </label>
+                <span className="text-sm text-gray-700">Reviewed items only</span>
+                <span className="text-xs text-gray-400">(Only process items marked as &quot;Reviewed&quot;)</span>
+              </div>
             </div>
 
             {/* Continue Button */}

@@ -52,7 +52,7 @@ def build_hierarchy_incremental(
     report_path: str,
     matrix_path: str,
     *,
-    customer: str,
+    customer: str = "_default",
     reviewed_only: bool = True,
     env_filter: str = "All",
     app_name: Optional[str] = None,
@@ -69,13 +69,14 @@ def build_hierarchy_incremental(
     matrix_path
         Path to resource_matrix.yaml.
     customer
-        Customer identifier for scoping the processing ledger.
+        Customer scope for the ledger (default: "_default" for single-customer mode).
     reviewed_only
         If True, only process rows with REVIEW STATUS == "Reviewed".
     env_filter
         Environment filter: "All", "Prod", or "OtherEnvs".
     app_name
         Application name (used for single-file mode). Auto-detected for directories.
+        Defaults to "ChangeMe-AppName" if not provided in single-file mode.
     state_dir
         Path to state directory (default: .state/).
     app_registry_path
@@ -108,6 +109,10 @@ def build_hierarchy_incremental(
             env_filter=env_filter,
         )
     elif path.is_file():
+        # Default app name if not provided
+        if not app_name:
+            app_name = "ChangeMe-AppName"
+
         parse_result = parse_single_file(
             path,
             reviewed_only=reviewed_only,

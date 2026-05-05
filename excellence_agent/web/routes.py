@@ -55,12 +55,21 @@ def _error(message: str, status: int = 400):
 
 @api_bp.route("/upload", methods=["POST"])
 def upload():
-    """Accept APRL Excel file and optional Advisor CSV, run the full pipeline."""
+    """Accept APRL Excel file and optional Advisor CSV, run the V2 incremental pipeline."""
     file = request.files.get("aprl_file")
     if not file or file.filename == "":
         return _error("No file selected.", 400)
 
     advisor_file = request.files.get("advisor_file")  # Optional
+
+    # App name: from form field, or default placeholder
+    app_name = (request.form.get("app_name") or "").strip()
+    if not app_name:
+        app_name = "ChangeMe-AppName"
+
+    # Reviewed-only toggle (default: True)
+    reviewed_only_raw = request.form.get("reviewed_only", "true")
+    reviewed_only = reviewed_only_raw.lower() not in ("false", "0", "no")
 
     config = _get_config()
 
@@ -76,76 +85,67 @@ def upload():
         advisor_file.save(advisor_path)
 
     try:
-        from excellence_agent.ingest import APRLParser
-        from excellence_agent.analysis import (
-            CrossReferencer,
-            Deduplicator,
-            HierarchyBuilder,
-            PatternDetector,
-            ResourceMapper,
+        from excellence_agent.pipeline_v2 import build_hierarchy_incremental
+
+        result = build_hierarchy_incremental(
+            report_path=upload_path,
+            matrix_path=config.resource_matrix_path,
+            reviewed_only=reviewed_only,
+            app_name=app_name,
+            advisor_path=advisor_path,
         )
 
-        # 1. Parse APRL
-        parser = APRLParser(upload_path)
-        report = parser.parse()
-        df = report.impacted_resources
+        hierarchy = result.hierarchy
 
-        # 2. Optional Advisor merge
-        xref_report = None
-        matrix = config.load_resource_matrix()
-        if advisor_path:
-            from excellence_agent.ingest import AdvisorParser
-            type_mapping = matrix.get("advisor_type_mapping", {})
-            advisor_report = AdvisorParser(advisor_path, type_mapping=type_mapping).parse()
-            xref = CrossReferencer()
-            df, xref_report = xref.merge(df, advisor_report.recommendations)
+        # Also run pattern detection on the V2 hierarchy (via V1 conversion)
+        from excellence_agent.cli import _convert_v2_to_v1
 
-        # 3. Map resources
-        mapper = ResourceMapper(matrix)
-        mapped_df = mapper.map_dataframe(df)
+        v1_hierarchy = _convert_v2_to_v1(hierarchy) if hierarchy.all_stories() else None
 
-        # 4. Build hierarchy
-        descriptions = {
-            cat: info.get("description", "")
-            for cat, info in matrix.get("categories", {}).items()
+        # Store results in app-level state (V2 + V1 for existing endpoints)
+        current_app.config["EA_HIERARCHY"] = v1_hierarchy
+        current_app.config["EA_HIERARCHY_V2"] = hierarchy
+        current_app.config["EA_INCREMENTAL_RESULT"] = result
+
+        # Patterns & dedup from V1 hierarchy (if stories exist)
+        if v1_hierarchy:
+            from excellence_agent.analysis import Deduplicator, PatternDetector
+
+            dedup = Deduplicator()
+            dedup_report = dedup.analyse(v1_hierarchy)
+            current_app.config["EA_DEDUP_REPORT"] = dedup_report
+
+            detector = PatternDetector()
+            patterns = detector.detect(v1_hierarchy)
+            current_app.config["EA_PATTERNS"] = patterns
+        else:
+            current_app.config["EA_DEDUP_REPORT"] = None
+            current_app.config["EA_PATTERNS"] = []
+
+        # Cross-reference report (from Advisor merge within pipeline)
+        current_app.config["EA_XREF_REPORT"] = None  # TODO: capture from pipeline if needed
+
+        stats = hierarchy.summary_stats() if hierarchy.all_stories() else {
+            "epics": 0, "features": 0, "user_stories": 0, "recommendations": 0
         }
-        builder = HierarchyBuilder(category_descriptions=descriptions)
-        hierarchy = builder.build(mapped_df)
 
-        # 5. Deduplicate
-        dedup = Deduplicator()
-        dedup_report = dedup.analyse(hierarchy)
-
-        # 6. Detect patterns
-        detector = PatternDetector()
-        patterns = detector.detect(hierarchy)
-
-        # Store results in app-level state
-        current_app.config["EA_HIERARCHY"] = hierarchy
-        current_app.config["EA_DEDUP_REPORT"] = dedup_report
-        current_app.config["EA_PATTERNS"] = patterns
-        current_app.config["EA_XREF_REPORT"] = xref_report
-
-        stats = hierarchy.summary_stats()
         message = (
-            f"Pipeline complete — {stats['epics']} Epics, "
-            f"{stats['features']} Features, "
-            f"{stats['user_stories']} User Stories, "
-            f"{stats['recommendations']} Recommendations."
+            f"Pipeline complete — {stats.get('epics', 0)} Epics (Apps), "
+            f"{stats.get('features', 0)} Features (Categories), "
+            f"{stats.get('user_stories', 0)} User Stories. "
+            f"New items: {result.new_items_processed}, "
+            f"Skipped (already processed): {result.items_skipped_duplicate}."
         )
-        if xref_report:
-            message += (
-                f" Cross-ref: {len(xref_report.matched_resources)} matched, "
-                f"{len(xref_report.advisor_only_resources)} Advisor-only."
-            )
 
         response_data = {
             "success": True,
             "stats": stats,
             "message": message,
+            "app_name": app_name,
+            "new_items_processed": result.new_items_processed,
+            "items_skipped_duplicate": result.items_skipped_duplicate,
+            "apps_processed": result.apps_processed,
         }
-        if xref_report:
-            response_data["cross_reference"] = xref_report.to_dict()
 
         return jsonify(response_data)
     except Exception as exc:
@@ -661,7 +661,7 @@ def incremental_run():
     try:
         result = build_hierarchy_incremental(
             report_path=report_path,
-            matrix_path=config.matrix_path,
+            matrix_path=config.resource_matrix_path,
             customer=customer,
             reviewed_only=data.get("reviewed_only", True),
             env_filter=data.get("env_filter", "All"),

@@ -472,7 +472,8 @@ class TestCLIExportIncremental:
         from excellence_agent.cli import cli
 
         runner = CliRunner()
-        result = runner.invoke(cli, ["export-incremental", "--customer", "test"])
+        # Customer is now optional (defaults to _default)
+        result = runner.invoke(cli, ["export-incremental"])
         assert result.exit_code != 0
         assert "Provide either --report or --input-dir" in result.output
 

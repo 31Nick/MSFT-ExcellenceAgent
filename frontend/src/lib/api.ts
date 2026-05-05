@@ -35,7 +35,9 @@ async function request<T>(url: string, options?: RequestInit): Promise<T> {
 export async function uploadFile(
   file: File,
   onProgress?: (pct: number) => void,
-  advisorFile?: File | null
+  advisorFile?: File | null,
+  appName?: string,
+  reviewedOnly?: boolean
 ): Promise<UploadResponse> {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -62,6 +64,10 @@ export async function uploadFile(
     if (advisorFile) {
       fd.append('advisor_file', advisorFile);
     }
+    if (appName) {
+      fd.append('app_name', appName);
+    }
+    fd.append('reviewed_only', reviewedOnly === false ? 'false' : 'true');
     xhr.send(fd);
   });
 }

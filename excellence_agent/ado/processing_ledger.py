@@ -5,8 +5,11 @@ for deduplication across incremental pipeline runs and per-resource-type
 run numbering.
 
 Tables:
-    processed_recommendations — one row per (customer, app, guid, resource_id)
-    resource_type_runs — per (customer, app, resource_type) run counter
+    processed_recommendations — one row per (app, guid, resource_id)
+    resource_type_runs — per (app, resource_type) run counter
+
+Note: The `customer` column is retained in the schema for backward
+compatibility but defaults to '_default' (single-customer mode).
 """
 
 from __future__ import annotations
@@ -18,6 +21,7 @@ from pathlib import Path
 from typing import Generator, List, Optional, Set, Tuple
 
 _DEFAULT_STATE_DIR = Path(__file__).parent.parent.parent / ".state"
+_DEFAULT_CUSTOMER = "_default"
 
 _LEDGER_SCHEMA_SQL = """
 CREATE TABLE IF NOT EXISTS processed_recommendations (
@@ -84,10 +88,10 @@ class ProcessingLedger:
 
     def is_already_processed(
         self,
-        customer: str,
-        app_name: str,
-        recommendation_guid: str,
-        resource_id: str,
+        customer: str = _DEFAULT_CUSTOMER,
+        app_name: str = "",
+        recommendation_guid: str = "",
+        resource_id: str = "",
     ) -> bool:
         """Check if a specific (guid, resource_id) has been processed before."""
         with self._connect() as conn:
@@ -101,8 +105,8 @@ class ProcessingLedger:
 
     def get_already_processed_keys(
         self,
-        customer: str,
-        app_name: str,
+        customer: str = _DEFAULT_CUSTOMER,
+        app_name: str = "",
     ) -> Set[Tuple[str, str]]:
         """Return all (recommendation_guid, resource_id) pairs already processed."""
         with self._connect() as conn:
@@ -116,9 +120,9 @@ class ProcessingLedger:
 
     def get_next_run_number(
         self,
-        customer: str,
-        app_name: str,
-        resource_type_norm: str,
+        customer: str = _DEFAULT_CUSTOMER,
+        app_name: str = "",
+        resource_type_norm: str = "",
     ) -> int:
         """Get the next run number for a (customer, app, resource_type).
 
@@ -151,9 +155,9 @@ class ProcessingLedger:
 
     def peek_next_run_number(
         self,
-        customer: str,
-        app_name: str,
-        resource_type_norm: str,
+        customer: str = _DEFAULT_CUSTOMER,
+        app_name: str = "",
+        resource_type_norm: str = "",
     ) -> int:
         """Preview the next run number WITHOUT incrementing."""
         with self._connect() as conn:
@@ -166,9 +170,9 @@ class ProcessingLedger:
 
     def get_current_run_count(
         self,
-        customer: str,
-        app_name: str,
-        resource_type_norm: str,
+        customer: str = _DEFAULT_CUSTOMER,
+        app_name: str = "",
+        resource_type_norm: str = "",
     ) -> int:
         """Get current run count (0 if never processed)."""
         with self._connect() as conn:
@@ -183,11 +187,11 @@ class ProcessingLedger:
 
     def record_processed(
         self,
-        customer: str,
-        app_name: str,
-        recommendation_guid: str,
-        resource_id: str,
-        run_number: int,
+        customer: str = _DEFAULT_CUSTOMER,
+        app_name: str = "",
+        recommendation_guid: str = "",
+        resource_id: str = "",
+        run_number: int = 1,
         *,
         source_file: str = "",
         story_stable_key: str = "",
@@ -208,10 +212,10 @@ class ProcessingLedger:
 
     def record_processed_batch(
         self,
-        customer: str,
-        app_name: str,
-        items: List[Tuple[str, str]],  # (recommendation_guid, resource_id)
-        run_number: int,
+        customer: str = _DEFAULT_CUSTOMER,
+        app_name: str = "",
+        items: List[Tuple[str, str]] = None,  # (recommendation_guid, resource_id)
+        run_number: int = 1,
         *,
         source_file: str = "",
         story_stable_key: str = "",
@@ -220,6 +224,8 @@ class ProcessingLedger:
 
         Returns the number of newly inserted records (ignores duplicates).
         """
+        if items is None:
+            items = []
         now = datetime.now(timezone.utc).isoformat()
         inserted = 0
         with self._connect() as conn:
