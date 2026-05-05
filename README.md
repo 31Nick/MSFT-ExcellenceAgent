@@ -9,11 +9,13 @@ ExcellenceAgent ingests [Azure Proactive Resiliency Library (APRL) v2](https://a
 - **Excel Ingest** — Parse APRL v2 reports with full column validation
 - **Smart Grouping** — Map resources to domain categories using a configurable matrix (Observability, Platform, Compute, Data, Networking, Apps, AI)
 - **4-Level ADO Hierarchy** — Generates Epics → Features → User Stories → Tasks with comprehensive descriptions and acceptance criteria
+- **Incremental Story Creation** — App-centric pipeline that processes only reviewed items, creates numbered stories per run, and prevents duplicate processing across runs (see [Incremental Pipeline](#incremental-pipeline-flexible-story-creation))
 - **Deduplication** — Identical recommendations across multiple resources collapse into single User Stories with child Tasks
 - **Pattern Detection** — Identifies cross-domain patterns, high-impact clusters, and resource-group hotspots
 - **ADO CSV Export** — UTF-8 BOM CSV with indented title columns for direct ADO bulk import
 - **ADO Live Sync** — Push work items directly to Azure DevOps via MCP (Model Context Protocol) with full CRUD, change detection, and retry support
 - **Per-Customer Configs** — Portable YAML configs for multi-customer environments (PAT-secured, gitignored)
+- **Application Registry** — YAML-based app management with auto-detection from batch assessment directories
 - **Web Dashboard** — Flask-based UI for visual hierarchy exploration, pattern insights, export, and sync dashboard
 - **Azure Advisor Cross-Reference** (Optional) — Upload Advisor CSV exports to cross-reference and identify overlapping insights between APRL and Advisor recommendations
 - **LLM Enrichment** (Optional) — Azure OpenAI integration for enhanced acceptance criteria, remediation steps, and semantic clustering
@@ -185,6 +187,107 @@ To overlay Azure Advisor recommendations alongside APRL:
 
 This enables you to prioritize remediation efforts and identify coverage gaps across assessment tools.
 
+### Incremental Pipeline (Flexible Story Creation)
+
+The incremental pipeline processes APRL Expert Analysis files in an app-centric manner, creating new numbered user stories per run without updating previous ones.
+
+#### Key Concepts
+
+- **App-centric hierarchy**: Epic = Application, Feature = Domain Category, Story = Resource Type per run
+- **Reviewed-only processing**: Only items with `REVIEW STATUS = "Reviewed"` are processed (configurable)
+- **Deduplication**: A processing ledger tracks `(recommendation_guid, resource_id)` pairs to prevent re-processing
+- **Run numbering**: Stories are numbered per `(application × resource type)` — e.g., "Virtual Machines - Recommendations 1", then "...Recommendations 2" on subsequent runs
+- **Multi-file input**: Supports batch assessment directories with auto-detection of app names from folder structure
+
+#### V2 Hierarchy (App-Centric)
+
+```
+Epic (Application — e.g. "Contoso-Web")
+ └── Feature (Domain Category — e.g. "Compute")
+      └── User Story (Resource Type + Run N — e.g. "Virtual Machines - Recommendations 1")
+```
+
+Stories are historical snapshots — immutable once created. Each run produces new stories rather than updating existing ones.
+
+#### Application Registry
+
+Applications are managed in `applications.yaml`:
+
+```yaml
+applications:
+  - name: "Contoso-Web"
+    description: "Contoso web application"
+    environments: ["Prod", "Dev"]
+    subscriptions: ["sub-id-1"]
+```
+
+CLI commands:
+
+```bash
+# List registered applications
+excellence-agent apps list
+
+# Add an application
+excellence-agent apps add "MyApp" -d "My application"
+
+# Remove an application
+excellence-agent apps remove "MyApp"
+```
+
+Apps are auto-detected from batch directory folder names when using `--input-dir`.
+
+#### Incremental Export
+
+```bash
+# Export from a single reviewed Expert Analysis file
+excellence-agent export-incremental \
+  --report path/to/Expert-Analysis.xlsx \
+  --customer myorg \
+  --app "MyApp"
+
+# Export from a batch assessment directory (auto-detects apps)
+excellence-agent export-incremental \
+  --input-dir path/to/batch-output/ \
+  --customer myorg
+
+# Process all items (not just reviewed)
+excellence-agent export-incremental \
+  --report path/to/report.xlsx \
+  --customer myorg \
+  --app "MyApp" \
+  --all-items
+
+# Filter by environment
+excellence-agent export-incremental \
+  --input-dir path/to/batch/ \
+  --customer myorg \
+  --env-filter Prod
+```
+
+**Batch directory structure** (matches PowerShell APRL assessment output):
+
+```
+Root/
+├── AppName1/
+│   ├── Prod/
+│   │   └── SubscriptionName/
+│   │       └── Expert-Analysis-*.xlsx
+│   └── OtherEnvs/
+│       └── ...
+└── AppName2/
+    └── ...
+```
+
+#### Web API Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/apps` | GET | List registered applications |
+| `/api/apps` | POST | Add an application (`{name, description}`) |
+| `/api/apps/<name>` | DELETE | Remove an application |
+| `/api/incremental/run` | POST | Run incremental pipeline |
+| `/api/incremental/export` | POST | Export last incremental result as CSV |
+
 ### Server Management (PowerShell)
 
 Use these PowerShell cmdlets from the project root on Windows.
@@ -241,6 +344,8 @@ Open `http://localhost:5000` in your browser. Upload an APRL Excel report to:
 
 ## ADO Work-Item Hierarchy
 
+### Standard Hierarchy (V1)
+
 The APRL data maps to a 4-level Azure DevOps hierarchy:
 
 ```
@@ -249,6 +354,18 @@ Epic (Domain Category — e.g. "Networking")
       └── User Story (APRL Recommendation — e.g. "Deploy Network Watcher in all regions")
            └── Task (Individual Resource — e.g. "NetworkWatcher_northeurope")
 ```
+
+### App-Centric Hierarchy (V2 — Incremental Pipeline)
+
+The incremental pipeline uses an app-centric 3-level hierarchy:
+
+```
+Epic (Application — e.g. "Contoso-Web")
+ └── Feature (Domain Category — e.g. "Compute")
+      └── User Story (Resource Type + Run # — e.g. "Virtual Machines - Recommendations 2")
+```
+
+Each story is a historical snapshot containing the recommendations from a single run. Stable keys use a `v2:` prefix to avoid conflicts with V1 work items.
 
 ### Importing into Azure DevOps
 
@@ -300,29 +417,36 @@ Enable by setting the Azure OpenAI environment variables in `.env`, then use the
 ```
 MSFT-ExcellenceAgent/
 ├── resource_matrix.yaml          # Resource type → Epic category mapping
+├── applications.yaml             # Application registry (auto-created)
 ├── requirements.txt
 ├── .env.example
 ├── customers/                    # Per-customer YAML configs (gitignored)
 │   ├── .gitkeep
 │   └── example.yaml              # Template
-├── .state/                       # Sync state DB (gitignored, auto-created)
+├── .state/                       # Sync state DB + processing ledger (gitignored, auto-created)
 ├── excellence_agent/
-│   ├── cli.py                    # Click CLI (ingest, analyse, export, customers, sync)
+│   ├── cli.py                    # Click CLI (ingest, analyse, export, export-incremental, apps, customers, sync)
 │   ├── config.py                 # Configuration management
-│   ├── models.py                 # Epic, Feature, UserStory, Task dataclasses
-│   ├── pipeline.py               # Shared ingest → map → build pipeline
+│   ├── models.py                 # Epic, Feature, UserStory, Task dataclasses (V1)
+│   ├── models_v2.py              # EpicV2, FeatureV2, UserStoryV2 (app-centric, V2)
+│   ├── pipeline.py               # V1 ingest → map → build pipeline
+│   ├── pipeline_v2.py            # V2 incremental pipeline with deduplication
+│   ├── applications.py           # Application registry (YAML CRUD + auto-detect)
 │   ├── ingest/                   # Excel parsing & validation
+│   │   └── batch_parser.py       # Multi-file directory parser + reviewed filter
 │   ├── analysis/                 # Grouping, deduplication, patterns
+│   │   └── grouper_v2.py         # App-centric V2 hierarchy builder
 │   ├── enrichment/               # Azure OpenAI integration
 │   ├── export/                   # ADO CSV generation & content templates
 │   ├── ado/                      # ADO MCP integration layer
 │   │   ├── customer_config.py    # Per-customer YAML config loader
 │   │   ├── mcp_client.py         # Typed async MCP client wrapper
+│   │   ├── processing_ledger.py  # Dedup ledger + run number tracking (SQLite)
 │   │   ├── state_store.py        # SQLite sync state tracking
 │   │   └── sync_service.py       # Sync orchestrator: plan, push, retry
 │   └── web/                      # Flask dashboard + React SPA
 ├── frontend/                     # React + Vite + TypeScript frontend
-└── tests/                        # pytest test suite (136 tests)
+└── tests/                        # pytest test suite (184 tests)
 ```
 
 ## Running Tests
