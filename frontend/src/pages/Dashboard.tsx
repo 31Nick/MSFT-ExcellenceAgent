@@ -1,11 +1,12 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Layers, GitBranch, BookOpen, CheckSquare, Copy, AlertTriangle, ArrowRightLeft, FolderOpen } from 'lucide-react';
+import { Layers, GitBranch, BookOpen, CheckSquare, Copy, AlertTriangle, ArrowRightLeft, FolderOpen, Plus, FileText, Database, X, ChevronUp, Check } from 'lucide-react';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import { getStats, getDedup, getHierarchy, getCrossReference, getActiveAssessment } from '../lib/api';
+import { getStats, getDedup, getHierarchy, getCrossReference, getActiveAssessment, uploadFile } from '../lib/api';
 import type { Stats, DedupReport, CrossReferenceReport } from '../lib/types';
 import StatCard from '../components/StatCard';
 import ImpactBadge from '../components/ImpactBadge';
+import FileDropZone from '../components/FileDropZone';
 import Spinner from '../components/Spinner';
 
 const IMPACT_COLORS: Record<string, string> = { High: '#ef4444', Medium: '#f59e0b', Low: '#22c55e' };
@@ -18,6 +19,15 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [activeAppName, setActiveAppName] = useState<string>('');
+
+  // Add Files panel state
+  const [showAddFiles, setShowAddFiles] = useState(false);
+  const [addAprlFile, setAddAprlFile] = useState<File | null>(null);
+  const [addAdvisorFile, setAddAdvisorFile] = useState<File | null>(null);
+  const [addReviewedOnly, setAddReviewedOnly] = useState(true);
+  const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadSuccess, setUploadSuccess] = useState<string | null>(null);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -41,6 +51,29 @@ export default function Dashboard() {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  const handleAddFiles = useCallback(async () => {
+    if (!addAprlFile) return;
+    setUploading(true);
+    setUploadProgress(0);
+    setError('');
+    setUploadSuccess(null);
+    try {
+      const resp = await uploadFile(addAprlFile, setUploadProgress, addAdvisorFile, activeAppName, addReviewedOnly);
+      setAddAprlFile(null);
+      setAddAdvisorFile(null);
+      setShowAddFiles(false);
+      setUploadSuccess(
+        `Added ${resp.new_items_processed ?? 0} new items (${resp.items_skipped_duplicate ?? 0} already processed)`
+      );
+      await fetchData();
+    } catch (err: unknown) {
+      if (err instanceof Error) setError(err.message);
+      else setError('Upload failed');
+    } finally {
+      setUploading(false);
+    }
+  }, [addAprlFile, addAdvisorFile, activeAppName, addReviewedOnly, fetchData]);
 
   if (loading) {
     return (
@@ -86,13 +119,120 @@ export default function Dashboard() {
             {activeAppName ? `Assessment: ${activeAppName}` : 'Assessment overview and key metrics'}
           </p>
         </div>
-        <button
-          onClick={() => navigate('/assessments')}
-          className="text-sm px-4 py-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 font-medium transition-colors"
-        >
-          Switch Assessment
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => { setShowAddFiles(!showAddFiles); setUploadSuccess(null); }}
+            className={`flex items-center gap-1.5 text-sm px-4 py-2 rounded-lg font-medium transition-colors ${
+              showAddFiles
+                ? 'bg-blue-600 text-white'
+                : 'bg-green-50 text-green-700 hover:bg-green-100'
+            }`}
+          >
+            {showAddFiles ? <ChevronUp size={16} /> : <Plus size={16} />}
+            Add Files
+          </button>
+          <button
+            onClick={() => navigate('/assessments')}
+            className="text-sm px-4 py-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 font-medium transition-colors"
+          >
+            Switch Assessment
+          </button>
+        </div>
       </div>
+
+      {/* Success message */}
+      {uploadSuccess && (
+        <div className="flex items-center gap-2 bg-green-50 border border-green-200 rounded-lg p-3 text-green-700">
+          <Check size={18} />
+          <span className="text-sm font-medium">{uploadSuccess}</span>
+          <button onClick={() => setUploadSuccess(null)} className="ml-auto p-1 hover:bg-green-100 rounded">
+            <X size={14} />
+          </button>
+        </div>
+      )}
+
+      {/* Add Files Panel */}
+      {showAddFiles && (
+        <div className="bg-white rounded-xl shadow-sm border border-green-100 p-5 space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-gray-700">Add more files to this assessment</h3>
+            <button onClick={() => setShowAddFiles(false)} className="p-1 rounded hover:bg-gray-100 text-gray-400">
+              <X size={18} />
+            </button>
+          </div>
+
+          {uploading ? (
+            <div className="flex flex-col items-center gap-3 py-4">
+              <Spinner className="w-8 h-8" />
+              <p className="text-gray-600 text-sm font-medium">Processing… {uploadProgress}%</p>
+              <div className="w-48 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                <div className="h-full bg-blue-500 rounded-full transition-all" style={{ width: `${uploadProgress}%` }} />
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* APRL File */}
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-1.5">APRL Report <span className="text-red-500">*</span></label>
+                {addAprlFile ? (
+                  <div className="flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-lg px-3 py-2">
+                    <FileText size={16} className="text-blue-600" />
+                    <span className="text-xs font-medium text-blue-700 flex-1 truncate">{addAprlFile.name}</span>
+                    <button onClick={() => setAddAprlFile(null)} className="p-0.5 hover:bg-blue-100 rounded text-blue-400">
+                      <X size={14} />
+                    </button>
+                  </div>
+                ) : (
+                  <FileDropZone onFile={(f) => setAddAprlFile(f)} uploading={false} progress={0} />
+                )}
+              </div>
+
+              {/* Advisor CSV */}
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-1.5">
+                  Advisor CSV <span className="text-xs text-gray-400 font-normal">(optional)</span>
+                </label>
+                {addAdvisorFile ? (
+                  <div className="flex items-center gap-2 bg-indigo-50 border border-indigo-200 rounded-lg px-3 py-2">
+                    <Database size={16} className="text-indigo-600" />
+                    <span className="text-xs font-medium text-indigo-700 flex-1 truncate">{addAdvisorFile.name}</span>
+                    <button onClick={() => setAddAdvisorFile(null)} className="p-0.5 hover:bg-indigo-100 rounded text-indigo-400">
+                      <X size={14} />
+                    </button>
+                  </div>
+                ) : (
+                  <label className="flex items-center gap-2 border border-dashed border-indigo-300 rounded-lg px-3 py-2 cursor-pointer hover:bg-indigo-50 transition-colors">
+                    <Database size={14} className="text-indigo-400" />
+                    <span className="text-xs text-indigo-600 font-medium">Select Advisor CSV</span>
+                    <input type="file" accept=".csv" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) setAddAdvisorFile(f); }} />
+                  </label>
+                )}
+              </div>
+            </div>
+          )}
+
+          {!uploading && (
+            <div className="flex items-center justify-between pt-1">
+              <div className="flex items-center gap-3">
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" checked={addReviewedOnly} onChange={(e) => setAddReviewedOnly(e.target.checked)} className="sr-only peer" />
+                  <div className="w-8 h-4 bg-gray-200 peer-focus:ring-2 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-blue-600"></div>
+                </label>
+                <span className="text-xs text-gray-600">Reviewed only</span>
+              </div>
+              <button
+                onClick={handleAddFiles}
+                disabled={!addAprlFile}
+                className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-all
+                  ${addAprlFile ? 'bg-green-600 text-white hover:bg-green-700 shadow-sm' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
+              >
+                <Plus size={16} />
+                Process Files
+              </button>
+            </div>
+          )}
+        </div>
+      )}
 
       {error && (
         <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">

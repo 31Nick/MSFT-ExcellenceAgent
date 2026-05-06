@@ -121,6 +121,10 @@ export interface UploadResponse {
   success: boolean;
   stats: Stats;
   message: string;
+  app_name?: string;
+  new_items_processed?: number;
+  items_skipped_duplicate?: number;
+  apps_processed?: string[];
   cross_reference?: CrossReferenceReport;
 }
 
