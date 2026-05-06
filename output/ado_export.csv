@@ -30,7 +30,7 @@
 <li>Data (data) &mdash; 3 recommendation(s), 4 resource(s)</li>
 <li>Networking (networking) &mdash; 2 recommendation(s), 8 resource(s)</li>
 <li>Platform (platform) &mdash; 13 recommendation(s), 3 resource(s)</li>
-</ul>","Reliability; DemoInfra03","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog1"
+</ul>","Reliability; DemoInfra03","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Feature","","Apps","","","<h1>Apps (apps)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>apps</strong> resources within the <strong>DemoInfra03</strong> domain.</p>
@@ -60,7 +60,7 @@
 <p><strong>Recommendations to complete:</strong></p>
 <ul>
 <li>Enable Autoscale/Automatic scaling to ensure adequate resources are available to service requests [Medium] &mdash; 3 resource(s)</li>
-</ul>","apps; DemoInfra03","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog1"
+</ul>","apps; DemoInfra03","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Serverfarms - Recommendations 2","","<h1>Serverfarms - Recommendations 2</h1>
 <h2>Overview</h2>
 <p>Consolidated APRL recommendations for <strong>apps</strong> resources.</p>
@@ -95,7 +95,7 @@
 <p><strong>Per-recommendation verification:</strong></p>
 <ul>
 <li><strong>Enable Autoscale/Automatic scaling to ensure adequate resources are available to service requests</strong> [Medium] &mdash; 3 resource(s) remediated (GUID: <code>6320abf6-f917-1843-b2ae-4779c35985ae</code>)</li>
-</ul>","Medium; Reliability; Apps; Source:APRL","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog1"
+</ul>","Medium; Reliability; Apps; Source:APRL","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Feature","","Data","","","<h1>Data (data)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>data</strong> resources within the <strong>DemoInfra03</strong> domain.</p>
@@ -142,7 +142,7 @@
 <li>Enable availability zones [High] &mdash; 1 resource(s)</li>
 <li>Ensure that storage accounts are zone or region redundant [High] &mdash; 2 resource(s)</li>
 <li>Enable versioning for accidental modification and keep the number of versions below 1000 [Low] &mdash; 1 resource(s)</li>
-</ul>","data; DemoInfra03","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog1"
+</ul>","data; DemoInfra03","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Database Accounts - Recommendations 2","","<h1>Database Accounts - Recommendations 2</h1>
 <h2>Overview</h2>
 <p>Consolidated APRL recommendations for <strong>data</strong> resources.</p>
@@ -175,7 +175,7 @@
 <p><strong>Per-recommendation verification:</strong></p>
 <ul>
 <li><strong>Enable availability zones</strong> [High] &mdash; 1 resource(s) remediated (GUID: <code>921631f6-ed59-49a5-94c1-f0f3ececa580</code>)</li>
-</ul>","High; Reliability; Data; Source:APRL","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog1"
+</ul>","High; Reliability; Data; Source:APRL","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Storage Accounts - Recommendations 2","","<h1>Storage Accounts - Recommendations 2</h1>
 <h2>Overview</h2>
 <p>Consolidated APRL recommendations for <strong>data</strong> resources.</p>
@@ -224,7 +224,7 @@
 <ul>
 <li><strong>Ensure that storage accounts are zone or region redundant</strong> [High] &mdash; 2 resource(s) remediated (GUID: <code>e6c7e1cc-2f47-264d-aa50-1da421314472</code>)</li>
 <li><strong>Enable versioning for accidental modification and keep the number of versions below 1000</strong> [Low] &mdash; 1 resource(s) remediated (GUID: <code>8ebda7c0-e0e1-ed45-af59-2d7ea9a1c05d</code>)</li>
-</ul>","High; Reliability; Data; Source:APRL","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog1"
+</ul>","High; Reliability; Data; Source:APRL","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Feature","","Networking","","","<h1>Networking (networking)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>networking</strong> resources within the <strong>DemoInfra03</strong> domain.</p>
@@ -263,7 +263,7 @@
 <ul>
 <li>Configure Diagnostic Settings for all network security groups [Medium] &mdash; 5 resource(s)</li>
 <li>Monitor changes in Network Security Groups with Azure Monitor [Low] &mdash; 5 resource(s)</li>
-</ul>","networking; DemoInfra03","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog1"
+</ul>","networking; DemoInfra03","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Network Security Groups - Recommendations 2","","<h1>Network Security Groups - Recommendations 2</h1>
 <h2>Overview</h2>
 <p>Consolidated APRL recommendations for <strong>networking</strong> resources.</p>
@@ -319,7 +319,7 @@
 <ul>
 <li><strong>Configure Diagnostic Settings for all network security groups</strong> [Medium] &mdash; 5 resource(s) remediated (GUID: <code>d2976d3e-294b-4b49-a1f0-c42566a3758f</code>)</li>
 <li><strong>Monitor changes in Network Security Groups with Azure Monitor</strong> [Low] &mdash; 5 resource(s) remediated (GUID: <code>8bb4a57b-55e4-d24e-9c19-2679d8bc779f</code>)</li>
-</ul>","Medium; Reliability; Networking; Source:APRL","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog1"
+</ul>","Medium; Reliability; Networking; Source:APRL","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "Feature","","Platform","","","<h1>Platform (platform)</h1>
 <h2>Overview</h2>
 <p>Recommendations for <strong>platform</strong> resources within the <strong>DemoInfra03</strong> domain.</p>
@@ -445,7 +445,7 @@
 <li>RE:08 Design a reliability testing strategy [Medium] &mdash; 1 resource(s)</li>
 <li>RE:09 Implement business continuity and disaster recovery plan [Medium] &mdash; 1 resource(s)</li>
 <li>RE:10 Design a reliable monitoring and alerting strategy [Medium] &mdash; 1 resource(s)</li>
-</ul>","platform; DemoInfra03","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog1"
+</ul>","platform; DemoInfra03","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Subscriptions - Recommendations 2","","<h1>Subscriptions - Recommendations 2</h1>
 <h2>Overview</h2>
 <p>Consolidated APRL recommendations for <strong>platform</strong> resources.</p>
@@ -658,7 +658,7 @@
 <li><strong>RE:08 Design a reliability testing strategy</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>7db74a6a-4062-46a8-a0cd-18684fb0ec08</code>)</li>
 <li><strong>RE:09 Implement business continuity and disaster recovery plan</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>5f95df03-cae2-4761-90b7-7afd657ac124</code>)</li>
 <li><strong>RE:10 Design a reliable monitoring and alerting strategy</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>90adebf7-bc90-4939-9aa8-119c46bee0fc</code>)</li>
-</ul>","Medium; Platform; Source:APRL","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog1"
+</ul>","Medium; Platform; Source:APRL","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
 "User Story","","","Systemtopics - Recommendations 2","","<h1>Systemtopics - Recommendations 2</h1>
 <h2>Overview</h2>
 <p>Consolidated APRL recommendations for <strong>platform</strong> resources.</p>
@@ -673,4 +673,4 @@
 ","<ul>
 <li>All 0 recommendation(s) have been implemented</li>
 <li>All 3 affected resource(s) pass APRL compliance checks</li>
-</ul>","Low; Source:APRL","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog1"
+</ul>","Low; Source:APRL","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog"
