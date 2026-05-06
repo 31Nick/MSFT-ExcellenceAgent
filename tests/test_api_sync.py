@@ -30,8 +30,7 @@ def tmp_customers_dir(tmp_path):
 @pytest.fixture
 def app(tmp_path):
     config = Config(output_dir=str(tmp_path / "output"))
-    app = create_app(config)
-    app.config["TESTING"] = True
+    app = create_app(config, testing=True)
     return app
 
 

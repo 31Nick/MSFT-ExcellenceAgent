@@ -1,13 +1,14 @@
 import { BrowserRouter, Routes, Route, NavLink, Navigate } from 'react-router-dom';
-import { LayoutDashboard, GitBranch, Puzzle, Download, Shield, RefreshCw } from 'lucide-react';
+import { LayoutDashboard, GitBranch, Puzzle, Download, Shield, RefreshCw, FolderOpen } from 'lucide-react';
+import Assessments from './pages/Assessments';
 import Dashboard from './pages/Dashboard';
 import Hierarchy from './pages/Hierarchy';
 import Patterns from './pages/Patterns';
 import Export from './pages/Export';
 import Sync from './pages/Sync';
-import AssessmentSelector from './components/AssessmentSelector';
 
 const navItems = [
+  { to: '/assessments', label: 'Assessments', icon: FolderOpen },
   { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { to: '/hierarchy', label: 'Hierarchy', icon: GitBranch },
   { to: '/patterns', label: 'Patterns', icon: Puzzle },
@@ -61,12 +62,9 @@ export default function App() {
         {/* Main content */}
         <main className="flex-1 overflow-y-auto">
           <div className="max-w-7xl mx-auto px-6 py-6">
-            {/* Assessment selector header */}
-            <div className="flex items-center justify-between mb-4">
-              <AssessmentSelector onSwitch={() => window.location.reload()} />
-            </div>
             <Routes>
-              <Route path="/" element={<Navigate to="/dashboard" replace />} />
+              <Route path="/" element={<Navigate to="/assessments" replace />} />
+              <Route path="/assessments" element={<Assessments />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/hierarchy" element={<Hierarchy />} />
               <Route path="/patterns" element={<Patterns />} />

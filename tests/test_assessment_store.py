@@ -276,9 +276,8 @@ class TestAssessmentAPI:
         from excellence_agent.web.app import create_app
 
         config = Config.from_env()
-        app = create_app(config)
+        app = create_app(config, testing=True)
         app.config["EA_ASSESSMENT_STORE"] = AssessmentStore(state_dir=tmp_state_dir)
-        app.config["TESTING"] = True
         with app.test_client() as c:
             yield c
 

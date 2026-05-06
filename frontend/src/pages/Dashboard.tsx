@@ -1,38 +1,35 @@
 import { useEffect, useState, useCallback } from 'react';
-import { Layers, GitBranch, BookOpen, CheckSquare, Copy, AlertTriangle, Database, ArrowRightLeft, ArrowRight, FileText, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Layers, GitBranch, BookOpen, CheckSquare, Copy, AlertTriangle, ArrowRightLeft, FolderOpen } from 'lucide-react';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import { getStats, getDedup, getHierarchy, uploadFile, getCrossReference } from '../lib/api';
+import { getStats, getDedup, getHierarchy, getCrossReference, getActiveAssessment } from '../lib/api';
 import type { Stats, DedupReport, CrossReferenceReport } from '../lib/types';
 import StatCard from '../components/StatCard';
 import ImpactBadge from '../components/ImpactBadge';
-import FileDropZone from '../components/FileDropZone';
 import Spinner from '../components/Spinner';
 
 const IMPACT_COLORS: Record<string, string> = { High: '#ef4444', Medium: '#f59e0b', Low: '#22c55e' };
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const [stats, setStats] = useState<Stats | null>(null);
   const [dedup, setDedup] = useState<DedupReport | null>(null);
   const [xref, setXref] = useState<CrossReferenceReport | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [uploading, setUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
-
-  // Staging state: files selected but not yet processed
-  const [stagedAprlFile, setStagedAprlFile] = useState<File | null>(null);
-  const [advisorFile, setAdvisorFile] = useState<File | null>(null);
-  const [appName, setAppName] = useState('ChangeMe-AppName');
-  const [reviewedOnly, setReviewedOnly] = useState(true);
+  const [activeAppName, setActiveAppName] = useState<string>('');
 
   const fetchData = useCallback(async () => {
     setLoading(true);
     setError('');
     try {
-      const [s, d, x] = await Promise.all([getStats(), getDedup(), getCrossReference()]);
+      const [s, d, x, active] = await Promise.all([
+        getStats(), getDedup(), getCrossReference(), getActiveAssessment(),
+      ]);
       setStats(s);
       setDedup(d);
       setXref(x);
+      if (active.active) setActiveAppName(active.active.app_name);
     } catch (err: unknown) {
       if (err instanceof Error) setError(err.message);
       else setError('Failed to load data');
@@ -44,31 +41,6 @@ export default function Dashboard() {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-
-  // Stage the APRL file (don't process yet)
-  const handleAprlSelected = useCallback((file: File) => {
-    setStagedAprlFile(file);
-    setError('');
-  }, []);
-
-  // User clicks "Continue" — now process both files
-  const handleContinue = useCallback(async () => {
-    if (!stagedAprlFile) return;
-    setUploading(true);
-    setUploadProgress(0);
-    setError('');
-    try {
-      await uploadFile(stagedAprlFile, setUploadProgress, advisorFile, appName, reviewedOnly);
-      setStagedAprlFile(null);
-      setAdvisorFile(null);
-      await fetchData();
-    } catch (err: unknown) {
-      if (err instanceof Error) setError(err.message);
-      else setError('Upload failed');
-    } finally {
-      setUploading(false);
-    }
-  }, [stagedAprlFile, advisorFile, appName, reviewedOnly, fetchData]);
 
   if (loading) {
     return (
@@ -83,151 +55,20 @@ export default function Dashboard() {
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-500 mt-1">Upload your assessment files to get started</p>
+          <p className="text-gray-500 mt-1">No active assessment loaded</p>
         </div>
-
-        {/* Processing overlay */}
-        {uploading && (
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
-            <div className="flex flex-col items-center gap-3">
-              <Spinner className="w-10 h-10" />
-              <p className="text-gray-600 font-medium">Processing files… {uploadProgress}%</p>
-              <div className="w-64 h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-blue-500 rounded-full transition-all duration-300"
-                  style={{ width: `${uploadProgress}%` }}
-                />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {!uploading && (
-          <>
-            {/* Step 1: APRL Report (Required) */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold">1</div>
-                <h3 className="text-sm font-semibold text-gray-700">APRL Assessment Report <span className="text-red-500">*</span></h3>
-              </div>
-              {stagedAprlFile ? (
-                <div className="flex items-center gap-3 bg-blue-50 border border-blue-200 rounded-lg px-4 py-3">
-                  <FileText size={18} className="text-blue-600" />
-                  <span className="text-sm font-medium text-blue-700 flex-1">{stagedAprlFile.name}</span>
-                  <button
-                    onClick={() => setStagedAprlFile(null)}
-                    className="p-1 rounded hover:bg-blue-100 text-blue-400 hover:text-blue-600 transition-colors"
-                  >
-                    <X size={16} />
-                  </button>
-                </div>
-              ) : (
-                <FileDropZone onFile={handleAprlSelected} uploading={false} progress={0} />
-              )}
-            </div>
-
-            {/* Step 2: Advisor Export (Optional) */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-indigo-500 text-white text-xs font-bold">2</div>
-                <h3 className="text-sm font-semibold text-gray-700">Azure Advisor Export</h3>
-                <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">Optional</span>
-              </div>
-              <p className="text-xs text-gray-500 mb-3">
-                Include an Azure Advisor CSV export to cross-reference recommendations and identify overlapping insights.
-              </p>
-              {advisorFile ? (
-                <div className="flex items-center gap-3 bg-indigo-50 border border-indigo-200 rounded-lg px-4 py-3">
-                  <Database size={18} className="text-indigo-600" />
-                  <span className="text-sm font-medium text-indigo-700 flex-1">{advisorFile.name}</span>
-                  <button
-                    onClick={() => setAdvisorFile(null)}
-                    className="p-1 rounded hover:bg-indigo-100 text-indigo-400 hover:text-indigo-600 transition-colors"
-                  >
-                    <X size={16} />
-                  </button>
-                </div>
-              ) : (
-                <label className="flex items-center gap-3 border border-dashed border-indigo-300 rounded-lg px-4 py-3 cursor-pointer hover:bg-indigo-50 transition-colors">
-                  <Database size={16} className="text-indigo-400" />
-                  <span className="text-sm text-indigo-600 font-medium">Click to select Advisor CSV</span>
-                  <input
-                    type="file"
-                    accept=".csv"
-                    className="hidden"
-                    onChange={(e) => {
-                      const f = e.target.files?.[0];
-                      if (f) setAdvisorFile(f);
-                    }}
-                  />
-                </label>
-              )}
-            </div>
-
-            {/* Step 3: Pipeline Settings */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-green-600 text-white text-xs font-bold">3</div>
-                <h3 className="text-sm font-semibold text-gray-700">Pipeline Settings</h3>
-              </div>
-
-              {/* App Name */}
-              <div className="mb-4">
-                <label className="block text-xs font-medium text-gray-600 mb-1">
-                  Application Name <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  value={appName}
-                  onChange={(e) => setAppName(e.target.value)}
-                  placeholder="ChangeMe-AppName"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                />
-                <p className="text-xs text-gray-400 mt-1">
-                  The application name becomes the Epic. Auto-detected from batch directories, but can always be overridden.
-                </p>
-              </div>
-
-              {/* Reviewed Only Toggle */}
-              <div className="flex items-center gap-3">
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={reviewedOnly}
-                    onChange={(e) => setReviewedOnly(e.target.checked)}
-                    className="sr-only peer"
-                  />
-                  <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
-                </label>
-                <span className="text-sm text-gray-700">Reviewed items only</span>
-                <span className="text-xs text-gray-400">(Only process items marked as &quot;Reviewed&quot;)</span>
-              </div>
-            </div>
-
-            {/* Continue Button */}
-            <div className="flex justify-end">
-              <button
-                onClick={handleContinue}
-                disabled={!stagedAprlFile}
-                className={`flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all
-                  ${stagedAprlFile
-                    ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-sm hover:shadow-md'
-                    : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  }`}
-              >
-                Continue to Analyse
-                <ArrowRight size={18} />
-              </button>
-            </div>
-          </>
-        )}
-
-        {error && (
-          <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
-            <AlertTriangle size={18} />
-            <span>{error}</span>
-          </div>
-        )}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center">
+          <FolderOpen size={48} className="mx-auto text-gray-300 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-700 mb-1">No assessment selected</h3>
+          <p className="text-gray-500 text-sm mb-6">Go to Assessments to start a new analysis or load a previous one.</p>
+          <button
+            onClick={() => navigate('/assessments')}
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors"
+          >
+            <FolderOpen size={18} />
+            Go to Assessments
+          </button>
+        </div>
       </div>
     );
   }
@@ -241,19 +82,15 @@ export default function Dashboard() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-500 mt-1">Assessment overview and key metrics</p>
+          <p className="text-gray-500 mt-1">
+            {activeAppName ? `Assessment: ${activeAppName}` : 'Assessment overview and key metrics'}
+          </p>
         </div>
         <button
-          onClick={() => {
-            setStats(null);
-            setDedup(null);
-            setXref(null);
-            setStagedAprlFile(null);
-            setAdvisorFile(null);
-          }}
+          onClick={() => navigate('/assessments')}
           className="text-sm px-4 py-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 font-medium transition-colors"
         >
-          Upload new files
+          Switch Assessment
         </button>
       </div>
 
