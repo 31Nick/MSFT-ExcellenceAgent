@@ -92,7 +92,7 @@ export async function getCrossReference(): Promise<CrossReferenceReport> {
   return request<CrossReferenceReport>('/api/cross-reference');
 }
 
-export async function exportCsv(params: ExportRequest): Promise<void> {
+export async function exportCsv(params: ExportRequest & { scope?: string }): Promise<void> {
   const res = await fetch('/api/export', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -103,10 +103,13 @@ export async function exportCsv(params: ExportRequest): Promise<void> {
     throw new ApiError(res.status, body || res.statusText);
   }
   const blob = await res.blob();
+  const disposition = res.headers.get('Content-Disposition') || '';
+  const filenameMatch = disposition.match(/filename="?([^";\n]+)"?/);
+  const filename = filenameMatch ? filenameMatch[1] : 'ado_export.csv';
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'ado_export.csv';
+  a.download = filename;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);

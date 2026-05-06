@@ -275,36 +275,101 @@ def dedup():
 
 @api_bp.route("/export", methods=["POST"])
 def export_csv():
-    """Generate a CSV export and return it as a file download."""
-    h = _get_hierarchy()
-    if h is None:
-        return _error("No data loaded. Upload an APRL file first.", 404)
+    """Generate a CSV export and return it as a file download.
 
+    Accepts optional JSON body:
+      - area_path / iteration_path: ADO paths
+      - scope: "active" (default, current in-memory), "all" (merge all runs for app),
+               or an integer assessment ID for a specific run
+    """
     config = _get_config()
     data = request.get_json(silent=True) or {}
     area_path = data.get("area_path", config.ado.area_path)
     iteration_path = data.get("iteration_path", config.ado.iteration_path)
+    scope = data.get("scope", "active")  # "active", "all", or integer ID
 
-    config.ado.area_path = area_path
-    config.ado.iteration_path = iteration_path
+    from excellence_agent.cli import _convert_v2_to_v1
+    from excellence_agent.config import ADOConfig
+    from excellence_agent.export import ContentGenerator
+    from excellence_agent.export.ado_csv import ADOExporter
+    from excellence_agent.models_v2 import WorkItemHierarchyV2
+
+    hierarchy_v1 = None
+    download_name = "ado_export.csv"
+
+    if scope == "active":
+        # Export whatever is currently loaded (most recent run)
+        hierarchy_v1 = _get_hierarchy()
+        if hierarchy_v1 is None:
+            return _error("No data loaded. Upload an APRL file first.", 404)
+        download_name = "ado_export_latest.csv"
+
+    elif scope == "all":
+        # Merge all assessment runs for the active app
+        store = _get_assessment_store()
+        active_id = current_app.config.get("EA_ACTIVE_ASSESSMENT_ID")
+        active_summary = store.get_summary(active_id) if active_id else None
+        app_name = active_summary.app_name if active_summary else None
+
+        if not app_name:
+            return _error("No active assessment. Load one first.", 404)
+
+        assessments = store.list_assessments(app_name=app_name)
+        if not assessments:
+            return _error("No assessments found for this app.", 404)
+
+        # Merge all hierarchies into one
+        merged = WorkItemHierarchyV2()
+        for a in assessments:
+            h_dict = store.load_hierarchy_dict(a.id)
+            if h_dict:
+                partial = WorkItemHierarchyV2.from_dict(h_dict)
+                for epic in partial.epics:
+                    merged.add_epic(epic)
+
+        if not merged.all_stories():
+            return _error("No stories found across all runs.", 404)
+
+        hierarchy_v1 = _convert_v2_to_v1(merged)
+        download_name = f"ado_export_all_{app_name}.csv"
+
+    else:
+        # Specific assessment ID
+        try:
+            assessment_id = int(scope)
+        except (TypeError, ValueError):
+            return _error(f"Invalid scope: '{scope}'. Use 'active', 'all', or an assessment ID.", 400)
+
+        store = _get_assessment_store()
+        h_dict = store.load_hierarchy_dict(assessment_id)
+        if h_dict is None:
+            return _error(f"Assessment #{assessment_id} not found.", 404)
+
+        hierarchy_v2 = WorkItemHierarchyV2.from_dict(h_dict)
+        if not hierarchy_v2.all_stories():
+            return _error(f"Assessment #{assessment_id} has no stories.", 404)
+
+        hierarchy_v1 = _convert_v2_to_v1(hierarchy_v2)
+        summary = store.get_summary(assessment_id)
+        label = summary.source_filename or f"run_{assessment_id}"
+        download_name = f"ado_export_{label}.csv"
+
+    ado_config = ADOConfig(area_path=area_path, iteration_path=iteration_path)
 
     try:
-        from excellence_agent.export import ContentGenerator
-        from excellence_agent.export.ado_csv import ADOExporter
-
         output_dir = os.path.abspath(config.output_dir)
         os.makedirs(output_dir, exist_ok=True)
         output_path = os.path.join(output_dir, "ado_export.csv")
 
         generator = ContentGenerator()
-        exporter = ADOExporter(config.ado, generator)
-        result_path = exporter.export(h, output_path)
+        exporter = ADOExporter(ado_config, generator)
+        result_path = exporter.export(hierarchy_v1, output_path)
 
         return send_file(
             result_path,
             mimetype="text/csv",
             as_attachment=True,
-            download_name="ado_export.csv",
+            download_name=download_name,
         )
     except Exception as exc:
         return _error(f"Export error: {exc}", 500)

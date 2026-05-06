@@ -1,64 +1,53 @@
 ﻿"Work Item Type","Title 1","Title 2","Title 3","Title 4","Description","Acceptance Criteria","Tags","Priority","Area Path","Iteration Path"
-"Epic","Apps","","","","<h1>Apps</h1>
+"Epic","DemoInfra03","","","","<h1>DemoInfra03</h1>
 <h2>Overview</h2>
-<p>Application hosting — App Service, Functions, Static Web Apps</p>
+<p>Azure Excellence recommendations for the DemoInfra03 domain.</p>
 <p><strong>WAF Pillars:</strong> Reliability</p>
 <h2>Scope</h2>
 <ul>
-<li><strong>Total Features:</strong> 2</li>
-<li><strong>Total Recommendations:</strong> 2</li>
-<li><strong>Total Affected Resources:</strong> 12</li>
+<li><strong>Total Features:</strong> 4</li>
+<li><strong>Total Recommendations:</strong> 6</li>
+<li><strong>Total Affected Resources:</strong> 18</li>
 <li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 </ul>
 <h2>Impact Summary</h2>
 <ul>
-<li><strong>High:</strong> 7 recommendation(s)</li>
-<li><strong>Medium:</strong> 6 recommendation(s)</li>
-<li><strong>Low:</strong> 3 recommendation(s)</li>
+<li><strong>High:</strong> 2 recommendation(s)</li>
+<li><strong>Low:</strong> 2 recommendation(s)</li>
+<li><strong>Medium:</strong> 15 recommendation(s)</li>
 </ul>
 <h2>Features</h2>
 <ul>
-<li><strong>Serverfarms</strong> (microsoft.web/serverfarms) &mdash; 6 resource(s), 1 recommendation(s)</li>
-<li><strong>Sites</strong> (microsoft.web/sites) &mdash; 6 resource(s), 1 recommendation(s)</li>
+<li><strong>Apps</strong> (apps) &mdash; 3 resource(s), 1 recommendation(s)</li>
+<li><strong>Data</strong> (data) &mdash; 4 resource(s), 2 recommendation(s)</li>
+<li><strong>Networking</strong> (networking) &mdash; 8 resource(s), 1 recommendation(s)</li>
+<li><strong>Platform</strong> (platform) &mdash; 3 resource(s), 2 recommendation(s)</li>
 </ul>
 ","<p>All Features within this Epic are completed and verified.</p>
 <p><strong>Features to complete:</strong></p>
 <ul>
-<li>Serverfarms (microsoft.web/serverfarms) &mdash; 3 recommendation(s), 6 resource(s)</li>
-<li>Sites (microsoft.web/sites) &mdash; 13 recommendation(s), 6 resource(s)</li>
-</ul>","Reliability; Apps","2","",""
-"Feature","","Serverfarms","","","<h1>Serverfarms (microsoft.web/serverfarms)</h1>
+<li>Apps (apps) &mdash; 1 recommendation(s), 3 resource(s)</li>
+<li>Data (data) &mdash; 3 recommendation(s), 4 resource(s)</li>
+<li>Networking (networking) &mdash; 2 recommendation(s), 8 resource(s)</li>
+<li>Platform (platform) &mdash; 13 recommendation(s), 3 resource(s)</li>
+</ul>","Reliability; DemoInfra03","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog1"
+"Feature","","Apps","","","<h1>Apps (apps)</h1>
 <h2>Overview</h2>
-<p>Recommendations for <strong>microsoft.web/serverfarms</strong> resources within the <strong>Apps</strong> domain.</p>
+<p>Recommendations for <strong>apps</strong> resources within the <strong>DemoInfra03</strong> domain.</p>
 <h2>Scope</h2>
 <ul>
-<li><strong>Recommendations:</strong> 3</li>
-<li><strong>Affected Resources:</strong> 6</li>
+<li><strong>Recommendations:</strong> 1</li>
+<li><strong>Affected Resources:</strong> 3</li>
 <li><strong>Resource Groups:</strong> resiliancetestingworkload, rg-btr-demo, rg-m2c-demo</li>
 <li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Regions:</strong> eastus, ukwest</li>
 </ul>
 <h2>Impact Breakdown</h2>
 <ul>
-<li><strong>High:</strong> 2</li>
 <li><strong>Medium:</strong> 1</li>
 </ul>
 <h2>Recommendations</h2>
 <ol>
-<li><strong>Create separate App Service plans for production and test</strong> [High]
-<ul>
-<li><strong>Control:</strong> Other Best Practices</li>
-<li><strong>Benefit:</strong> Protects prod performance; avoids test impact</li>
-<li><strong>Affected Resources:</strong> 3</li>
-</ul>
-</li>
-<li><strong>Use zone-supported App Service Plan</strong> [High]
-<ul>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> </li>
-<li><strong>Affected Resources:</strong> 3</li>
-</ul>
-</li>
 <li><strong>Enable Autoscale/Automatic scaling to ensure adequate resources are available to service requests</strong> [Medium]
 <ul>
 <li><strong>Control:</strong> Scalability</li>
@@ -67,56 +56,23 @@
 </ul>
 </li>
 </ol>
-","<p>All recommendations for <strong>microsoft.web/serverfarms</strong> are completed. Resources validated against APRL checks.</p>
+","<p>All recommendations for <strong>apps</strong> are completed. Resources validated against APRL checks.</p>
 <p><strong>Recommendations to complete:</strong></p>
 <ul>
-<li>Create separate App Service plans for production and test [High] &mdash; 3 resource(s)</li>
-<li>Use zone-supported App Service Plan [High] &mdash; 3 resource(s)</li>
 <li>Enable Autoscale/Automatic scaling to ensure adequate resources are available to service requests [Medium] &mdash; 3 resource(s)</li>
-</ul>","microsoft.web/serverfarms; Apps","1","",""
-"User Story","","","Serverfarms - Recommendations","","<h1>Serverfarms - Recommendations</h1>
+</ul>","apps; DemoInfra03","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog1"
+"User Story","","","Serverfarms - Recommendations 2","","<h1>Serverfarms - Recommendations 2</h1>
 <h2>Overview</h2>
-<p>Consolidated APRL recommendations for <strong>microsoft.web/serverfarms</strong> resources.</p>
+<p>Consolidated APRL recommendations for <strong>apps</strong> resources.</p>
 <ul>
-<li><strong>Impact:</strong> High</li>
+<li><strong>Impact:</strong> Medium</li>
 <li><strong>WAF Pillars:</strong> Reliability</li>
-<li><strong>Recommendations:</strong> 3</li>
-<li><strong>Affected Resources:</strong> 6</li>
-<li><strong>Source:</strong> APRL & Advisor</li>
+<li><strong>Recommendations:</strong> 1</li>
+<li><strong>Affected Resources:</strong> 3</li>
+<li><strong>Source:</strong> APRL</li>
 </ul>
 <h2>Recommendations</h2>
-<h3>1. Create separate App Service plans for production and test [High]</h3>
-<p>It is strongly recommended to create separate App Service plans for production and test environments to avoid using slots within your production deployment for testing purposes.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Other Best Practices</li>
-<li><strong>Benefit:</strong> Protects prod performance; avoids test impact</li>
-<li><strong>GUID:</strong> <code>dbe3fd66-fb2a-9d46-b162-1791e21da236</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service"">https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service</a></li>
-</ul>
-<p><strong>Affected Resources (3):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>asp-01</td><td>resiliancetestingworkload</td><td>ukwest</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>asp-btr-demo</td><td>rg-btr-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>m2c-plan</td><td>rg-m2c-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>2. Use zone-supported App Service Plan [High]</h3>
-<p>No detailed description available.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> N/A</li>
-<li><strong>GUID:</strong> <code>fac3022a-eda5-44b9-b54d-cb500d1d01dd</code></li>
-</ul>
-<p><strong>Affected Resources (3):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>asp-01</td><td>resiliancetestingworkload</td><td>ukwest</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>asp-btr-demo</td><td>rg-btr-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>m2c-plan</td><td>rg-m2c-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>3. Enable Autoscale/Automatic scaling to ensure adequate resources are available to service requests [Medium]</h3>
+<h3>1. Enable Autoscale/Automatic scaling to ensure adequate resources are available to service requests [Medium]</h3>
 <p>Enabling Autoscale/Automatic Scaling for your Azure App Service ensures sufficient resources for incoming requests. Autoscaling is rule-based, whereas Automatic Scaling, a newer feature, automatically adjusts resources based on HTTP traffic.</p>
 <ul>
 <li><strong>WAF Pillar:</strong> Reliability</li>
@@ -133,1005 +89,31 @@
 <tr><td>m2c-plan</td><td>rg-m2c-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
 </table>
 ","<ul>
-<li>All 3 recommendation(s) have been implemented</li>
-<li>All 6 affected resource(s) pass APRL compliance checks</li>
-</ul>
-<p><strong>Per-recommendation verification:</strong></p>
-<ul>
-<li><strong>Create separate App Service plans for production and test</strong> [High] &mdash; 3 resource(s) remediated (GUID: <code>dbe3fd66-fb2a-9d46-b162-1791e21da236</code>)</li>
-<li><strong>Use zone-supported App Service Plan</strong> [High] &mdash; 3 resource(s) remediated (GUID: <code>fac3022a-eda5-44b9-b54d-cb500d1d01dd</code>)</li>
-<li><strong>Enable Autoscale/Automatic scaling to ensure adequate resources are available to service requests</strong> [Medium] &mdash; 3 resource(s) remediated (GUID: <code>6320abf6-f917-1843-b2ae-4779c35985ae</code>)</li>
-</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","",""
-"Feature","","Sites","","","<h1>Sites (microsoft.web/sites)</h1>
-<h2>Overview</h2>
-<p>Recommendations for <strong>microsoft.web/sites</strong> resources within the <strong>Apps</strong> domain.</p>
-<h2>Scope</h2>
-<ul>
-<li><strong>Recommendations:</strong> 13</li>
-<li><strong>Affected Resources:</strong> 6</li>
-<li><strong>Resource Groups:</strong> resiliancetestingworkload, rg-btr-demo, rg-m2c-demo</li>
-<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-<li><strong>Regions:</strong> eastus, global, ukwest</li>
-</ul>
-<h2>Impact Breakdown</h2>
-<ul>
-<li><strong>High:</strong> 5</li>
-<li><strong>Medium:</strong> 5</li>
-<li><strong>Low:</strong> 3</li>
-</ul>
-<h2>Recommendations</h2>
-<ol>
-<li><strong>Enable Health check for App Service</strong> [High]
-<ul>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> </li>
-<li><strong>Affected Resources:</strong> 1</li>
-</ul>
-</li>
-<li><strong>Enable Health check for App Services</strong> [High]
-<ul>
-<li><strong>Control:</strong> Other Best Practices</li>
-<li><strong>Benefit:</strong> Enhanced reliability via automation</li>
-<li><strong>Affected Resources:</strong> 1</li>
-</ul>
-</li>
-<li><strong>Monitor Performance</strong> [High]
-<ul>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Real-time insights and issue diagnosis</li>
-<li><strong>Affected Resources:</strong> 2</li>
-</ul>
-</li>
-<li><strong>Set minimum instance count for App Service to 2</strong> [High]
-<ul>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> </li>
-<li><strong>Affected Resources:</strong> 2</li>
-</ul>
-</li>
-<li><strong>Use Standard or Premium tier</strong> [High]
-<ul>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> </li>
-<li><strong>Affected Resources:</strong> 3</li>
-</ul>
-</li>
-<li><strong>Create a separate storage account for logs</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> Scalability</li>
-<li><strong>Benefit:</strong> Improves app performance</li>
-<li><strong>Affected Resources:</strong> 2</li>
-</ul>
-</li>
-<li><strong>Ensure Function App runs a supported version</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> Other Best Practices</li>
-<li><strong>Benefit:</strong> Better governance</li>
-<li><strong>Affected Resources:</strong> 2</li>
-</ul>
-</li>
-<li><strong>Ensure FUNCTIONS_WORKER_RUNTIME is set properly</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> Other Best Practices</li>
-<li><strong>Benefit:</strong> Better governance</li>
-<li><strong>Affected Resources:</strong> 2</li>
-</ul>
-</li>
-<li><strong>No warmup trigger added to Function App</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Improved app availability</li>
-<li><strong>Affected Resources:</strong> 2</li>
-</ul>
-</li>
-<li><strong>Store configuration as app settings for Web Sites</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> Other Best Practices</li>
-<li><strong>Benefit:</strong> Enhanced reliability via automation</li>
-<li><strong>Affected Resources:</strong> 2</li>
-</ul>
-</li>
-<li><strong>Enable diagnostics logging</strong> [Low]
-<ul>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Monitoring and Alerting</li>
-<li><strong>Affected Resources:</strong> 2</li>
-</ul>
-</li>
-<li><strong>Ensure unique hostid set for Function App</strong> [Low]
-<ul>
-<li><strong>Control:</strong> Other Best Practices</li>
-<li><strong>Benefit:</strong> Easier management</li>
-<li><strong>Affected Resources:</strong> 2</li>
-</ul>
-</li>
-<li><strong>Separate web apps from web APIs</strong> [Low]
-<ul>
-<li><strong>Control:</strong> Scalability</li>
-<li><strong>Benefit:</strong> Independent scaling, easier management</li>
-<li><strong>Affected Resources:</strong> 2</li>
-</ul>
-</li>
-</ol>
-","<p>All recommendations for <strong>microsoft.web/sites</strong> are completed. Resources validated against APRL checks.</p>
-<p><strong>Recommendations to complete:</strong></p>
-<ul>
-<li>Enable Health check for App Service [High] &mdash; 1 resource(s)</li>
-<li>Enable Health check for App Services [High] &mdash; 1 resource(s)</li>
-<li>Monitor Performance [High] &mdash; 2 resource(s)</li>
-<li>Set minimum instance count for App Service to 2 [High] &mdash; 2 resource(s)</li>
-<li>Use Standard or Premium tier [High] &mdash; 3 resource(s)</li>
-<li>Create a separate storage account for logs [Medium] &mdash; 2 resource(s)</li>
-<li>Ensure Function App runs a supported version [Medium] &mdash; 2 resource(s)</li>
-<li>Ensure FUNCTIONS_WORKER_RUNTIME is set properly [Medium] &mdash; 2 resource(s)</li>
-<li>No warmup trigger added to Function App [Medium] &mdash; 2 resource(s)</li>
-<li>Store configuration as app settings for Web Sites [Medium] &mdash; 2 resource(s)</li>
-<li>Enable diagnostics logging [Low] &mdash; 2 resource(s)</li>
-<li>Ensure unique hostid set for Function App [Low] &mdash; 2 resource(s)</li>
-<li>Separate web apps from web APIs [Low] &mdash; 2 resource(s)</li>
-</ul>","microsoft.web/sites; Apps","1","",""
-"User Story","","","Sites - Recommendations","","<h1>Sites - Recommendations</h1>
-<h2>Overview</h2>
-<p>Consolidated APRL recommendations for <strong>microsoft.web/sites</strong> resources.</p>
-<ul>
-<li><strong>Impact:</strong> High</li>
-<li><strong>WAF Pillars:</strong> Reliability</li>
-<li><strong>Recommendations:</strong> 13</li>
-<li><strong>Affected Resources:</strong> 6</li>
-<li><strong>Source:</strong> APRL & Advisor</li>
-</ul>
-<h2>Recommendations</h2>
-<h3>1. Enable Health check for App Service [High]</h3>
-<p>No detailed description available.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> N/A</li>
-<li><strong>GUID:</strong> <code>72063b96-92fa-4b74-9457-b84b662155f9</code></li>
-</ul>
-<p><strong>Affected Resources (1):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>app-btr-demo-jfh3g0</td><td>rg-btr-demo</td><td>global</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>2. Enable Health check for App Services [High]</h3>
-<p>Use Health Check for production workloads. Health check increases your application's availability by rerouting requests away from unhealthy instances, and replacing instances if they remain unhealthy. The Health check path should check critical components of your application.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Other Best Practices</li>
-<li><strong>Benefit:</strong> Enhanced reliability via automation</li>
-<li><strong>GUID:</strong> <code>fd049c28-ae6d-48f0-a641-cc3ba1a3fe1d</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/app-service/monitor-instances-health-check?tabs=dotnet#enable-health-check"">https://learn.microsoft.com/azure/app-service/monitor-instances-health-check?tabs=dotnet#enable-health-check</a></li>
-</ul>
-<p><strong>Affected Resources (1):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>app-btr-demo-jfh3g0</td><td>rg-btr-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>3. Monitor Performance [High]</h3>
-<p>Use Application Insights to monitor app performance and load behavior, offering real-time insights, issue diagnosis, and root-cause analysis. It supports ASP.NET, ASP.NET Core, Java, and Node.js on Azure App Service, now with built-in monitoring.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Real-time insights and issue diagnosis</li>
-<li><strong>GUID:</strong> <code>a7e8bb3d-8ceb-442d-b26f-007cd63f9ffc</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/application-insights/app-insights-overview"">https://learn.microsoft.com/azure/application-insights/app-insights-overview</a></li>
-</ul>
-<p><strong>Affected Resources (2):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>app-btr-demo-jfh3g0</td><td>rg-btr-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>m2c-4sac2i6ziq5kc</td><td>rg-m2c-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>4. Set minimum instance count for App Service to 2 [High]</h3>
-<p>No detailed description available.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> N/A</li>
-<li><strong>GUID:</strong> <code>e987dcce-fd2c-4683-8abf-f1a34bbad737</code></li>
-</ul>
-<p><strong>Affected Resources (2):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>asp-01</td><td>resiliancetestingworkload</td><td>ukwest</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>m2c-plan</td><td>rg-m2c-demo</td><td>global</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>5. Use Standard or Premium tier [High]</h3>
-<p>No detailed description available.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> N/A</li>
-<li><strong>GUID:</strong> <code>dc298556-8232-4aa8-bfe0-5204c5017be0</code></li>
-</ul>
-<p><strong>Affected Resources (3):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>asp-01</td><td>resiliancetestingworkload</td><td>global</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>asp-btr-demo</td><td>rg-btr-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>m2c-plan</td><td>rg-m2c-demo</td><td>global</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>6. Create a separate storage account for logs [Medium]</h3>
-<p>Creating a separate storage account for logs and not using the same one for application data prevents logging activities from reducing application performance by ensuring that the resources dedicated to handling application data are not burdened by logging processes.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Scalability</li>
-<li><strong>Benefit:</strong> Improves app performance</li>
-<li><strong>GUID:</strong> <code>3f9ddb59-0bb3-4acb-9c9b-99aa1776f0ab</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service"">https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service</a></li>
-</ul>
-<p><strong>Affected Resources (2):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>app-btr-demo-jfh3g0</td><td>rg-btr-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>m2c-4sac2i6ziq5kc</td><td>rg-m2c-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>7. Ensure Function App runs a supported version [Medium]</h3>
-<p>Beginning on December 13, 2022, function apps running on versions 2.x and 3.x of the Azure Functions runtime have reached the end of life (EOL) of extended support. We highly recommend you migrating your function apps to version 4.x of the Functions runtime.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Other Best Practices</li>
-<li><strong>Benefit:</strong> Better governance</li>
-<li><strong>GUID:</strong> <code>c9a278b7-024b-454b-bd54-41587c512b74</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/azure-functions/migrate-version-3-version-4?tabs=net6-in-proc%2Cazure-cli%2Cwindows&pivots=programming-language-csharp"">https://learn.microsoft.com/azure/azure-functions/migrate-version-3-version-4?tabs=net6-in-proc%2Cazure-cli%2Cwindows&pivots=programming-language-csharp</a></li>
-</ul>
-<p><strong>Affected Resources (2):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>app-btr-demo-jfh3g0</td><td>rg-btr-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>m2c-4sac2i6ziq5kc</td><td>rg-m2c-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>8. Ensure FUNCTIONS_WORKER_RUNTIME is set properly [Medium]</h3>
-<p>The FUNCTIONS_WORKER_RUNTIME setting in the Function App configuration should be set to the appropriate value based on the language you are using. This setting is used to determine the language worker that will be used to execute your functions.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Other Best Practices</li>
-<li><strong>Benefit:</strong> Better governance</li>
-<li><strong>GUID:</strong> <code>7c608f46-46b2-4cc0-bbd6-1d457c16671c</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/azure-functions/functions-app-settings#functions_worker_runtime"">https://learn.microsoft.com/azure/azure-functions/functions-app-settings#functions_worker_runtime</a></li>
-</ul>
-<p><strong>Affected Resources (2):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>app-btr-demo-jfh3g0</td><td>rg-btr-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>m2c-4sac2i6ziq5kc</td><td>rg-m2c-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>9. No warmup trigger added to Function App [Medium]</h3>
-<p>Add a warmup trigger to pre-load custom dependencies during the pre-warming process so that your functions are ready to start processing requests immediately.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Improved app availability</li>
-<li><strong>GUID:</strong> <code>52f368ee-1d77-4b34-92db-64be269642d0</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/azure-functions/functions-bindings-warmup?tabs=in-process%2Cnodejs-v4&pivots=programming-language-csharp#trigger"">https://learn.microsoft.com/azure/azure-functions/functions-bindings-warmup?tabs=in-process%2Cnodejs-v4&pivots=programming-language-csharp#trigger</a></li>
-</ul>
-<p><strong>Affected Resources (2):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>app-btr-demo-jfh3g0</td><td>rg-btr-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>m2c-4sac2i6ziq5kc</td><td>rg-m2c-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>10. Store configuration as app settings for Web Sites [Medium]</h3>
-<p>Use app settings for configuration and define them in Resource Manager templates or via PowerShell to facilitate part of an automated deployment/update process for improved reliability.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Other Best Practices</li>
-<li><strong>Benefit:</strong> Enhanced reliability via automation</li>
-<li><strong>GUID:</strong> <code>0b80b67c-afbe-4988-ad58-a85a146b681e</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/app-service-web/web-sites-configure"">https://learn.microsoft.com/azure/app-service-web/web-sites-configure</a></li>
-</ul>
-<p><strong>Affected Resources (2):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>app-btr-demo-jfh3g0</td><td>rg-btr-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>m2c-4sac2i6ziq5kc</td><td>rg-m2c-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>11. Enable diagnostics logging [Low]</h3>
-<p>Enabling diagnostics logging for your Azure App Service is crucial for monitoring and diagnostics, including both application logging and web server logging.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Monitoring and Alerting</li>
-<li><strong>GUID:</strong> <code>493f6079-3bb6-4a56-96ba-ab3248474cb1</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/app-service/troubleshoot-diagnostic-logs"">https://learn.microsoft.com/azure/app-service/troubleshoot-diagnostic-logs</a></li>
-</ul>
-<p><strong>Affected Resources (2):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>app-btr-demo-jfh3g0</td><td>rg-btr-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>m2c-4sac2i6ziq5kc</td><td>rg-m2c-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>12. Ensure unique hostid set for Function App [Low]</h3>
-<p>A host ID must be between 1 and 32 characters, contain only lowercase letters, numbers, and dashes, not start or end with a dash, and not contain consecutive dashes. The host ID value should be unique for all apps/slots you're running.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Other Best Practices</li>
-<li><strong>Benefit:</strong> Easier management</li>
-<li><strong>GUID:</strong> <code>0b06a688-0dd6-4d73-9f72-6666ff853ca9</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules"">https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules</a></li>
-</ul>
-<p><strong>Affected Resources (2):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>app-btr-demo-jfh3g0</td><td>rg-btr-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>m2c-4sac2i6ziq5kc</td><td>rg-m2c-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>13. Separate web apps from web APIs [Low]</h3>
-<p>If your solution includes both a web front end and a web API, decomposing them into separate App Service apps facilitates solution decomposition by workload, allowing for independent scaling. Initially, you can deploy both in the same plan and separate them for independent scaling when necessary.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Scalability</li>
-<li><strong>Benefit:</strong> Independent scaling, easier management</li>
-<li><strong>GUID:</strong> <code>78a5c033-ff51-4332-8a71-83464c34494b</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service"">https://learn.microsoft.com/azure/architecture/checklist/resiliency-per-service#app-service</a></li>
-</ul>
-<p><strong>Affected Resources (2):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>app-btr-demo-jfh3g0</td><td>rg-btr-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>m2c-4sac2i6ziq5kc</td><td>rg-m2c-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-","<ul>
-<li>All 13 recommendation(s) have been implemented</li>
-<li>All 6 affected resource(s) pass APRL compliance checks</li>
-</ul>
-<p><strong>Per-recommendation verification:</strong></p>
-<ul>
-<li><strong>Enable Health check for App Service</strong> [High] &mdash; 1 resource(s) remediated (GUID: <code>72063b96-92fa-4b74-9457-b84b662155f9</code>)</li>
-<li><strong>Enable Health check for App Services</strong> [High] &mdash; 1 resource(s) remediated (GUID: <code>fd049c28-ae6d-48f0-a641-cc3ba1a3fe1d</code>)</li>
-<li><strong>Monitor Performance</strong> [High] &mdash; 2 resource(s) remediated (GUID: <code>a7e8bb3d-8ceb-442d-b26f-007cd63f9ffc</code>)</li>
-<li><strong>Set minimum instance count for App Service to 2</strong> [High] &mdash; 2 resource(s) remediated (GUID: <code>e987dcce-fd2c-4683-8abf-f1a34bbad737</code>)</li>
-<li><strong>Use Standard or Premium tier</strong> [High] &mdash; 3 resource(s) remediated (GUID: <code>dc298556-8232-4aa8-bfe0-5204c5017be0</code>)</li>
-<li><strong>Create a separate storage account for logs</strong> [Medium] &mdash; 2 resource(s) remediated (GUID: <code>3f9ddb59-0bb3-4acb-9c9b-99aa1776f0ab</code>)</li>
-<li><strong>Ensure Function App runs a supported version</strong> [Medium] &mdash; 2 resource(s) remediated (GUID: <code>c9a278b7-024b-454b-bd54-41587c512b74</code>)</li>
-<li><strong>Ensure FUNCTIONS_WORKER_RUNTIME is set properly</strong> [Medium] &mdash; 2 resource(s) remediated (GUID: <code>7c608f46-46b2-4cc0-bbd6-1d457c16671c</code>)</li>
-<li><strong>No warmup trigger added to Function App</strong> [Medium] &mdash; 2 resource(s) remediated (GUID: <code>52f368ee-1d77-4b34-92db-64be269642d0</code>)</li>
-<li><strong>Store configuration as app settings for Web Sites</strong> [Medium] &mdash; 2 resource(s) remediated (GUID: <code>0b80b67c-afbe-4988-ad58-a85a146b681e</code>)</li>
-<li><strong>Enable diagnostics logging</strong> [Low] &mdash; 2 resource(s) remediated (GUID: <code>493f6079-3bb6-4a56-96ba-ab3248474cb1</code>)</li>
-<li><strong>Ensure unique hostid set for Function App</strong> [Low] &mdash; 2 resource(s) remediated (GUID: <code>0b06a688-0dd6-4d73-9f72-6666ff853ca9</code>)</li>
-<li><strong>Separate web apps from web APIs</strong> [Low] &mdash; 2 resource(s) remediated (GUID: <code>78a5c033-ff51-4332-8a71-83464c34494b</code>)</li>
-</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","",""
-"Epic","Compute","","","","<h1>Compute</h1>
-<h2>Overview</h2>
-<p>Virtual machines, scale sets, containers, and orchestration</p>
-<p><strong>WAF Pillars:</strong> Reliability</p>
-<h2>Scope</h2>
-<ul>
-<li><strong>Total Features:</strong> 2</li>
-<li><strong>Total Recommendations:</strong> 2</li>
-<li><strong>Total Affected Resources:</strong> 9</li>
-<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-</ul>
-<h2>Impact Summary</h2>
-<ul>
-<li><strong>High:</strong> 3 recommendation(s)</li>
-<li><strong>Medium:</strong> 8 recommendation(s)</li>
-<li><strong>Low:</strong> 2 recommendation(s)</li>
-</ul>
-<h2>Features</h2>
-<ul>
-<li><strong>Virtual Machines</strong> (microsoft.compute/virtualmachines) &mdash; 6 resource(s), 1 recommendation(s)</li>
-<li><strong>Disks</strong> (microsoft.compute/disks) &mdash; 3 resource(s), 1 recommendation(s)</li>
-</ul>
-","<p>All Features within this Epic are completed and verified.</p>
-<p><strong>Features to complete:</strong></p>
-<ul>
-<li>Virtual Machines (microsoft.compute/virtualmachines) &mdash; 11 recommendation(s), 6 resource(s)</li>
-<li>Disks (microsoft.compute/disks) &mdash; 2 recommendation(s), 3 resource(s)</li>
-</ul>","Reliability; Compute","2","",""
-"Feature","","Virtual Machines","","","<h1>Virtual Machines (microsoft.compute/virtualmachines)</h1>
-<h2>Overview</h2>
-<p>Recommendations for <strong>microsoft.compute/virtualmachines</strong> resources within the <strong>Compute</strong> domain.</p>
-<h2>Scope</h2>
-<ul>
-<li><strong>Recommendations:</strong> 11</li>
-<li><strong>Affected Resources:</strong> 6</li>
-<li><strong>Resource Groups:</strong> resiliancetestingworkload, rg-btr-demo</li>
-<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-<li><strong>Regions:</strong> uksouth</li>
-</ul>
-<h2>Impact Breakdown</h2>
-<ul>
-<li><strong>High:</strong> 2</li>
-<li><strong>Medium:</strong> 7</li>
-<li><strong>Low:</strong> 2</li>
-</ul>
-<h2>Recommendations</h2>
-<ol>
-<li><strong>Migrate workload to D-series or better virtual machine</strong> [High]
-<ul>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> </li>
-<li><strong>Affected Resources:</strong> 2</li>
-</ul>
-</li>
-<li><strong>Review and migrate virtual machine workloads</strong> [High]
-<ul>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> </li>
-<li><strong>Affected Resources:</strong> 2</li>
-</ul>
-</li>
-<li><strong>Enable Accelerated Networking (AccelNet)</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> Scalability</li>
-<li><strong>Benefit:</strong> Reduces latency, jitter and CPU use</li>
-<li><strong>Affected Resources:</strong> 3</li>
-</ul>
-</li>
-<li><strong>Enable Backups on your Virtual Machines</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> </li>
-<li><strong>Affected Resources:</strong> 1</li>
-</ul>
-</li>
-<li><strong>Enable Scheduled Events for Maintenance sensitive workload VMs</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> Minimize downtime for VMs</li>
-<li><strong>Affected Resources:</strong> 3</li>
-</ul>
-</li>
-<li><strong>Migrate to Virtual Machine Scale Sets Flex</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> </li>
-<li><strong>Affected Resources:</strong> 1</li>
-</ul>
-</li>
-<li><strong>Migrate workload to Virtual Machine Scale Sets Flex</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> </li>
-<li><strong>Affected Resources:</strong> 2</li>
-</ul>
-</li>
-<li><strong>Reserve Compute Capacity in Disaster Recovery Regions</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> Disaster Recovery</li>
-<li><strong>Benefit:</strong> Guaranteed capacity in disaster recovery regions</li>
-<li><strong>Affected Resources:</strong> 3</li>
-</ul>
-</li>
-<li><strong>Use Azure Boost VMs for Maintenance sensitive workload VMs</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> Less maintenance impact</li>
-<li><strong>Affected Resources:</strong> 3</li>
-</ul>
-</li>
-<li><strong>Convert Standard to Premium disk for higher uptime</strong> [Low]
-<ul>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> </li>
-<li><strong>Affected Resources:</strong> 2</li>
-</ul>
-</li>
-<li><strong>Enable VM Insights</strong> [Low]
-<ul>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Improves VM performance and health</li>
-<li><strong>Affected Resources:</strong> 3</li>
-</ul>
-</li>
-</ol>
-","<p>All recommendations for <strong>microsoft.compute/virtualmachines</strong> are completed. Resources validated against APRL checks.</p>
-<p><strong>Recommendations to complete:</strong></p>
-<ul>
-<li>Migrate workload to D-series or better virtual machine [High] &mdash; 2 resource(s)</li>
-<li>Review and migrate virtual machine workloads [High] &mdash; 2 resource(s)</li>
-<li>Enable Accelerated Networking (AccelNet) [Medium] &mdash; 3 resource(s)</li>
-<li>Enable Backups on your Virtual Machines [Medium] &mdash; 1 resource(s)</li>
-<li>Enable Scheduled Events for Maintenance sensitive workload VMs [Medium] &mdash; 3 resource(s)</li>
-<li>Migrate to Virtual Machine Scale Sets Flex [Medium] &mdash; 1 resource(s)</li>
-<li>Migrate workload to Virtual Machine Scale Sets Flex [Medium] &mdash; 2 resource(s)</li>
-<li>Reserve Compute Capacity in Disaster Recovery Regions [Medium] &mdash; 3 resource(s)</li>
-<li>Use Azure Boost VMs for Maintenance sensitive workload VMs [Medium] &mdash; 3 resource(s)</li>
-<li>Convert Standard to Premium disk for higher uptime [Low] &mdash; 2 resource(s)</li>
-<li>Enable VM Insights [Low] &mdash; 3 resource(s)</li>
-</ul>","microsoft.compute/virtualmachines; Compute","1","",""
-"User Story","","","Virtual Machines - Recommendations","","<h1>Virtual Machines - Recommendations</h1>
-<h2>Overview</h2>
-<p>Consolidated APRL recommendations for <strong>microsoft.compute/virtualmachines</strong> resources.</p>
-<ul>
-<li><strong>Impact:</strong> High</li>
-<li><strong>WAF Pillars:</strong> Reliability</li>
-<li><strong>Recommendations:</strong> 11</li>
-<li><strong>Affected Resources:</strong> 6</li>
-<li><strong>Source:</strong> APRL & Advisor</li>
-</ul>
-<h2>Recommendations</h2>
-<h3>1. Migrate workload to D-series or better virtual machine [High]</h3>
-<p>No detailed description available.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> N/A</li>
-<li><strong>GUID:</strong> <code>7f71b153-c0b7-4e99-a23e-db8179183ec9</code></li>
-</ul>
-<p><strong>Affected Resources (2):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>server01</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>server02</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>2. Review and migrate virtual machine workloads [High]</h3>
-<p>No detailed description available.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> N/A</li>
-<li><strong>GUID:</strong> <code>13cea0f1-c3f7-4c66-8b3b-9928a0f07cea</code></li>
-</ul>
-<p><strong>Affected Resources (2):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>server01</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>server02</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>3. Enable Accelerated Networking (AccelNet) [Medium]</h3>
-<p>Accelerated networking enables SR-IOV to a VM, greatly improving its networking performance by bypassing the host from the data path, which reduces latency, jitter, and CPU utilization for demanding network workloads on supported VM types.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Scalability</li>
-<li><strong>Benefit:</strong> Reduces latency, jitter and CPU use</li>
-<li><strong>GUID:</strong> <code>dfedbeb1-1519-fc47-86a5-52f96cf07105</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/virtual-network/accelerated-networking-overview"">https://learn.microsoft.com/azure/virtual-network/accelerated-networking-overview</a></li>
-</ul>
-<p><strong>Affected Resources (3):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>server01</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>server02</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>vm-dev-btr-demo</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>4. Enable Backups on your Virtual Machines [Medium]</h3>
-<p>No detailed description available.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> N/A</li>
-<li><strong>GUID:</strong> <code>651c7925-17a3-42e5-85cd-73bd095cf27f</code></li>
-</ul>
-<p><strong>Affected Resources (1):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>server01</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>5. Enable Scheduled Events for Maintenance sensitive workload VMs [Medium]</h3>
-<p>If your workload is Maintenance sensitive, enable Scheduled Events. This Azure Metadata Service lets your app prepare for virtual machine maintenance by providing information on upcoming events like reboots, reducing disruptions.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> Minimize downtime for VMs</li>
-<li><strong>GUID:</strong> <code>2de8fa5e-14f4-4c4c-857f-1520f87a629f</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/virtual-machines/windows/scheduled-event-service"">https://learn.microsoft.com/azure/virtual-machines/windows/scheduled-event-service</a></li>
-</ul>
-<p><strong>Affected Resources (3):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>server01</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>server02</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>vm-dev-btr-demo</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>6. Migrate to Virtual Machine Scale Sets Flex [Medium]</h3>
-<p>No detailed description available.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> N/A</li>
-<li><strong>GUID:</strong> <code>39fb2718-a2ae-4662-a8c9-cd8df23f01eb</code></li>
-</ul>
-<p><strong>Affected Resources (1):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>server02</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>7. Migrate workload to Virtual Machine Scale Sets Flex [Medium]</h3>
-<p>No detailed description available.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> N/A</li>
-<li><strong>GUID:</strong> <code>5f2613df-629f-4b07-9425-2a47ea0dfad3</code></li>
-</ul>
-<p><strong>Affected Resources (2):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>server02</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>vm-dev-btr-demo</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>8. Reserve Compute Capacity in Disaster Recovery Regions [Medium]</h3>
-<p>On-Demand Capacity Reservations ensure recovery of virtual machines in the event of a natural disaster by reserving compute capacity in advance within a specific region or zone. This guarantees that VMs have the necessary resources during disaster recovery failover events thus reducing downtime.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Disaster Recovery</li>
-<li><strong>Benefit:</strong> Guaranteed capacity in disaster recovery regions</li>
-<li><strong>GUID:</strong> <code>587ca3e4-113b-4c4f-b4e0-92cd8d2065b6</code></li>
-<li><strong>Learn more:</strong> <a href=""https://aka.ms/on-demand-capacity-reservations-docs"">https://aka.ms/on-demand-capacity-reservations-docs</a></li>
-</ul>
-<p><strong>Affected Resources (3):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>server01</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>server02</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>vm-dev-btr-demo</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>9. Use Azure Boost VMs for Maintenance sensitive workload VMs [Medium]</h3>
-<p>If the workload is Maintenance sensitive, consider Azure Boost compatible VMs. Azure Boost is designed to lessen the impact on customers when Azure maintenance activities occur on the host.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> Less maintenance impact</li>
-<li><strong>GUID:</strong> <code>9ab499d8-8844-424d-a2d4-8f53690eb8f8</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/azure-boost/overview"">https://learn.microsoft.com/azure/azure-boost/overview</a></li>
-</ul>
-<p><strong>Affected Resources (3):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>server01</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>server02</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>vm-dev-btr-demo</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>10. Convert Standard to Premium disk for higher uptime [Low]</h3>
-<p>No detailed description available.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> N/A</li>
-<li><strong>GUID:</strong> <code>2b5cf6e5-2792-49b2-9ec0-0e901be6488b</code></li>
-</ul>
-<p><strong>Affected Resources (2):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>server01</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>vm-dev-btr-demo</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>11. Enable VM Insights [Low]</h3>
-<p>VM Insights monitors VM and scale set performance, health, running processes, and dependencies. It enhances the predictability of application performance and availability by pinpointing performance bottlenecks and network issues, and it clarifies if problems are related to other dependencies.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Improves VM performance and health</li>
-<li><strong>GUID:</strong> <code>b72214bb-e879-5f4b-b9cd-642db84f36f4</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/azure-monitor/vm/vminsights-overview"">https://learn.microsoft.com/azure/azure-monitor/vm/vminsights-overview</a></li>
-</ul>
-<p><strong>Affected Resources (3):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>server01</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>server02</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>vm-dev-btr-demo</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-","<ul>
-<li>All 11 recommendation(s) have been implemented</li>
-<li>All 6 affected resource(s) pass APRL compliance checks</li>
-</ul>
-<p><strong>Per-recommendation verification:</strong></p>
-<ul>
-<li><strong>Migrate workload to D-series or better virtual machine</strong> [High] &mdash; 2 resource(s) remediated (GUID: <code>7f71b153-c0b7-4e99-a23e-db8179183ec9</code>)</li>
-<li><strong>Review and migrate virtual machine workloads</strong> [High] &mdash; 2 resource(s) remediated (GUID: <code>13cea0f1-c3f7-4c66-8b3b-9928a0f07cea</code>)</li>
-<li><strong>Enable Accelerated Networking (AccelNet)</strong> [Medium] &mdash; 3 resource(s) remediated (GUID: <code>dfedbeb1-1519-fc47-86a5-52f96cf07105</code>)</li>
-<li><strong>Enable Backups on your Virtual Machines</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>651c7925-17a3-42e5-85cd-73bd095cf27f</code>)</li>
-<li><strong>Enable Scheduled Events for Maintenance sensitive workload VMs</strong> [Medium] &mdash; 3 resource(s) remediated (GUID: <code>2de8fa5e-14f4-4c4c-857f-1520f87a629f</code>)</li>
-<li><strong>Migrate to Virtual Machine Scale Sets Flex</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>39fb2718-a2ae-4662-a8c9-cd8df23f01eb</code>)</li>
-<li><strong>Migrate workload to Virtual Machine Scale Sets Flex</strong> [Medium] &mdash; 2 resource(s) remediated (GUID: <code>5f2613df-629f-4b07-9425-2a47ea0dfad3</code>)</li>
-<li><strong>Reserve Compute Capacity in Disaster Recovery Regions</strong> [Medium] &mdash; 3 resource(s) remediated (GUID: <code>587ca3e4-113b-4c4f-b4e0-92cd8d2065b6</code>)</li>
-<li><strong>Use Azure Boost VMs for Maintenance sensitive workload VMs</strong> [Medium] &mdash; 3 resource(s) remediated (GUID: <code>9ab499d8-8844-424d-a2d4-8f53690eb8f8</code>)</li>
-<li><strong>Convert Standard to Premium disk for higher uptime</strong> [Low] &mdash; 2 resource(s) remediated (GUID: <code>2b5cf6e5-2792-49b2-9ec0-0e901be6488b</code>)</li>
-<li><strong>Enable VM Insights</strong> [Low] &mdash; 3 resource(s) remediated (GUID: <code>b72214bb-e879-5f4b-b9cd-642db84f36f4</code>)</li>
-</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","",""
-"Feature","","Disks","","","<h1>Disks (microsoft.compute/disks)</h1>
-<h2>Overview</h2>
-<p>Recommendations for <strong>microsoft.compute/disks</strong> resources within the <strong>Compute</strong> domain.</p>
-<h2>Scope</h2>
-<ul>
-<li><strong>Recommendations:</strong> 2</li>
-<li><strong>Affected Resources:</strong> 3</li>
-<li><strong>Resource Groups:</strong> resiliancetestingworkload, rg-btr-demo</li>
-<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-<li><strong>Regions:</strong> global, uksouth</li>
-</ul>
-<h2>Impact Breakdown</h2>
-<ul>
-<li><strong>High:</strong> 1</li>
-<li><strong>Medium:</strong> 1</li>
-</ul>
-<h2>Recommendations</h2>
-<ol>
-<li><strong>Ensure Azure Disks are in the same zone as your VM for higher resiliency and availability</strong> [High]
-<ul>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> </li>
-<li><strong>Affected Resources:</strong> 3</li>
-</ul>
-</li>
-<li><strong>Migrate Standard HDD OS Disks to SSD</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> </li>
-<li><strong>Affected Resources:</strong> 3</li>
-</ul>
-</li>
-</ol>
-","<p>All recommendations for <strong>microsoft.compute/disks</strong> are completed. Resources validated against APRL checks.</p>
-<p><strong>Recommendations to complete:</strong></p>
-<ul>
-<li>Ensure Azure Disks are in the same zone as your VM for higher resiliency and availability [High] &mdash; 3 resource(s)</li>
-<li>Migrate Standard HDD OS Disks to SSD [Medium] &mdash; 3 resource(s)</li>
-</ul>","microsoft.compute/disks; Compute","1","",""
-"User Story","","","Disks - Recommendations","","<h1>Disks - Recommendations</h1>
-<h2>Overview</h2>
-<p>Consolidated APRL recommendations for <strong>microsoft.compute/disks</strong> resources.</p>
-<ul>
-<li><strong>Impact:</strong> High</li>
-<li><strong>WAF Pillars:</strong> Reliability</li>
-<li><strong>Recommendations:</strong> 2</li>
-<li><strong>Affected Resources:</strong> 3</li>
-<li><strong>Source:</strong> APRL & Advisor</li>
-</ul>
-<h2>Recommendations</h2>
-<h3>1. Ensure Azure Disks are in the same zone as your VM for higher resiliency and availability [High]</h3>
-<p>No detailed description available.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> N/A</li>
-<li><strong>GUID:</strong> <code>d4102c0f-ebe3-4b22-8fe0-e488866a87af</code></li>
-</ul>
-<p><strong>Affected Resources (3):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>server01_osdisk_1_44cd5ccc8fa44c15afcce9733b4ad87f</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>server02_osdisk_1_2007d7e1fb74423991e364a21a14512b</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>osdisk-devvm-btr-demo</td><td>rg-btr-demo</td><td>global</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>2. Migrate Standard HDD OS Disks to SSD [Medium]</h3>
-<p>No detailed description available.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> N/A</li>
-<li><strong>GUID:</strong> <code>6885dc91-c4d1-4695-be6f-f64be575769f</code></li>
-</ul>
-<p><strong>Affected Resources (3):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>server01_osdisk_1_44cd5ccc8fa44c15afcce9733b4ad87f</td><td>resiliancetestingworkload</td><td>global</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>server02_osdisk_1_2007d7e1fb74423991e364a21a14512b</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>osdisk-devvm-btr-demo</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-","<ul>
-<li>All 2 recommendation(s) have been implemented</li>
+<li>All 1 recommendation(s) have been implemented</li>
 <li>All 3 affected resource(s) pass APRL compliance checks</li>
 </ul>
 <p><strong>Per-recommendation verification:</strong></p>
 <ul>
-<li><strong>Ensure Azure Disks are in the same zone as your VM for higher resiliency and availability</strong> [High] &mdash; 3 resource(s) remediated (GUID: <code>d4102c0f-ebe3-4b22-8fe0-e488866a87af</code>)</li>
-<li><strong>Migrate Standard HDD OS Disks to SSD</strong> [Medium] &mdash; 3 resource(s) remediated (GUID: <code>6885dc91-c4d1-4695-be6f-f64be575769f</code>)</li>
-</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","",""
-"Epic","Data","","","","<h1>Data</h1>
+<li><strong>Enable Autoscale/Automatic scaling to ensure adequate resources are available to service requests</strong> [Medium] &mdash; 3 resource(s) remediated (GUID: <code>6320abf6-f917-1843-b2ae-4779c35985ae</code>)</li>
+</ul>","Medium; Reliability; Apps; Source:APRL","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog1"
+"Feature","","Data","","","<h1>Data (data)</h1>
 <h2>Overview</h2>
-<p>Databases, storage, and data services</p>
-<p><strong>WAF Pillars:</strong> Reliability</p>
+<p>Recommendations for <strong>data</strong> resources within the <strong>DemoInfra03</strong> domain.</p>
 <h2>Scope</h2>
 <ul>
-<li><strong>Total Features:</strong> 3</li>
-<li><strong>Total Recommendations:</strong> 3</li>
-<li><strong>Total Affected Resources:</strong> 10</li>
-<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-</ul>
-<h2>Impact Summary</h2>
-<ul>
-<li><strong>High:</strong> 7 recommendation(s)</li>
-<li><strong>Low:</strong> 3 recommendation(s)</li>
-<li><strong>Medium:</strong> 3 recommendation(s)</li>
-</ul>
-<h2>Features</h2>
-<ul>
-<li><strong>Storage Accounts</strong> (microsoft.storage/storageaccounts) &mdash; 6 resource(s), 1 recommendation(s)</li>
-<li><strong>Database Accounts</strong> (microsoft.documentdb/databaseaccounts) &mdash; 3 resource(s), 1 recommendation(s)</li>
-<li><strong>Servers</strong> (microsoft.sql/servers) &mdash; 1 resource(s), 1 recommendation(s)</li>
-</ul>
-","<p>All Features within this Epic are completed and verified.</p>
-<p><strong>Features to complete:</strong></p>
-<ul>
-<li>Storage Accounts (microsoft.storage/storageaccounts) &mdash; 5 recommendation(s), 6 resource(s)</li>
-<li>Database Accounts (microsoft.documentdb/databaseaccounts) &mdash; 5 recommendation(s), 3 resource(s)</li>
-<li>Servers (microsoft.sql/servers) &mdash; 3 recommendation(s), 1 resource(s)</li>
-</ul>","Reliability; Data","2","",""
-"Feature","","Storage Accounts","","","<h1>Storage Accounts (microsoft.storage/storageaccounts)</h1>
-<h2>Overview</h2>
-<p>Recommendations for <strong>microsoft.storage/storageaccounts</strong> resources within the <strong>Data</strong> domain.</p>
-<h2>Scope</h2>
-<ul>
-<li><strong>Recommendations:</strong> 5</li>
-<li><strong>Affected Resources:</strong> 6</li>
+<li><strong>Recommendations:</strong> 3</li>
+<li><strong>Affected Resources:</strong> 4</li>
 <li><strong>Resource Groups:</strong> mcapsgovernance, rg-btr-demo, rg-btr-tfstate</li>
-<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-<li><strong>Regions:</strong> global, uksouth, westus2</li>
-</ul>
-<h2>Impact Breakdown</h2>
-<ul>
-<li><strong>High:</strong> 2</li>
-<li><strong>Low:</strong> 3</li>
-</ul>
-<h2>Recommendations</h2>
-<ol>
-<li><strong>Enable zone redundancy for storage accounts to improve high availability and resiliency</strong> [High]
-<ul>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> </li>
-<li><strong>Affected Resources:</strong> 3</li>
-</ul>
-</li>
-<li><strong>Ensure that storage accounts are zone or region redundant</strong> [High]
-<ul>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> High availability and durability for storage</li>
-<li><strong>Affected Resources:</strong> 3</li>
-</ul>
-</li>
-<li><strong>Enable point-in-time restore for GPv2 accounts to safeguard against data loss</strong> [Low]
-<ul>
-<li><strong>Control:</strong> Disaster Recovery</li>
-<li><strong>Benefit:</strong> Protects data from loss/corruption</li>
-<li><strong>Affected Resources:</strong> 3</li>
-</ul>
-</li>
-<li><strong>Enable versioning for accidental modification and keep the number of versions below 1000</strong> [Low]
-<ul>
-<li><strong>Control:</strong> Disaster Recovery</li>
-<li><strong>Benefit:</strong> Recover data, manage latency</li>
-<li><strong>Affected Resources:</strong> 3</li>
-</ul>
-</li>
-<li><strong>Monitor all blob storage accounts</strong> [Low]
-<ul>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Enhanced alerting and log analysis</li>
-<li><strong>Affected Resources:</strong> 3</li>
-</ul>
-</li>
-</ol>
-","<p>All recommendations for <strong>microsoft.storage/storageaccounts</strong> are completed. Resources validated against APRL checks.</p>
-<p><strong>Recommendations to complete:</strong></p>
-<ul>
-<li>Enable zone redundancy for storage accounts to improve high availability and resiliency [High] &mdash; 3 resource(s)</li>
-<li>Ensure that storage accounts are zone or region redundant [High] &mdash; 3 resource(s)</li>
-<li>Enable point-in-time restore for GPv2 accounts to safeguard against data loss [Low] &mdash; 3 resource(s)</li>
-<li>Enable versioning for accidental modification and keep the number of versions below 1000 [Low] &mdash; 3 resource(s)</li>
-<li>Monitor all blob storage accounts [Low] &mdash; 3 resource(s)</li>
-</ul>","microsoft.storage/storageaccounts; Data","1","",""
-"User Story","","","Storage Accounts - Recommendations","","<h1>Storage Accounts - Recommendations</h1>
-<h2>Overview</h2>
-<p>Consolidated APRL recommendations for <strong>microsoft.storage/storageaccounts</strong> resources.</p>
-<ul>
-<li><strong>Impact:</strong> High</li>
-<li><strong>WAF Pillars:</strong> Reliability</li>
-<li><strong>Recommendations:</strong> 5</li>
-<li><strong>Affected Resources:</strong> 6</li>
-<li><strong>Source:</strong> APRL & Advisor</li>
-</ul>
-<h2>Recommendations</h2>
-<h3>1. Enable zone redundancy for storage accounts to improve high availability and resiliency [High]</h3>
-<p>No detailed description available.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> N/A</li>
-<li><strong>GUID:</strong> <code>4c10f447-fc3d-48b5-931d-23cea8486023</code></li>
-</ul>
-<p><strong>Affected Resources (3):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>mcapsb30a58e84134ade1</td><td>mcapsgovernance</td><td>global</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>stbtrdemojfh3g0</td><td>rg-btr-demo</td><td>global</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>sabtrtfstate01</td><td>rg-btr-tfstate</td><td>global</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>2. Ensure that storage accounts are zone or region redundant [High]</h3>
-<p>Redundancy ensures storage accounts meet availability and durability targets amidst failures, weighing lower costs against higher availability. Locally redundant storage offers the least durability at the lowest cost.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> High availability and durability for storage</li>
-<li><strong>GUID:</strong> <code>e6c7e1cc-2f47-264d-aa50-1da421314472</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/storage/common/storage-redundancy"">https://learn.microsoft.com/azure/storage/common/storage-redundancy</a></li>
-</ul>
-<p><strong>Affected Resources (3):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>mcapsb30a58e84134ade1</td><td>mcapsgovernance</td><td>westus2</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>stbtrdemojfh3g0</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>sabtrtfstate01</td><td>rg-btr-tfstate</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>3. Enable point-in-time restore for GPv2 accounts to safeguard against data loss [Low]</h3>
-<p>Consider enabling point-in-time restore for standard general purpose v2 accounts with flat namespace to protect against accidental deletion or corruption by restoring block blob data to an earlier state.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Disaster Recovery</li>
-<li><strong>Benefit:</strong> Protects data from loss/corruption</li>
-<li><strong>GUID:</strong> <code>1b965cb9-7629-214e-b682-6bf6e450a100</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/storage/blobs/point-in-time-restore-overview"">https://learn.microsoft.com/azure/storage/blobs/point-in-time-restore-overview</a></li>
-</ul>
-<p><strong>Affected Resources (3):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>mcapsb30a58e84134ade1</td><td>mcapsgovernance</td><td>westus2</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>stbtrdemojfh3g0</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>sabtrtfstate01</td><td>rg-btr-tfstate</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>4. Enable versioning for accidental modification and keep the number of versions below 1000 [Low]</h3>
-<p>Consider enabling versioning for Azure Storage Accounts to recover from accidental modifications or deletions and manage blob operation latency. Microsoft advises maintaining fewer than 1000 versions per blob to optimize performance. Lifecycle management can help delete old versions automatically.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Disaster Recovery</li>
-<li><strong>Benefit:</strong> Recover data, manage latency</li>
-<li><strong>GUID:</strong> <code>8ebda7c0-e0e1-ed45-af59-2d7ea9a1c05d</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/storage/blobs/versioning-overview"">https://learn.microsoft.com/azure/storage/blobs/versioning-overview</a></li>
-</ul>
-<p><strong>Affected Resources (3):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>mcapsb30a58e84134ade1</td><td>mcapsgovernance</td><td>westus2</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>stbtrdemojfh3g0</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>sabtrtfstate01</td><td>rg-btr-tfstate</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>5. Monitor all blob storage accounts [Low]</h3>
-<p>For critical applications and business processes relying on Azure, monitoring and alerts are crucial. Resource logs are only stored after creating a diagnostic setting to route logs to specified locations, requiring selection of log categories to collect.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Enhanced alerting and log analysis</li>
-<li><strong>GUID:</strong> <code>96cb8331-6b06-8242-8ce8-4e2f665dc679</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/storage/blobs/monitor-blob-storage"">https://learn.microsoft.com/azure/storage/blobs/monitor-blob-storage</a></li>
-</ul>
-<p><strong>Affected Resources (3):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>mcapsb30a58e84134ade1</td><td>mcapsgovernance</td><td>westus2</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>stbtrdemojfh3g0</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>sabtrtfstate01</td><td>rg-btr-tfstate</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-","<ul>
-<li>All 5 recommendation(s) have been implemented</li>
-<li>All 6 affected resource(s) pass APRL compliance checks</li>
-</ul>
-<p><strong>Per-recommendation verification:</strong></p>
-<ul>
-<li><strong>Enable zone redundancy for storage accounts to improve high availability and resiliency</strong> [High] &mdash; 3 resource(s) remediated (GUID: <code>4c10f447-fc3d-48b5-931d-23cea8486023</code>)</li>
-<li><strong>Ensure that storage accounts are zone or region redundant</strong> [High] &mdash; 3 resource(s) remediated (GUID: <code>e6c7e1cc-2f47-264d-aa50-1da421314472</code>)</li>
-<li><strong>Enable point-in-time restore for GPv2 accounts to safeguard against data loss</strong> [Low] &mdash; 3 resource(s) remediated (GUID: <code>1b965cb9-7629-214e-b682-6bf6e450a100</code>)</li>
-<li><strong>Enable versioning for accidental modification and keep the number of versions below 1000</strong> [Low] &mdash; 3 resource(s) remediated (GUID: <code>8ebda7c0-e0e1-ed45-af59-2d7ea9a1c05d</code>)</li>
-<li><strong>Monitor all blob storage accounts</strong> [Low] &mdash; 3 resource(s) remediated (GUID: <code>96cb8331-6b06-8242-8ce8-4e2f665dc679</code>)</li>
-</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","",""
-"Feature","","Database Accounts","","","<h1>Database Accounts (microsoft.documentdb/databaseaccounts)</h1>
-<h2>Overview</h2>
-<p>Recommendations for <strong>microsoft.documentdb/databaseaccounts</strong> resources within the <strong>Data</strong> domain.</p>
-<h2>Scope</h2>
-<ul>
-<li><strong>Recommendations:</strong> 5</li>
-<li><strong>Affected Resources:</strong> 3</li>
-<li><strong>Resource Groups:</strong> defaultresourcegroup-suk, rg-btr-demo</li>
 <li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Regions:</strong> uksouth, westus2</li>
 </ul>
 <h2>Impact Breakdown</h2>
 <ul>
-<li><strong>High:</strong> 3</li>
-<li><strong>Medium:</strong> 2</li>
+<li><strong>High:</strong> 2</li>
+<li><strong>Low:</strong> 1</li>
 </ul>
 <h2>Recommendations</h2>
 <ol>
-<li><strong>Configure continuous backup mode</strong> [High]
-<ul>
-<li><strong>Control:</strong> Disaster Recovery</li>
-<li><strong>Benefit:</strong> Faster self-serve data restore</li>
-<li><strong>Affected Resources:</strong> 2</li>
-</ul>
-</li>
 <li><strong>Enable availability zones</strong> [High]
 <ul>
 <li><strong>Control:</strong> High Availability</li>
@@ -1139,64 +121,40 @@
 <li><strong>Affected Resources:</strong> 1</li>
 </ul>
 </li>
-<li><strong>Enable zone redundancy for multi-region Cosmos DB accounts</strong> [High]
+<li><strong>Ensure that storage accounts are zone or region redundant</strong> [High]
 <ul>
 <li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> </li>
-<li><strong>Affected Resources:</strong> 1</li>
-</ul>
-</li>
-<li><strong>Improve resiliency by migrating your Azure Cosmos DB accounts to continuous backup</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> </li>
-<li><strong>Affected Resources:</strong> 1</li>
-</ul>
-</li>
-<li><strong>Monitor Cosmos DB health and set up alerts</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Proactive issue management</li>
+<li><strong>Benefit:</strong> High availability and durability for storage</li>
 <li><strong>Affected Resources:</strong> 2</li>
 </ul>
 </li>
+<li><strong>Enable versioning for accidental modification and keep the number of versions below 1000</strong> [Low]
+<ul>
+<li><strong>Control:</strong> Disaster Recovery</li>
+<li><strong>Benefit:</strong> Recover data, manage latency</li>
+<li><strong>Affected Resources:</strong> 1</li>
+</ul>
+</li>
 </ol>
-","<p>All recommendations for <strong>microsoft.documentdb/databaseaccounts</strong> are completed. Resources validated against APRL checks.</p>
+","<p>All recommendations for <strong>data</strong> are completed. Resources validated against APRL checks.</p>
 <p><strong>Recommendations to complete:</strong></p>
 <ul>
-<li>Configure continuous backup mode [High] &mdash; 2 resource(s)</li>
 <li>Enable availability zones [High] &mdash; 1 resource(s)</li>
-<li>Enable zone redundancy for multi-region Cosmos DB accounts [High] &mdash; 1 resource(s)</li>
-<li>Improve resiliency by migrating your Azure Cosmos DB accounts to continuous backup [Medium] &mdash; 1 resource(s)</li>
-<li>Monitor Cosmos DB health and set up alerts [Medium] &mdash; 2 resource(s)</li>
-</ul>","microsoft.documentdb/databaseaccounts; Data","1","",""
-"User Story","","","Database Accounts - Recommendations","","<h1>Database Accounts - Recommendations</h1>
+<li>Ensure that storage accounts are zone or region redundant [High] &mdash; 2 resource(s)</li>
+<li>Enable versioning for accidental modification and keep the number of versions below 1000 [Low] &mdash; 1 resource(s)</li>
+</ul>","data; DemoInfra03","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog1"
+"User Story","","","Database Accounts - Recommendations 2","","<h1>Database Accounts - Recommendations 2</h1>
 <h2>Overview</h2>
-<p>Consolidated APRL recommendations for <strong>microsoft.documentdb/databaseaccounts</strong> resources.</p>
+<p>Consolidated APRL recommendations for <strong>data</strong> resources.</p>
 <ul>
 <li><strong>Impact:</strong> High</li>
 <li><strong>WAF Pillars:</strong> Reliability</li>
-<li><strong>Recommendations:</strong> 5</li>
-<li><strong>Affected Resources:</strong> 3</li>
-<li><strong>Source:</strong> APRL & Advisor</li>
+<li><strong>Recommendations:</strong> 1</li>
+<li><strong>Affected Resources:</strong> 1</li>
+<li><strong>Source:</strong> APRL</li>
 </ul>
 <h2>Recommendations</h2>
-<h3>1. Configure continuous backup mode [High]</h3>
-<p>Cosmos DB's backup is always on, offering protection against data mishaps. Continuous mode allows for self-serve restoration to a pre-mishap point, unlike periodic mode which requires contacting Microsoft support, leading to longer restore times.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Disaster Recovery</li>
-<li><strong>Benefit:</strong> Faster self-serve data restore</li>
-<li><strong>GUID:</strong> <code>e544520b-8505-7841-9e77-1f1974ee86ec</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/cosmos-db/continuous-backup-restore-introduction"">https://learn.microsoft.com/azure/cosmos-db/continuous-backup-restore-introduction</a></li>
-</ul>
-<p><strong>Affected Resources (2):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>test-cdb-uk01</td><td>defaultresourcegroup-suk</td><td>westus2</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>cosmos-btr-demo-jfh3g0</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>2. Enable availability zones [High]</h3>
+<h3>1. Enable availability zones [High]</h3>
 <p>When availability zones are configured, Azure Cosmos DB intelligently distributes the 4 replicas of your data across all available zones. It ensures that your Azure Cosmos DB can withstand an outage in one availability zone and remain fully operational throughout.</p>
 <ul>
 <li><strong>WAF Pillar:</strong> Reliability</li>
@@ -1210,205 +168,70 @@
 <tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
 <tr><td>cosmos-btr-demo-jfh3g0</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
 </table>
-<h3>3. Enable zone redundancy for multi-region Cosmos DB accounts [High]</h3>
-<p>No detailed description available.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> N/A</li>
-<li><strong>GUID:</strong> <code>687f83d3-db01-4ab1-a77b-b31e99f16d33</code></li>
-</ul>
-<p><strong>Affected Resources (1):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>test-cdb-uk01</td><td>defaultresourcegroup-suk</td><td>westus2</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>4. Improve resiliency by migrating your Azure Cosmos DB accounts to continuous backup [Medium]</h3>
-<p>No detailed description available.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> N/A</li>
-<li><strong>GUID:</strong> <code>52fef986-5897-4359-8b92-0f22749f0d73</code></li>
-</ul>
-<p><strong>Affected Resources (1):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>test-cdb-uk01</td><td>defaultresourcegroup-suk</td><td>westus2</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>5. Monitor Cosmos DB health and set up alerts [Medium]</h3>
-<p>Monitoring the availability and responsiveness of Azure Cosmos DB resources and having alerts set up for your workload is a good practice. This ensures you stay proactive in handling unforeseen events.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Proactive issue management</li>
-<li><strong>GUID:</strong> <code>deaea200-013c-414b-ac9f-bfa7a7fb13f0</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/cosmos-db/create-alerts"">https://learn.microsoft.com/azure/cosmos-db/create-alerts</a></li>
-</ul>
-<p><strong>Affected Resources (2):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>test-cdb-uk01</td><td>defaultresourcegroup-suk</td><td>westus2</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>cosmos-btr-demo-jfh3g0</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
 ","<ul>
-<li>All 5 recommendation(s) have been implemented</li>
-<li>All 3 affected resource(s) pass APRL compliance checks</li>
-</ul>
-<p><strong>Per-recommendation verification:</strong></p>
-<ul>
-<li><strong>Configure continuous backup mode</strong> [High] &mdash; 2 resource(s) remediated (GUID: <code>e544520b-8505-7841-9e77-1f1974ee86ec</code>)</li>
-<li><strong>Enable availability zones</strong> [High] &mdash; 1 resource(s) remediated (GUID: <code>921631f6-ed59-49a5-94c1-f0f3ececa580</code>)</li>
-<li><strong>Enable zone redundancy for multi-region Cosmos DB accounts</strong> [High] &mdash; 1 resource(s) remediated (GUID: <code>687f83d3-db01-4ab1-a77b-b31e99f16d33</code>)</li>
-<li><strong>Improve resiliency by migrating your Azure Cosmos DB accounts to continuous backup</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>52fef986-5897-4359-8b92-0f22749f0d73</code>)</li>
-<li><strong>Monitor Cosmos DB health and set up alerts</strong> [Medium] &mdash; 2 resource(s) remediated (GUID: <code>deaea200-013c-414b-ac9f-bfa7a7fb13f0</code>)</li>
-</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","",""
-"Feature","","Servers","","","<h1>Servers (microsoft.sql/servers)</h1>
-<h2>Overview</h2>
-<p>Recommendations for <strong>microsoft.sql/servers</strong> resources within the <strong>Data</strong> domain.</p>
-<h2>Scope</h2>
-<ul>
-<li><strong>Recommendations:</strong> 3</li>
-<li><strong>Affected Resources:</strong> 1</li>
-<li><strong>Resource Groups:</strong> rg-btr-demo</li>
-<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-<li><strong>Regions:</strong> uksouth</li>
-</ul>
-<h2>Impact Breakdown</h2>
-<ul>
-<li><strong>High:</strong> 2</li>
-<li><strong>Medium:</strong> 1</li>
-</ul>
-<h2>Recommendations</h2>
-<ol>
-<li><strong>Use failover group customer managed policy</strong> [High]
-<ul>
-<li><strong>Control:</strong> Disaster Recovery</li>
-<li><strong>Benefit:</strong> Enhanced disaster recovery</li>
-<li><strong>Affected Resources:</strong> 1</li>
-</ul>
-</li>
-<li><strong>Use Failover Group endpoints for database connections</strong> [High]
-<ul>
-<li><strong>Control:</strong> Disaster Recovery</li>
-<li><strong>Benefit:</strong> Enhanced disaster recovery</li>
-<li><strong>Affected Resources:</strong> 1</li>
-</ul>
-</li>
-<li><strong>Back Up Your Keys</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> Disaster Recovery</li>
-<li><strong>Benefit:</strong> Enhanced security and data recovery</li>
-<li><strong>Affected Resources:</strong> 1</li>
-</ul>
-</li>
-</ol>
-","<p>All recommendations for <strong>microsoft.sql/servers</strong> are completed. Resources validated against APRL checks.</p>
-<p><strong>Recommendations to complete:</strong></p>
-<ul>
-<li>Use failover group customer managed policy [High] &mdash; 1 resource(s)</li>
-<li>Use Failover Group endpoints for database connections [High] &mdash; 1 resource(s)</li>
-<li>Back Up Your Keys [Medium] &mdash; 1 resource(s)</li>
-</ul>","microsoft.sql/servers; Data","1","",""
-"User Story","","","Servers - Recommendations","","<h1>Servers - Recommendations</h1>
-<h2>Overview</h2>
-<p>Consolidated APRL recommendations for <strong>microsoft.sql/servers</strong> resources.</p>
-<ul>
-<li><strong>Impact:</strong> High</li>
-<li><strong>WAF Pillars:</strong> Reliability</li>
-<li><strong>Recommendations:</strong> 3</li>
-<li><strong>Affected Resources:</strong> 1</li>
-<li><strong>Source:</strong> APRL</li>
-</ul>
-<h2>Recommendations</h2>
-<h3>1. Use failover group customer managed policy [High]</h3>
-<p>When using failover groups, setting your failover policy to customer managed is highly recommended as it keeps you in control of when to initiate a failover.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Disaster Recovery</li>
-<li><strong>Benefit:</strong> Enhanced disaster recovery</li>
-<li><strong>GUID:</strong> <code>0f838324-ffe3-4b8a-b7a2-d983be8f9fa9</code></li>
-<li><strong>Learn more:</strong> <a href=""https://aka.ms/SQLDBFGPolicy"">https://aka.ms/SQLDBFGPolicy</a></li>
-</ul>
-<p><strong>Affected Resources (1):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>sql-btr-demo-jfh3g0</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>2. Use Failover Group endpoints for database connections [High]</h3>
-<p>When using Failover Groups, it is recommended to connect to the Failover Group endpoint instead of individual database endpoints. This allows for automatic redirection to the secondary database in case of a failover, ensuring high availability.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Disaster Recovery</li>
-<li><strong>Benefit:</strong> Enhanced disaster recovery</li>
-<li><strong>GUID:</strong> <code>de266d8a-a9f3-4cb9-be95-9306001fceea</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/azure-sql/database/failover-group-sql-db?view=azuresql#endpoint-redirection"">https://learn.microsoft.com/azure/azure-sql/database/failover-group-sql-db?view=azuresql#endpoint-redirection</a></li>
-</ul>
-<p><strong>Affected Resources (1):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>sql-btr-demo-jfh3g0</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>3. Back Up Your Keys [Medium]</h3>
-<p>It is highly recommended to use Azure Key Vault (AKV) to store encryption keys related to Always Encrypted configurations, however it is not required. If you are not using AKV, then ensure that your keys are properly backed up and stored in a secure manner.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Disaster Recovery</li>
-<li><strong>Benefit:</strong> Enhanced security and data recovery</li>
-<li><strong>GUID:</strong> <code>d6ef87aa-574e-584e-a955-3e6bb8b5425b</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/key-vault/general/overview"">https://learn.microsoft.com/azure/key-vault/general/overview</a></li>
-</ul>
-<p><strong>Affected Resources (1):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>sql-btr-demo-jfh3g0</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-","<ul>
-<li>All 3 recommendation(s) have been implemented</li>
+<li>All 1 recommendation(s) have been implemented</li>
 <li>All 1 affected resource(s) pass APRL compliance checks</li>
 </ul>
 <p><strong>Per-recommendation verification:</strong></p>
 <ul>
-<li><strong>Use failover group customer managed policy</strong> [High] &mdash; 1 resource(s) remediated (GUID: <code>0f838324-ffe3-4b8a-b7a2-d983be8f9fa9</code>)</li>
-<li><strong>Use Failover Group endpoints for database connections</strong> [High] &mdash; 1 resource(s) remediated (GUID: <code>de266d8a-a9f3-4cb9-be95-9306001fceea</code>)</li>
-<li><strong>Back Up Your Keys</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>d6ef87aa-574e-584e-a955-3e6bb8b5425b</code>)</li>
-</ul>","High; Reliability; Azure Service; Source:APRL","1","",""
-"Epic","Networking","","","","<h1>Networking</h1>
+<li><strong>Enable availability zones</strong> [High] &mdash; 1 resource(s) remediated (GUID: <code>921631f6-ed59-49a5-94c1-f0f3ececa580</code>)</li>
+</ul>","High; Reliability; Data; Source:APRL","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog1"
+"User Story","","","Storage Accounts - Recommendations 2","","<h1>Storage Accounts - Recommendations 2</h1>
 <h2>Overview</h2>
-<p>Virtual networks, gateways, load balancers, and connectivity</p>
-<p><strong>WAF Pillars:</strong> Reliability</p>
-<h2>Scope</h2>
+<p>Consolidated APRL recommendations for <strong>data</strong> resources.</p>
 <ul>
-<li><strong>Total Features:</strong> 3</li>
-<li><strong>Total Recommendations:</strong> 3</li>
-<li><strong>Total Affected Resources:</strong> 15</li>
-<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
+<li><strong>Impact:</strong> High</li>
+<li><strong>WAF Pillars:</strong> Reliability</li>
+<li><strong>Recommendations:</strong> 2</li>
+<li><strong>Affected Resources:</strong> 3</li>
+<li><strong>Source:</strong> APRL</li>
 </ul>
-<h2>Impact Summary</h2>
+<h2>Recommendations</h2>
+<h3>1. Ensure that storage accounts are zone or region redundant [High]</h3>
+<p>Redundancy ensures storage accounts meet availability and durability targets amidst failures, weighing lower costs against higher availability. Locally redundant storage offers the least durability at the lowest cost.</p>
 <ul>
-<li><strong>Medium:</strong> 4 recommendation(s)</li>
-<li><strong>Low:</strong> 2 recommendation(s)</li>
+<li><strong>WAF Pillar:</strong> Reliability</li>
+<li><strong>Control:</strong> High Availability</li>
+<li><strong>Benefit:</strong> High availability and durability for storage</li>
+<li><strong>GUID:</strong> <code>e6c7e1cc-2f47-264d-aa50-1da421314472</code></li>
+<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/storage/common/storage-redundancy"">https://learn.microsoft.com/azure/storage/common/storage-redundancy</a></li>
 </ul>
-<h2>Features</h2>
+<p><strong>Affected Resources (2):</strong></p>
+<table>
+<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
+<tr><td>stbtrdemojfh3g0</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
+<tr><td>sabtrtfstate01</td><td>rg-btr-tfstate</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
+</table>
+<h3>2. Enable versioning for accidental modification and keep the number of versions below 1000 [Low]</h3>
+<p>Consider enabling versioning for Azure Storage Accounts to recover from accidental modifications or deletions and manage blob operation latency. Microsoft advises maintaining fewer than 1000 versions per blob to optimize performance. Lifecycle management can help delete old versions automatically.</p>
 <ul>
-<li><strong>Network Security Groups</strong> (microsoft.network/networksecuritygroups) &mdash; 11 resource(s), 1 recommendation(s)</li>
-<li><strong>Networkwatchers</strong> (microsoft.network/networkwatchers) &mdash; 2 resource(s), 1 recommendation(s)</li>
-<li><strong>Virtual Networks</strong> (microsoft.network/virtualnetworks) &mdash; 2 resource(s), 1 recommendation(s)</li>
+<li><strong>WAF Pillar:</strong> Reliability</li>
+<li><strong>Control:</strong> Disaster Recovery</li>
+<li><strong>Benefit:</strong> Recover data, manage latency</li>
+<li><strong>GUID:</strong> <code>8ebda7c0-e0e1-ed45-af59-2d7ea9a1c05d</code></li>
+<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/storage/blobs/versioning-overview"">https://learn.microsoft.com/azure/storage/blobs/versioning-overview</a></li>
 </ul>
-","<p>All Features within this Epic are completed and verified.</p>
-<p><strong>Features to complete:</strong></p>
+<p><strong>Affected Resources (1):</strong></p>
+<table>
+<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
+<tr><td>mcapsb30a58e84134ade1</td><td>mcapsgovernance</td><td>westus2</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
+</table>
+","<ul>
+<li>All 2 recommendation(s) have been implemented</li>
+<li>All 3 affected resource(s) pass APRL compliance checks</li>
+</ul>
+<p><strong>Per-recommendation verification:</strong></p>
 <ul>
-<li>Network Security Groups (microsoft.network/networksecuritygroups) &mdash; 2 recommendation(s), 11 resource(s)</li>
-<li>Networkwatchers (microsoft.network/networkwatchers) &mdash; 2 recommendation(s), 2 resource(s)</li>
-<li>Virtual Networks (microsoft.network/virtualnetworks) &mdash; 2 recommendation(s), 2 resource(s)</li>
-</ul>","Reliability; Networking","2","",""
-"Feature","","Network Security Groups","","","<h1>Network Security Groups (microsoft.network/networksecuritygroups)</h1>
+<li><strong>Ensure that storage accounts are zone or region redundant</strong> [High] &mdash; 2 resource(s) remediated (GUID: <code>e6c7e1cc-2f47-264d-aa50-1da421314472</code>)</li>
+<li><strong>Enable versioning for accidental modification and keep the number of versions below 1000</strong> [Low] &mdash; 1 resource(s) remediated (GUID: <code>8ebda7c0-e0e1-ed45-af59-2d7ea9a1c05d</code>)</li>
+</ul>","High; Reliability; Data; Source:APRL","1","N9GFN-Test-Project","N9GFN-Test-Project\Backlog1"
+"Feature","","Networking","","","<h1>Networking (networking)</h1>
 <h2>Overview</h2>
-<p>Recommendations for <strong>microsoft.network/networksecuritygroups</strong> resources within the <strong>Networking</strong> domain.</p>
+<p>Recommendations for <strong>networking</strong> resources within the <strong>DemoInfra03</strong> domain.</p>
 <h2>Scope</h2>
 <ul>
 <li><strong>Recommendations:</strong> 2</li>
-<li><strong>Affected Resources:</strong> 11</li>
+<li><strong>Affected Resources:</strong> 8</li>
 <li><strong>Resource Groups:</strong> resiliancetestingworkload, rg-btr-demo</li>
 <li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Regions:</strong> uksouth</li>
@@ -1424,31 +247,31 @@
 <ul>
 <li><strong>Control:</strong> Monitoring And Alerting</li>
 <li><strong>Benefit:</strong> Enhanced monitoring and security insights</li>
-<li><strong>Affected Resources:</strong> 11</li>
+<li><strong>Affected Resources:</strong> 5</li>
 </ul>
 </li>
 <li><strong>Monitor changes in Network Security Groups with Azure Monitor</strong> [Low]
 <ul>
 <li><strong>Control:</strong> Monitoring And Alerting</li>
 <li><strong>Benefit:</strong> Enhanced security and change monitoring</li>
-<li><strong>Affected Resources:</strong> 11</li>
+<li><strong>Affected Resources:</strong> 5</li>
 </ul>
 </li>
 </ol>
-","<p>All recommendations for <strong>microsoft.network/networksecuritygroups</strong> are completed. Resources validated against APRL checks.</p>
+","<p>All recommendations for <strong>networking</strong> are completed. Resources validated against APRL checks.</p>
 <p><strong>Recommendations to complete:</strong></p>
 <ul>
-<li>Configure Diagnostic Settings for all network security groups [Medium] &mdash; 11 resource(s)</li>
-<li>Monitor changes in Network Security Groups with Azure Monitor [Low] &mdash; 11 resource(s)</li>
-</ul>","microsoft.network/networksecuritygroups; Networking","2","",""
-"User Story","","","Network Security Groups - Recommendations","","<h1>Network Security Groups - Recommendations</h1>
+<li>Configure Diagnostic Settings for all network security groups [Medium] &mdash; 5 resource(s)</li>
+<li>Monitor changes in Network Security Groups with Azure Monitor [Low] &mdash; 5 resource(s)</li>
+</ul>","networking; DemoInfra03","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog1"
+"User Story","","","Network Security Groups - Recommendations 2","","<h1>Network Security Groups - Recommendations 2</h1>
 <h2>Overview</h2>
-<p>Consolidated APRL recommendations for <strong>microsoft.network/networksecuritygroups</strong> resources.</p>
+<p>Consolidated APRL recommendations for <strong>networking</strong> resources.</p>
 <ul>
 <li><strong>Impact:</strong> Medium</li>
 <li><strong>WAF Pillars:</strong> Reliability</li>
 <li><strong>Recommendations:</strong> 2</li>
-<li><strong>Affected Resources:</strong> 11</li>
+<li><strong>Affected Resources:</strong> 8</li>
 <li><strong>Source:</strong> APRL</li>
 </ul>
 <h2>Recommendations</h2>
@@ -1461,20 +284,14 @@
 <li><strong>GUID:</strong> <code>d2976d3e-294b-4b49-a1f0-c42566a3758f</code></li>
 <li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/azure-monitor/essentials/diagnostic-settings"">https://learn.microsoft.com/azure/azure-monitor/essentials/diagnostic-settings</a></li>
 </ul>
-<p><strong>Affected Resources (11):</strong></p>
+<p><strong>Affected Resources (5):</strong></p>
 <table>
 <tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
 <tr><td>basicNsgvnet01-nic01</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
 <tr><td>server01-nsg</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>vnet01-snet-uksouth-1-nsg-uksouth</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>vnet01-snet-uksouth-2-nsg-uksouth</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>vnet01-subnet01-nsg-uksouth</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
 <tr><td>vnet01-subnet02-nsg-uksouth</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
 <tr><td>vnet-btr-demo-AzureBastionSubnet-nsg-uksouth</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>vnet-btr-demo-snet-app-nsg-uksouth</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>vnet-btr-demo-snet-db-nsg-uksouth</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
 <tr><td>vnet-btr-demo-snet-func-nsg-uksouth</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>vnet-btr-demo-snet-vm-nsg-uksouth</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
 </table>
 <h3>2. Monitor changes in Network Security Groups with Azure Monitor [Low]</h3>
 <p>Create Alerts with Azure Monitor for operations like creating or updating Network Security Group rules to catch unauthorized/undesired changes to resources and spot attempts to bypass firewalls or access resources from the outside.</p>
@@ -1485,572 +302,33 @@
 <li><strong>GUID:</strong> <code>8bb4a57b-55e4-d24e-9c19-2679d8bc779f</code></li>
 <li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/azure-monitor/essentials/activity-log?tabs=powershell"">https://learn.microsoft.com/azure/azure-monitor/essentials/activity-log?tabs=powershell</a></li>
 </ul>
-<p><strong>Affected Resources (11):</strong></p>
+<p><strong>Affected Resources (5):</strong></p>
 <table>
 <tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>basicNsgvnet01-nic01</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>server01-nsg</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>vnet01-snet-uksouth-1-nsg-uksouth</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
 <tr><td>vnet01-snet-uksouth-2-nsg-uksouth</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
 <tr><td>vnet01-subnet01-nsg-uksouth</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
 <tr><td>vnet01-subnet02-nsg-uksouth</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
 <tr><td>vnet-btr-demo-AzureBastionSubnet-nsg-uksouth</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>vnet-btr-demo-snet-app-nsg-uksouth</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
 <tr><td>vnet-btr-demo-snet-db-nsg-uksouth</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>vnet-btr-demo-snet-func-nsg-uksouth</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>vnet-btr-demo-snet-vm-nsg-uksouth</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
 </table>
 ","<ul>
 <li>All 2 recommendation(s) have been implemented</li>
-<li>All 11 affected resource(s) pass APRL compliance checks</li>
+<li>All 8 affected resource(s) pass APRL compliance checks</li>
 </ul>
 <p><strong>Per-recommendation verification:</strong></p>
 <ul>
-<li><strong>Configure Diagnostic Settings for all network security groups</strong> [Medium] &mdash; 11 resource(s) remediated (GUID: <code>d2976d3e-294b-4b49-a1f0-c42566a3758f</code>)</li>
-<li><strong>Monitor changes in Network Security Groups with Azure Monitor</strong> [Low] &mdash; 11 resource(s) remediated (GUID: <code>8bb4a57b-55e4-d24e-9c19-2679d8bc779f</code>)</li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
-"Feature","","Networkwatchers","","","<h1>Networkwatchers (microsoft.network/networkwatchers)</h1>
+<li><strong>Configure Diagnostic Settings for all network security groups</strong> [Medium] &mdash; 5 resource(s) remediated (GUID: <code>d2976d3e-294b-4b49-a1f0-c42566a3758f</code>)</li>
+<li><strong>Monitor changes in Network Security Groups with Azure Monitor</strong> [Low] &mdash; 5 resource(s) remediated (GUID: <code>8bb4a57b-55e4-d24e-9c19-2679d8bc779f</code>)</li>
+</ul>","Medium; Reliability; Networking; Source:APRL","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog1"
+"Feature","","Platform","","","<h1>Platform (platform)</h1>
 <h2>Overview</h2>
-<p>Recommendations for <strong>microsoft.network/networkwatchers</strong> resources within the <strong>Networking</strong> domain.</p>
-<h2>Scope</h2>
-<ul>
-<li><strong>Recommendations:</strong> 2</li>
-<li><strong>Affected Resources:</strong> 2</li>
-<li><strong>Resource Groups:</strong> networkwatcherrg</li>
-<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-<li><strong>Regions:</strong> northeurope, uksouth</li>
-</ul>
-<h2>Impact Breakdown</h2>
-<ul>
-<li><strong>Medium:</strong> 1</li>
-<li><strong>Low:</strong> 1</li>
-</ul>
-<h2>Recommendations</h2>
-<ol>
-<li><strong>Configure Network Watcher Connection monitor</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Improves monitoring for Azure and Hybrid connectivity</li>
-<li><strong>Affected Resources:</strong> 2</li>
-</ul>
-</li>
-<li><strong>Deploy Network Watcher in all regions where you have networking services</strong> [Low]
-<ul>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Enhanced monitoring and diagnostics for Azure IaaS</li>
-<li><strong>Affected Resources:</strong> 2</li>
-</ul>
-</li>
-</ol>
-","<p>All recommendations for <strong>microsoft.network/networkwatchers</strong> are completed. Resources validated against APRL checks.</p>
-<p><strong>Recommendations to complete:</strong></p>
-<ul>
-<li>Configure Network Watcher Connection monitor [Medium] &mdash; 2 resource(s)</li>
-<li>Deploy Network Watcher in all regions where you have networking services [Low] &mdash; 2 resource(s)</li>
-</ul>","microsoft.network/networkwatchers; Networking","2","",""
-"User Story","","","Networkwatchers - Recommendations","","<h1>Networkwatchers - Recommendations</h1>
-<h2>Overview</h2>
-<p>Consolidated APRL recommendations for <strong>microsoft.network/networkwatchers</strong> resources.</p>
-<ul>
-<li><strong>Impact:</strong> Medium</li>
-<li><strong>WAF Pillars:</strong> Reliability</li>
-<li><strong>Recommendations:</strong> 2</li>
-<li><strong>Affected Resources:</strong> 2</li>
-<li><strong>Source:</strong> APRL</li>
-</ul>
-<h2>Recommendations</h2>
-<h3>1. Configure Network Watcher Connection monitor [Medium]</h3>
-<p>Improves monitoring for Azure and Hybrid connectivity</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Improves monitoring for Azure and Hybrid connectivity</li>
-<li><strong>GUID:</strong> <code>1e28bbc1-1eb7-486f-8d7f-93943f40219c</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/network-watcher/connection-monitor-overview"">https://learn.microsoft.com/azure/network-watcher/connection-monitor-overview</a></li>
-</ul>
-<p><strong>Affected Resources (2):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>NetworkWatcher_northeurope</td><td>networkwatcherrg</td><td>northeurope</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>NetworkWatcher_uksouth</td><td>networkwatcherrg</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>2. Deploy Network Watcher in all regions where you have networking services [Low]</h3>
-<p>Azure Network Watcher offers tools for monitoring, diagnosing, viewing metrics, and managing logs for IaaS resources. It helps maintain the health of VMs, VNets, application gateways, load balancers, but not for PaaS or Web analytics.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Enhanced monitoring and diagnostics for Azure IaaS</li>
-<li><strong>GUID:</strong> <code>4e133bd0-8762-bc40-a95b-b29142427d73</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/network-watcher/network-watcher-overview"">https://learn.microsoft.com/azure/network-watcher/network-watcher-overview</a></li>
-</ul>
-<p><strong>Affected Resources (2):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>NetworkWatcher_northeurope</td><td>networkwatcherrg</td><td>northeurope</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>NetworkWatcher_uksouth</td><td>networkwatcherrg</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-","<ul>
-<li>All 2 recommendation(s) have been implemented</li>
-<li>All 2 affected resource(s) pass APRL compliance checks</li>
-</ul>
-<p><strong>Per-recommendation verification:</strong></p>
-<ul>
-<li><strong>Configure Network Watcher Connection monitor</strong> [Medium] &mdash; 2 resource(s) remediated (GUID: <code>1e28bbc1-1eb7-486f-8d7f-93943f40219c</code>)</li>
-<li><strong>Deploy Network Watcher in all regions where you have networking services</strong> [Low] &mdash; 2 resource(s) remediated (GUID: <code>4e133bd0-8762-bc40-a95b-b29142427d73</code>)</li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
-"Feature","","Virtual Networks","","","<h1>Virtual Networks (microsoft.network/virtualnetworks)</h1>
-<h2>Overview</h2>
-<p>Recommendations for <strong>microsoft.network/virtualnetworks</strong> resources within the <strong>Networking</strong> domain.</p>
-<h2>Scope</h2>
-<ul>
-<li><strong>Recommendations:</strong> 2</li>
-<li><strong>Affected Resources:</strong> 2</li>
-<li><strong>Resource Groups:</strong> resiliancetestingworkload, rg-btr-demo</li>
-<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-<li><strong>Regions:</strong> uksouth</li>
-</ul>
-<h2>Impact Breakdown</h2>
-<ul>
-<li><strong>Medium:</strong> 2</li>
-</ul>
-<h2>Recommendations</h2>
-<ol>
-<li><strong>Enable Virtual Network Flow Logs</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Improves monitoring and security for Azure connectivity</li>
-<li><strong>Affected Resources:</strong> 2</li>
-</ul>
-</li>
-<li><strong>Use NAT gateway for outbound connectivity</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> </li>
-<li><strong>Affected Resources:</strong> 2</li>
-</ul>
-</li>
-</ol>
-","<p>All recommendations for <strong>microsoft.network/virtualnetworks</strong> are completed. Resources validated against APRL checks.</p>
-<p><strong>Recommendations to complete:</strong></p>
-<ul>
-<li>Enable Virtual Network Flow Logs [Medium] &mdash; 2 resource(s)</li>
-<li>Use NAT gateway for outbound connectivity [Medium] &mdash; 2 resource(s)</li>
-</ul>","microsoft.network/virtualnetworks; Networking","2","",""
-"User Story","","","Virtual Networks - Recommendations","","<h1>Virtual Networks - Recommendations</h1>
-<h2>Overview</h2>
-<p>Consolidated APRL recommendations for <strong>microsoft.network/virtualnetworks</strong> resources.</p>
-<ul>
-<li><strong>Impact:</strong> Medium</li>
-<li><strong>WAF Pillars:</strong> Reliability</li>
-<li><strong>Recommendations:</strong> 2</li>
-<li><strong>Affected Resources:</strong> 2</li>
-<li><strong>Source:</strong> APRL & Advisor</li>
-</ul>
-<h2>Recommendations</h2>
-<h3>1. Enable Virtual Network Flow Logs [Medium]</h3>
-<p>Improves monitoring and security for Azure and Hybrid connectivity</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Improves monitoring and security for Azure connectivity</li>
-<li><strong>GUID:</strong> <code>06b77be9-56a3-4d41-b362-8b295c5a283d</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/network-watcher/vnet-flow-logs-overview"">https://learn.microsoft.com/azure/network-watcher/vnet-flow-logs-overview</a></li>
-</ul>
-<p><strong>Affected Resources (2):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>vnet01</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>vnet-btr-demo</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>2. Use NAT gateway for outbound connectivity [Medium]</h3>
-<p>No detailed description available.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> N/A</li>
-<li><strong>GUID:</strong> <code>56f0c458-521d-4b8b-a704-c0a099483d19</code></li>
-</ul>
-<p><strong>Affected Resources (2):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>vnet01</td><td>resiliancetestingworkload</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>vnet-btr-demo</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-","<ul>
-<li>All 2 recommendation(s) have been implemented</li>
-<li>All 2 affected resource(s) pass APRL compliance checks</li>
-</ul>
-<p><strong>Per-recommendation verification:</strong></p>
-<ul>
-<li><strong>Enable Virtual Network Flow Logs</strong> [Medium] &mdash; 2 resource(s) remediated (GUID: <code>06b77be9-56a3-4d41-b362-8b295c5a283d</code>)</li>
-<li><strong>Use NAT gateway for outbound connectivity</strong> [Medium] &mdash; 2 resource(s) remediated (GUID: <code>56f0c458-521d-4b8b-a704-c0a099483d19</code>)</li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL & Advisor","2","",""
-"Epic","Observability","","","","<h1>Observability</h1>
-<h2>Overview</h2>
-<p>Monitoring, logging, and diagnostics resources</p>
-<p><strong>WAF Pillars:</strong> Reliability</p>
-<h2>Scope</h2>
-<ul>
-<li><strong>Total Features:</strong> 2</li>
-<li><strong>Total Recommendations:</strong> 2</li>
-<li><strong>Total Affected Resources:</strong> 6</li>
-<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-</ul>
-<h2>Impact Summary</h2>
-<ul>
-<li><strong>Medium:</strong> 2 recommendation(s)</li>
-<li><strong>Low:</strong> 1 recommendation(s)</li>
-</ul>
-<h2>Features</h2>
-<ul>
-<li><strong>Workspaces</strong> (microsoft.operationalinsights/workspaces) &mdash; 4 resource(s), 1 recommendation(s)</li>
-<li><strong>Components</strong> (microsoft.insights/components) &mdash; 2 resource(s), 1 recommendation(s)</li>
-</ul>
-","<p>All Features within this Epic are completed and verified.</p>
-<p><strong>Features to complete:</strong></p>
-<ul>
-<li>Workspaces (microsoft.operationalinsights/workspaces) &mdash; 2 recommendation(s), 4 resource(s)</li>
-<li>Components (microsoft.insights/components) &mdash; 1 recommendation(s), 2 resource(s)</li>
-</ul>","Reliability; Observability","2","",""
-"Feature","","Workspaces","","","<h1>Workspaces (microsoft.operationalinsights/workspaces)</h1>
-<h2>Overview</h2>
-<p>Recommendations for <strong>microsoft.operationalinsights/workspaces</strong> resources within the <strong>Observability</strong> domain.</p>
-<h2>Scope</h2>
-<ul>
-<li><strong>Recommendations:</strong> 2</li>
-<li><strong>Affected Resources:</strong> 4</li>
-<li><strong>Resource Groups:</strong> defaultresourcegroup-suk, defaultresourcegroup-weu, resiliancetestingworkload, rg-m2c-demo</li>
-<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-<li><strong>Regions:</strong> eastus, swedencentral, uksouth, westeurope</li>
-</ul>
-<h2>Impact Breakdown</h2>
-<ul>
-<li><strong>Medium:</strong> 1</li>
-<li><strong>Low:</strong> 1</li>
-</ul>
-<h2>Recommendations</h2>
-<ol>
-<li><strong>Enable Log Analytics data export to GRS or GZRS</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> Other Best Practices</li>
-<li><strong>Benefit:</strong> Enhances compliance and regional fault tolerance</li>
-<li><strong>Affected Resources:</strong> 4</li>
-</ul>
-</li>
-<li><strong>Create a health status alert rule for your Log Analytics workspace</strong> [Low]
-<ul>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Early alert for workspace failure</li>
-<li><strong>Affected Resources:</strong> 4</li>
-</ul>
-</li>
-</ol>
-","<p>All recommendations for <strong>microsoft.operationalinsights/workspaces</strong> are completed. Resources validated against APRL checks.</p>
-<p><strong>Recommendations to complete:</strong></p>
-<ul>
-<li>Enable Log Analytics data export to GRS or GZRS [Medium] &mdash; 4 resource(s)</li>
-<li>Create a health status alert rule for your Log Analytics workspace [Low] &mdash; 4 resource(s)</li>
-</ul>","microsoft.operationalinsights/workspaces; Observability","2","",""
-"User Story","","","Workspaces - Recommendations","","<h1>Workspaces - Recommendations</h1>
-<h2>Overview</h2>
-<p>Consolidated APRL recommendations for <strong>microsoft.operationalinsights/workspaces</strong> resources.</p>
-<ul>
-<li><strong>Impact:</strong> Medium</li>
-<li><strong>WAF Pillars:</strong> Reliability</li>
-<li><strong>Recommendations:</strong> 2</li>
-<li><strong>Affected Resources:</strong> 4</li>
-<li><strong>Source:</strong> APRL</li>
-</ul>
-<h2>Recommendations</h2>
-<h3>1. Enable Log Analytics data export to GRS or GZRS [Medium]</h3>
-<p>Data export in a Log Analytics workspace to an Azure Storage account enhances data protection against regional failures by using geo-redundant (GRS) or geo-zone-redundant storage (GZRS), mainly for compliance and integration with other Azure services and tools.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Other Best Practices</li>
-<li><strong>Benefit:</strong> Enhances compliance and regional fault tolerance</li>
-<li><strong>GUID:</strong> <code>b36fd2ac-dd83-664a-ab48-ff7b8d3b189d</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/azure-monitor/logs/logs-data-export"">https://learn.microsoft.com/azure/azure-monitor/logs/logs-data-export</a></li>
-</ul>
-<p><strong>Affected Resources (4):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>DefaultWorkspace-a4aef89a-cd11-438f-b30a-58e84134ade1-SUK</td><td>defaultresourcegroup-suk</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>DefaultWorkspace-a4aef89a-cd11-438f-b30a-58e84134ade1-WEU</td><td>defaultresourcegroup-weu</td><td>westeurope</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>workspacetx2r6ifsscane</td><td>resiliancetestingworkload</td><td>swedencentral</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>m2c-law-4sac2i6ziq5kc</td><td>rg-m2c-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>2. Create a health status alert rule for your Log Analytics workspace [Low]</h3>
-<p>A health status alert will proactively notify you if a workspace becomes unavailable because of a datacenter or regional failure.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Early alert for workspace failure</li>
-<li><strong>GUID:</strong> <code>4b77191c-cc3c-8c4e-844b-0f56d0927890</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/azure-monitor/logs/log-analytics-workspace-health"">https://learn.microsoft.com/azure/azure-monitor/logs/log-analytics-workspace-health</a></li>
-</ul>
-<p><strong>Affected Resources (4):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>DefaultWorkspace-a4aef89a-cd11-438f-b30a-58e84134ade1-SUK</td><td>defaultresourcegroup-suk</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>DefaultWorkspace-a4aef89a-cd11-438f-b30a-58e84134ade1-WEU</td><td>defaultresourcegroup-weu</td><td>westeurope</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>workspacetx2r6ifsscane</td><td>resiliancetestingworkload</td><td>swedencentral</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>m2c-law-4sac2i6ziq5kc</td><td>rg-m2c-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-","<ul>
-<li>All 2 recommendation(s) have been implemented</li>
-<li>All 4 affected resource(s) pass APRL compliance checks</li>
-</ul>
-<p><strong>Per-recommendation verification:</strong></p>
-<ul>
-<li><strong>Enable Log Analytics data export to GRS or GZRS</strong> [Medium] &mdash; 4 resource(s) remediated (GUID: <code>b36fd2ac-dd83-664a-ab48-ff7b8d3b189d</code>)</li>
-<li><strong>Create a health status alert rule for your Log Analytics workspace</strong> [Low] &mdash; 4 resource(s) remediated (GUID: <code>4b77191c-cc3c-8c4e-844b-0f56d0927890</code>)</li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
-"Feature","","Components","","","<h1>Components (microsoft.insights/components)</h1>
-<h2>Overview</h2>
-<p>Recommendations for <strong>microsoft.insights/components</strong> resources within the <strong>Observability</strong> domain.</p>
-<h2>Scope</h2>
-<ul>
-<li><strong>Recommendations:</strong> 1</li>
-<li><strong>Affected Resources:</strong> 2</li>
-<li><strong>Resource Groups:</strong> resiliancetestingworkload, rg-m2c-demo</li>
-<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-<li><strong>Regions:</strong> eastus, swedencentral</li>
-</ul>
-<h2>Impact Breakdown</h2>
-<ul>
-<li><strong>Medium:</strong> 1</li>
-</ul>
-<h2>Recommendations</h2>
-<ol>
-<li><strong>Migrate from Application Insights instrumentation keys to connection strings</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> Service Upgrade And Retirement</li>
-<li><strong>Benefit:</strong> Reliable telemetry ingestion</li>
-<li><strong>Affected Resources:</strong> 2</li>
-</ul>
-</li>
-</ol>
-","<p>All recommendations for <strong>microsoft.insights/components</strong> are completed. Resources validated against APRL checks.</p>
-<p><strong>Recommendations to complete:</strong></p>
-<ul>
-<li>Migrate from Application Insights instrumentation keys to connection strings [Medium] &mdash; 2 resource(s)</li>
-</ul>","microsoft.insights/components; Observability","2","",""
-"User Story","","","Components - Recommendations","","<h1>Components - Recommendations</h1>
-<h2>Overview</h2>
-<p>Consolidated APRL recommendations for <strong>microsoft.insights/components</strong> resources.</p>
-<ul>
-<li><strong>Impact:</strong> Medium</li>
-<li><strong>WAF Pillars:</strong> Reliability</li>
-<li><strong>Recommendations:</strong> 1</li>
-<li><strong>Affected Resources:</strong> 2</li>
-<li><strong>Source:</strong> APRL</li>
-</ul>
-<h2>Recommendations</h2>
-<h3>1. Migrate from Application Insights instrumentation keys to connection strings [Medium]</h3>
-<p>Application Insights is changing from global ingestion endpoints to regional endpoints that use connection strings. Connection strings make telemetry ingestion more reliable by removing dependencies on global ingestion endpoints. Transition to connection string-based ingestion before 31 March 2025.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Service Upgrade And Retirement</li>
-<li><strong>Benefit:</strong> Reliable telemetry ingestion</li>
-<li><strong>GUID:</strong> <code>092f5c85-bffb-48b0-b85d-d543c6b54800</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/azure-monitor/app/migrate-from-instrumentation-keys-to-connection-strings"">https://learn.microsoft.com/azure/azure-monitor/app/migrate-from-instrumentation-keys-to-connection-strings</a></li>
-</ul>
-<p><strong>Affected Resources (2):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>sretest-dc5186d9-9bfc-app-insights</td><td>resiliancetestingworkload</td><td>swedencentral</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-<tr><td>m2c-appi</td><td>rg-m2c-demo</td><td>eastus</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-","<ul>
-<li>All 1 recommendation(s) have been implemented</li>
-<li>All 2 affected resource(s) pass APRL compliance checks</li>
-</ul>
-<p><strong>Per-recommendation verification:</strong></p>
-<ul>
-<li><strong>Migrate from Application Insights instrumentation keys to connection strings</strong> [Medium] &mdash; 2 resource(s) remediated (GUID: <code>092f5c85-bffb-48b0-b85d-d543c6b54800</code>)</li>
-</ul>","Medium; Reliability; Azure Service; Source:APRL","2","",""
-"Epic","Platform","","","","<h1>Platform</h1>
-<h2>Overview</h2>
-<p>Core platform services — identity, secrets, governance</p>
-<p><strong>WAF Pillars:</strong> Reliability</p>
-<h2>Scope</h2>
-<ul>
-<li><strong>Total Features:</strong> 3</li>
-<li><strong>Total Recommendations:</strong> 3</li>
-<li><strong>Total Affected Resources:</strong> 5</li>
-<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-</ul>
-<h2>Impact Summary</h2>
-<ul>
-<li><strong>High:</strong> 1 recommendation(s)</li>
-<li><strong>Medium:</strong> 14 recommendation(s)</li>
-<li><strong>Low:</strong> 1 recommendation(s)</li>
-</ul>
-<h2>Features</h2>
-<ul>
-<li><strong>Systemtopics</strong> (microsoft.eventgrid/systemtopics) &mdash; 3 resource(s), 1 recommendation(s)</li>
-<li><strong>Vaults</strong> (microsoft.keyvault/vaults) &mdash; 2 resource(s), 1 recommendation(s)</li>
-<li><strong>Subscriptions</strong> (microsoft.subscription/subscriptions) &mdash; 0 resource(s), 1 recommendation(s)</li>
-</ul>
-","<p>All Features within this Epic are completed and verified.</p>
-<p><strong>Features to complete:</strong></p>
-<ul>
-<li>Systemtopics (microsoft.eventgrid/systemtopics) &mdash; 0 recommendation(s), 3 resource(s)</li>
-<li>Vaults (microsoft.keyvault/vaults) &mdash; 3 recommendation(s), 2 resource(s)</li>
-<li>Subscriptions (microsoft.subscription/subscriptions) &mdash; 13 recommendation(s), 0 resource(s)</li>
-</ul>","Reliability; Platform","2","",""
-"Feature","","Systemtopics","","","<h1>Systemtopics (microsoft.eventgrid/systemtopics)</h1>
-<h2>Overview</h2>
-<p>Recommendations for <strong>microsoft.eventgrid/systemtopics</strong> resources within the <strong>Platform</strong> domain.</p>
-<h2>Scope</h2>
-<ul>
-<li><strong>Recommendations:</strong> 0</li>
-<li><strong>Affected Resources:</strong> 3</li>
-<li><strong>Resource Groups:</strong> mcapsgovernance, rg-btr-demo, rg-btr-tfstate</li>
-<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-<li><strong>Regions:</strong> N/A</li>
-</ul>
-<h2>Impact Breakdown</h2>
-<ul>
-</ul>
-<h2>Recommendations</h2>
-<ol>
-</ol>
-","<p>All recommendations for <strong>microsoft.eventgrid/systemtopics</strong> are completed. Resources validated against APRL checks.</p>","microsoft.eventgrid/systemtopics; Platform","3","",""
-"User Story","","","Systemtopics - Recommendations","","<h1>Systemtopics - Recommendations</h1>
-<h2>Overview</h2>
-<p>Consolidated APRL recommendations for <strong>microsoft.eventgrid/systemtopics</strong> resources.</p>
-<ul>
-<li><strong>Impact:</strong> Low</li>
-<li><strong>WAF Pillars:</strong> N/A</li>
-<li><strong>Recommendations:</strong> 0</li>
-<li><strong>Affected Resources:</strong> 3</li>
-<li><strong>Source:</strong> APRL</li>
-</ul>
-<h2>Recommendations</h2>
-","<ul>
-<li>All 0 recommendation(s) have been implemented</li>
-<li>All 3 affected resource(s) pass APRL compliance checks</li>
-</ul>","Low; Source:APRL","3","",""
-"Feature","","Vaults","","","<h1>Vaults (microsoft.keyvault/vaults)</h1>
-<h2>Overview</h2>
-<p>Recommendations for <strong>microsoft.keyvault/vaults</strong> resources within the <strong>Platform</strong> domain.</p>
-<h2>Scope</h2>
-<ul>
-<li><strong>Recommendations:</strong> 3</li>
-<li><strong>Affected Resources:</strong> 2</li>
-<li><strong>Resource Groups:</strong> rg-btr-demo</li>
-<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-<li><strong>Regions:</strong> uksouth</li>
-</ul>
-<h2>Impact Breakdown</h2>
-<ul>
-<li><strong>High:</strong> 1</li>
-<li><strong>Medium:</strong> 1</li>
-<li><strong>Low:</strong> 1</li>
-</ul>
-<h2>Recommendations</h2>
-<ol>
-<li><strong>Azure Key Vault API versions prior to 2026-02-01 are being retired</strong> [High]
-<ul>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> </li>
-<li><strong>Affected Resources:</strong> 1</li>
-</ul>
-</li>
-<li><strong>Key vaults should have purge protection enabled</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> Disaster Recovery</li>
-<li><strong>Benefit:</strong> Protects from insider attacks, avoids data loss</li>
-<li><strong>Affected Resources:</strong> 1</li>
-</ul>
-</li>
-<li><strong>Diagnostic logs in Key Vault should be enabled</strong> [Low]
-<ul>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Enhanced monitoring and security compliance</li>
-<li><strong>Affected Resources:</strong> 1</li>
-</ul>
-</li>
-</ol>
-","<p>All recommendations for <strong>microsoft.keyvault/vaults</strong> are completed. Resources validated against APRL checks.</p>
-<p><strong>Recommendations to complete:</strong></p>
-<ul>
-<li>Azure Key Vault API versions prior to 2026-02-01 are being retired [High] &mdash; 1 resource(s)</li>
-<li>Key vaults should have purge protection enabled [Medium] &mdash; 1 resource(s)</li>
-<li>Diagnostic logs in Key Vault should be enabled [Low] &mdash; 1 resource(s)</li>
-</ul>","microsoft.keyvault/vaults; Platform","1","",""
-"User Story","","","Vaults - Recommendations","","<h1>Vaults - Recommendations</h1>
-<h2>Overview</h2>
-<p>Consolidated APRL recommendations for <strong>microsoft.keyvault/vaults</strong> resources.</p>
-<ul>
-<li><strong>Impact:</strong> High</li>
-<li><strong>WAF Pillars:</strong> Reliability</li>
-<li><strong>Recommendations:</strong> 3</li>
-<li><strong>Affected Resources:</strong> 2</li>
-<li><strong>Source:</strong> APRL & Advisor</li>
-</ul>
-<h2>Recommendations</h2>
-<h3>1. Azure Key Vault API versions prior to 2026-02-01 are being retired [High]</h3>
-<p>No detailed description available.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> N/A</li>
-<li><strong>GUID:</strong> <code>7ff06874-39e9-41be-9552-fa1ae2a83c88</code></li>
-</ul>
-<p><strong>Affected Resources (1):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>kv-btr-demo-jfh3g0</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>2. Key vaults should have purge protection enabled [Medium]</h3>
-<p>Purge protection secures against malicious deletions by enforcing a retention period for soft deleted key vaults, ensuring no one, not even insiders or Microsoft, can purge your key vaults during this period, preventing permanent data loss.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Disaster Recovery</li>
-<li><strong>Benefit:</strong> Protects from insider attacks, avoids data loss</li>
-<li><strong>GUID:</strong> <code>70fcfe6d-00e9-5544-a63a-fff42b9f2edb</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/key-vault/general/soft-delete-overview#purge-protection"">https://learn.microsoft.com/azure/key-vault/general/soft-delete-overview#purge-protection</a></li>
-</ul>
-<p><strong>Affected Resources (1):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>kv-btr-demo-jfh3g0</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>3. Diagnostic logs in Key Vault should be enabled [Low]</h3>
-<p>Enable logs, set up alerts, and adhere to retention requirements for improved monitoring and security of Key Vault access, detailing the frequency and identity of users.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Enhanced monitoring and security compliance</li>
-<li><strong>GUID:</strong> <code>1dc0821d-4f14-7644-bab4-ba208ff5f7fa</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/key-vault/general/logging?tabs=Vault"">https://learn.microsoft.com/azure/key-vault/general/logging?tabs=Vault</a></li>
-</ul>
-<p><strong>Affected Resources (1):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>kv-btr-demo-jfh3g0</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-","<ul>
-<li>All 3 recommendation(s) have been implemented</li>
-<li>All 2 affected resource(s) pass APRL compliance checks</li>
-</ul>
-<p><strong>Per-recommendation verification:</strong></p>
-<ul>
-<li><strong>Azure Key Vault API versions prior to 2026-02-01 are being retired</strong> [High] &mdash; 1 resource(s) remediated (GUID: <code>7ff06874-39e9-41be-9552-fa1ae2a83c88</code>)</li>
-<li><strong>Key vaults should have purge protection enabled</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>70fcfe6d-00e9-5544-a63a-fff42b9f2edb</code>)</li>
-<li><strong>Diagnostic logs in Key Vault should be enabled</strong> [Low] &mdash; 1 resource(s) remediated (GUID: <code>1dc0821d-4f14-7644-bab4-ba208ff5f7fa</code>)</li>
-</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","",""
-"Feature","","Subscriptions","","","<h1>Subscriptions (microsoft.subscription/subscriptions)</h1>
-<h2>Overview</h2>
-<p>Recommendations for <strong>microsoft.subscription/subscriptions</strong> resources within the <strong>Platform</strong> domain.</p>
+<p>Recommendations for <strong>platform</strong> resources within the <strong>DemoInfra03</strong> domain.</p>
 <h2>Scope</h2>
 <ul>
 <li><strong>Recommendations:</strong> 13</li>
-<li><strong>Affected Resources:</strong> 0</li>
-<li><strong>Resource Groups:</strong> N/A</li>
-<li><strong>Subscriptions:</strong> N/A</li>
+<li><strong>Affected Resources:</strong> 3</li>
+<li><strong>Resource Groups:</strong> mcapsgovernance, rg-btr-demo, rg-btr-tfstate</li>
+<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
 <li><strong>Regions:</strong> </li>
 </ul>
 <h2>Impact Breakdown</h2>
@@ -2151,7 +429,7 @@
 </ul>
 </li>
 </ol>
-","<p>All recommendations for <strong>microsoft.subscription/subscriptions</strong> are completed. Resources validated against APRL checks.</p>
+","<p>All recommendations for <strong>platform</strong> are completed. Resources validated against APRL checks.</p>
 <p><strong>Recommendations to complete:</strong></p>
 <ul>
 <li>RE:01 Design your workload to align with business objectives [Medium] &mdash; 1 resource(s)</li>
@@ -2167,10 +445,10 @@
 <li>RE:08 Design a reliability testing strategy [Medium] &mdash; 1 resource(s)</li>
 <li>RE:09 Implement business continuity and disaster recovery plan [Medium] &mdash; 1 resource(s)</li>
 <li>RE:10 Design a reliable monitoring and alerting strategy [Medium] &mdash; 1 resource(s)</li>
-</ul>","microsoft.subscription/subscriptions; Platform","2","",""
-"User Story","","","Subscriptions - Recommendations","","<h1>Subscriptions - Recommendations</h1>
+</ul>","platform; DemoInfra03","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog1"
+"User Story","","","Subscriptions - Recommendations 2","","<h1>Subscriptions - Recommendations 2</h1>
 <h2>Overview</h2>
-<p>Consolidated APRL recommendations for <strong>microsoft.subscription/subscriptions</strong> resources.</p>
+<p>Consolidated APRL recommendations for <strong>platform</strong> resources.</p>
 <ul>
 <li><strong>Impact:</strong> Medium</li>
 <li><strong>WAF Pillars:</strong> N/A</li>
@@ -2380,183 +658,19 @@
 <li><strong>RE:08 Design a reliability testing strategy</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>7db74a6a-4062-46a8-a0cd-18684fb0ec08</code>)</li>
 <li><strong>RE:09 Implement business continuity and disaster recovery plan</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>5f95df03-cae2-4761-90b7-7afd657ac124</code>)</li>
 <li><strong>RE:10 Design a reliable monitoring and alerting strategy</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>90adebf7-bc90-4939-9aa8-119c46bee0fc</code>)</li>
-</ul>","Medium; Well Architected; Source:APRL","2","",""
-"Epic","Uncategorised","","","","<h1>Uncategorised</h1>
+</ul>","Medium; Platform; Source:APRL","2","N9GFN-Test-Project","N9GFN-Test-Project\Backlog1"
+"User Story","","","Systemtopics - Recommendations 2","","<h1>Systemtopics - Recommendations 2</h1>
 <h2>Overview</h2>
-<p>Azure Excellence recommendations for the Uncategorised domain.</p>
-<p><strong>WAF Pillars:</strong> Reliability</p>
-<h2>Scope</h2>
+<p>Consolidated APRL recommendations for <strong>platform</strong> resources.</p>
 <ul>
-<li><strong>Total Features:</strong> 1</li>
-<li><strong>Total Recommendations:</strong> 1</li>
-<li><strong>Total Affected Resources:</strong> 2</li>
-<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-</ul>
-<h2>Impact Summary</h2>
-<ul>
-<li><strong>High:</strong> 2 recommendation(s)</li>
-<li><strong>Medium:</strong> 3 recommendation(s)</li>
-</ul>
-<h2>Features</h2>
-<ul>
-<li><strong>Vaults</strong> (microsoft.recoveryservices/vaults) &mdash; 2 resource(s), 1 recommendation(s)</li>
-</ul>
-","<p>All Features within this Epic are completed and verified.</p>
-<p><strong>Features to complete:</strong></p>
-<ul>
-<li>Vaults (microsoft.recoveryservices/vaults) &mdash; 5 recommendation(s), 2 resource(s)</li>
-</ul>","Reliability; Uncategorised","2","",""
-"Feature","","Vaults","","","<h1>Vaults (microsoft.recoveryservices/vaults)</h1>
-<h2>Overview</h2>
-<p>Recommendations for <strong>microsoft.recoveryservices/vaults</strong> resources within the <strong>Uncategorised</strong> domain.</p>
-<h2>Scope</h2>
-<ul>
-<li><strong>Recommendations:</strong> 5</li>
-<li><strong>Affected Resources:</strong> 2</li>
-<li><strong>Resource Groups:</strong> rg-btr-demo</li>
-<li><strong>Subscriptions:</strong> a4aef89a-cd11-438f-b30a-58e84134ade1</li>
-<li><strong>Regions:</strong> global, uksouth</li>
-</ul>
-<h2>Impact Breakdown</h2>
-<ul>
-<li><strong>High:</strong> 2</li>
-<li><strong>Medium:</strong> 3</li>
+<li><strong>Impact:</strong> Low</li>
+<li><strong>WAF Pillars:</strong> N/A</li>
+<li><strong>Recommendations:</strong> 0</li>
+<li><strong>Affected Resources:</strong> 3</li>
+<li><strong>Source:</strong> APRL</li>
 </ul>
 <h2>Recommendations</h2>
-<ol>
-<li><strong>Enable Zone Redundant Storage (ZRS) for vault storage to protect backups from zone failures</strong> [High]
-<ul>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> </li>
-<li><strong>Affected Resources:</strong> 1</li>
-</ul>
-</li>
-<li><strong>Ensure static IP addresses in Site Recovery VM failover settings are available in failover subnet</strong> [High]
-<ul>
-<li><strong>Control:</strong> Disaster Recovery</li>
-<li><strong>Benefit:</strong> Smooth failover IP management</li>
-<li><strong>Affected Resources:</strong> 1</li>
-</ul>
-</li>
-<li><strong>Enable Soft Delete for Recovery Services Vaults in Azure Backup</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> Disaster Recovery</li>
-<li><strong>Benefit:</strong> Enhances disaster recovery capabilities</li>
-<li><strong>Affected Resources:</strong> 1</li>
-</ul>
-</li>
-<li><strong>Enable soft delete for your Recovery Services vaults</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> </li>
-<li><strong>Affected Resources:</strong> 1</li>
-</ul>
-</li>
-<li><strong>Migrate from classic alerts to built-in Azure Monitor alerts for Azure Recovery Services Vaults</strong> [Medium]
-<ul>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Enhanced, scalable, and consistent alerting.</li>
-<li><strong>Affected Resources:</strong> 1</li>
-</ul>
-</li>
-</ol>
-","<p>All recommendations for <strong>microsoft.recoveryservices/vaults</strong> are completed. Resources validated against APRL checks.</p>
-<p><strong>Recommendations to complete:</strong></p>
-<ul>
-<li>Enable Zone Redundant Storage (ZRS) for vault storage to protect backups from zone failures [High] &mdash; 1 resource(s)</li>
-<li>Ensure static IP addresses in Site Recovery VM failover settings are available in failover subnet [High] &mdash; 1 resource(s)</li>
-<li>Enable Soft Delete for Recovery Services Vaults in Azure Backup [Medium] &mdash; 1 resource(s)</li>
-<li>Enable soft delete for your Recovery Services vaults [Medium] &mdash; 1 resource(s)</li>
-<li>Migrate from classic alerts to built-in Azure Monitor alerts for Azure Recovery Services Vaults [Medium] &mdash; 1 resource(s)</li>
-</ul>","microsoft.recoveryservices/vaults; Uncategorised","1","",""
-"User Story","","","Vaults - Recommendations","","<h1>Vaults - Recommendations</h1>
-<h2>Overview</h2>
-<p>Consolidated APRL recommendations for <strong>microsoft.recoveryservices/vaults</strong> resources.</p>
-<ul>
-<li><strong>Impact:</strong> High</li>
-<li><strong>WAF Pillars:</strong> Reliability</li>
-<li><strong>Recommendations:</strong> 5</li>
-<li><strong>Affected Resources:</strong> 2</li>
-<li><strong>Source:</strong> APRL & Advisor</li>
-</ul>
-<h2>Recommendations</h2>
-<h3>1. Enable Zone Redundant Storage (ZRS) for vault storage to protect backups from zone failures [High]</h3>
-<p>No detailed description available.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> N/A</li>
-<li><strong>GUID:</strong> <code>21ac578c-0fb9-42eb-9c58-69716f87e7fb</code></li>
-</ul>
-<p><strong>Affected Resources (1):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>rsv-btr-demo</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>2. Ensure static IP addresses in Site Recovery VM failover settings are available in failover subnet [High]</h3>
-<p>Ensure VM failover settings' static IP addresses are available in the failover subnet to maintain consistent IP assignment during failover, with the target VM receiving the same static IP if it's available or the next available IP otherwise. IP adjustments can be made in VM Network settings.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Disaster Recovery</li>
-<li><strong>Benefit:</strong> Smooth failover IP management</li>
-<li><strong>GUID:</strong> <code>e93bb813-b356-48f3-9bdf-a06a0a6ba039</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/site-recovery/azure-to-azure-network-mapping#set-up-ip-addressing-for-target-vms"">https://learn.microsoft.com/azure/site-recovery/azure-to-azure-network-mapping#set-up-ip-addressing-for-target-vms</a></li>
-</ul>
-<p><strong>Affected Resources (1):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>rsv-btr-demo</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>3. Enable Soft Delete for Recovery Services Vaults in Azure Backup [Medium]</h3>
-<p>With soft delete, if backup data is deleted, the backup data is retained for 14 additional days, allowing the recovery of that backup item with no data loss with no cost to you. Soft delete is enabled by default. Disabling this feature isn't recommended.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Disaster Recovery</li>
-<li><strong>Benefit:</strong> Enhances disaster recovery capabilities</li>
-<li><strong>GUID:</strong> <code>9e39919b-78af-4a0b-b70f-c548dae97c25</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/backup/backup-azure-security-feature-cloud?tabs=azure-portal"">https://learn.microsoft.com/azure/backup/backup-azure-security-feature-cloud?tabs=azure-portal</a></li>
-</ul>
-<p><strong>Affected Resources (1):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>rsv-btr-demo</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>4. Enable soft delete for your Recovery Services vaults [Medium]</h3>
-<p>No detailed description available.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> High Availability</li>
-<li><strong>Benefit:</strong> N/A</li>
-<li><strong>GUID:</strong> <code>3ebfaf53-4d8c-4e67-a948-017bbbf59de6</code></li>
-</ul>
-<p><strong>Affected Resources (1):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>rsv-btr-demo</td><td>rg-btr-demo</td><td>global</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
-<h3>5. Migrate from classic alerts to built-in Azure Monitor alerts for Azure Recovery Services Vaults [Medium]</h3>
-<p>Classic alerts for Recovery Services vaults in Azure Backup will be retired on 31 March 2026.</p>
-<ul>
-<li><strong>WAF Pillar:</strong> Reliability</li>
-<li><strong>Control:</strong> Monitoring And Alerting</li>
-<li><strong>Benefit:</strong> Enhanced, scalable, and consistent alerting.</li>
-<li><strong>GUID:</strong> <code>2912472d-0198-4bdc-aa90-37f145790edc</code></li>
-<li><strong>Learn more:</strong> <a href=""https://learn.microsoft.com/azure/backup/move-to-azure-monitor-alerts"">https://learn.microsoft.com/azure/backup/move-to-azure-monitor-alerts</a></li>
-</ul>
-<p><strong>Affected Resources (1):</strong></p>
-<table>
-<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-<tr><td>rsv-btr-demo</td><td>rg-btr-demo</td><td>uksouth</td><td>a4aef89a-cd11-438f-b30a-58e84134ade1</td></tr>
-</table>
 ","<ul>
-<li>All 5 recommendation(s) have been implemented</li>
-<li>All 2 affected resource(s) pass APRL compliance checks</li>
-</ul>
-<p><strong>Per-recommendation verification:</strong></p>
-<ul>
-<li><strong>Enable Zone Redundant Storage (ZRS) for vault storage to protect backups from zone failures</strong> [High] &mdash; 1 resource(s) remediated (GUID: <code>21ac578c-0fb9-42eb-9c58-69716f87e7fb</code>)</li>
-<li><strong>Ensure static IP addresses in Site Recovery VM failover settings are available in failover subnet</strong> [High] &mdash; 1 resource(s) remediated (GUID: <code>e93bb813-b356-48f3-9bdf-a06a0a6ba039</code>)</li>
-<li><strong>Enable Soft Delete for Recovery Services Vaults in Azure Backup</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>9e39919b-78af-4a0b-b70f-c548dae97c25</code>)</li>
-<li><strong>Enable soft delete for your Recovery Services vaults</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>3ebfaf53-4d8c-4e67-a948-017bbbf59de6</code>)</li>
-<li><strong>Migrate from classic alerts to built-in Azure Monitor alerts for Azure Recovery Services Vaults</strong> [Medium] &mdash; 1 resource(s) remediated (GUID: <code>2912472d-0198-4bdc-aa90-37f145790edc</code>)</li>
-</ul>","High; Reliability; Azure Service; Source:APRL & Advisor","1","",""
+<li>All 0 recommendation(s) have been implemented</li>
+<li>All 3 affected resource(s) pass APRL compliance checks</li>
+</ul>","Low; Source:APRL","3","N9GFN-Test-Project","N9GFN-Test-Project\Backlog1"
