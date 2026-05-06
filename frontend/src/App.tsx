@@ -5,6 +5,7 @@ import Hierarchy from './pages/Hierarchy';
 import Patterns from './pages/Patterns';
 import Export from './pages/Export';
 import Sync from './pages/Sync';
+import AssessmentSelector from './components/AssessmentSelector';
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -60,6 +61,10 @@ export default function App() {
         {/* Main content */}
         <main className="flex-1 overflow-y-auto">
           <div className="max-w-7xl mx-auto px-6 py-6">
+            {/* Assessment selector header */}
+            <div className="flex items-center justify-between mb-4">
+              <AssessmentSelector onSwitch={() => window.location.reload()} />
+            </div>
             <Routes>
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
               <Route path="/dashboard" element={<Dashboard />} />

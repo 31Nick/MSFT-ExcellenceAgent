@@ -154,3 +154,49 @@ export async function retrySync(customer: string, runId?: number): Promise<SyncP
     body: JSON.stringify({ customer, run_id: runId }),
   });
 }
+
+// ── Assessment API ──────────────────────────────────────────────────────
+
+export interface AssessmentSummary {
+  id: number;
+  app_name: string;
+  created_at: string;
+  source_filename: string;
+  reviewed_only: boolean;
+  stats: Record<string, number>;
+  items_processed: number;
+  items_skipped: number;
+}
+
+export interface AssessmentsListResponse {
+  success: boolean;
+  assessments: AssessmentSummary[];
+  active_id: number | null;
+}
+
+export interface LoadAssessmentResponse {
+  success: boolean;
+  assessment_id: number;
+  app_name: string;
+  stats: Record<string, number>;
+  message: string;
+}
+
+export async function listAssessments(appName?: string): Promise<AssessmentsListResponse> {
+  const params = appName ? `?app_name=${encodeURIComponent(appName)}` : '';
+  return request<AssessmentsListResponse>(`/api/assessments${params}`);
+}
+
+export async function getActiveAssessment(): Promise<{ success: boolean; active: AssessmentSummary | null }> {
+  return request<{ success: boolean; active: AssessmentSummary | null }>('/api/assessments/active');
+}
+
+export async function loadAssessment(id: number): Promise<LoadAssessmentResponse> {
+  return request<LoadAssessmentResponse>(`/api/assessments/${id}`);
+}
+
+export async function deleteAssessment(id: number): Promise<{ success: boolean; message: string }> {
+  return request<{ success: boolean; message: string }>(`/api/assessments/${id}`, {
+    method: 'DELETE',
+  });
+}

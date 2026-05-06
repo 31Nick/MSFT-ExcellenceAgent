@@ -36,6 +36,16 @@ def _get_config():
     return current_app.config["EA_CONFIG"]
 
 
+def _get_assessment_store():
+    """Get or create the AssessmentStore singleton."""
+    store = current_app.config.get("EA_ASSESSMENT_STORE")
+    if store is None:
+        from excellence_agent.ado.assessment_store import AssessmentStore
+        store = AssessmentStore()
+        current_app.config["EA_ASSESSMENT_STORE"] = store
+    return store
+
+
 def _impact_counts(hierarchy):
     """Return dict of impact level → count across all user stories."""
     counts: dict[str, int] = {"High": 0, "Medium": 0, "Low": 0}
@@ -128,6 +138,19 @@ def upload():
         stats = hierarchy.summary_stats() if hierarchy.all_stories() else {
             "epics": 0, "features": 0, "user_stories": 0, "recommendations": 0
         }
+
+        # Persist assessment to store
+        assessment_store = _get_assessment_store()
+        assessment_id = assessment_store.save(
+            app_name=app_name,
+            hierarchy_dict=hierarchy.to_dict(),
+            stats=stats,
+            source_filename=file.filename,
+            reviewed_only=reviewed_only,
+            items_processed=result.new_items_processed,
+            items_skipped=result.items_skipped_duplicate,
+        )
+        current_app.config["EA_ACTIVE_ASSESSMENT_ID"] = assessment_id
 
         message = (
             f"Pipeline complete — {stats.get('epics', 0)} Epics (Apps), "
@@ -726,3 +749,123 @@ def incremental_export():
         as_attachment=True,
         download_name="ado_incremental_export.csv",
     )
+
+
+# ---------------------------------------------------------------------------
+# Assessment persistence endpoints
+# ---------------------------------------------------------------------------
+
+@api_bp.route("/assessments", methods=["GET"])
+def list_assessments():
+    """List all stored assessments (summaries only, no hierarchy blob)."""
+    store = _get_assessment_store()
+    app_filter = request.args.get("app_name")
+    summaries = store.list_assessments(app_name=app_filter or None)
+    return jsonify({
+        "success": True,
+        "assessments": [
+            {
+                "id": s.id,
+                "app_name": s.app_name,
+                "created_at": s.created_at,
+                "source_filename": s.source_filename,
+                "reviewed_only": s.reviewed_only,
+                "stats": s.stats,
+                "items_processed": s.items_processed,
+                "items_skipped": s.items_skipped,
+            }
+            for s in summaries
+        ],
+        "active_id": current_app.config.get("EA_ACTIVE_ASSESSMENT_ID"),
+    })
+
+
+@api_bp.route("/assessments/active", methods=["GET"])
+def get_active_assessment():
+    """Get info about the currently active assessment."""
+    active_id = current_app.config.get("EA_ACTIVE_ASSESSMENT_ID")
+    if active_id is None:
+        return jsonify({"success": True, "active": None})
+
+    store = _get_assessment_store()
+    summary = store.get_summary(active_id)
+    if summary is None:
+        return jsonify({"success": True, "active": None})
+
+    return jsonify({
+        "success": True,
+        "active": {
+            "id": summary.id,
+            "app_name": summary.app_name,
+            "created_at": summary.created_at,
+            "source_filename": summary.source_filename,
+            "reviewed_only": summary.reviewed_only,
+            "stats": summary.stats,
+            "items_processed": summary.items_processed,
+            "items_skipped": summary.items_skipped,
+        },
+    })
+
+
+@api_bp.route("/assessments/<int:assessment_id>", methods=["GET"])
+def load_assessment(assessment_id: int):
+    """Load an assessment by ID, making it the active assessment."""
+    store = _get_assessment_store()
+    hierarchy_dict = store.load_hierarchy_dict(assessment_id)
+    if hierarchy_dict is None:
+        return _error("Assessment not found.", 404)
+
+    summary = store.get_summary(assessment_id)
+
+    # Reconstruct the V2 hierarchy
+    from excellence_agent.models_v2 import WorkItemHierarchyV2
+
+    hierarchy = WorkItemHierarchyV2.from_dict(hierarchy_dict)
+
+    # Set as active in memory
+    current_app.config["EA_HIERARCHY_V2"] = hierarchy
+    current_app.config["EA_ACTIVE_ASSESSMENT_ID"] = assessment_id
+
+    # Also convert to V1 for existing endpoint compatibility
+    if hierarchy.all_stories():
+        from excellence_agent.cli import _convert_v2_to_v1
+        from excellence_agent.analysis import Deduplicator, PatternDetector
+
+        v1_hierarchy = _convert_v2_to_v1(hierarchy)
+        current_app.config["EA_HIERARCHY"] = v1_hierarchy
+
+        dedup = Deduplicator()
+        current_app.config["EA_DEDUP_REPORT"] = dedup.analyse(v1_hierarchy)
+        detector = PatternDetector()
+        current_app.config["EA_PATTERNS"] = detector.detect(v1_hierarchy)
+    else:
+        current_app.config["EA_HIERARCHY"] = None
+        current_app.config["EA_DEDUP_REPORT"] = None
+        current_app.config["EA_PATTERNS"] = []
+
+    return jsonify({
+        "success": True,
+        "assessment_id": assessment_id,
+        "app_name": summary.app_name if summary else "",
+        "stats": summary.stats if summary else {},
+        "message": f"Loaded assessment #{assessment_id} for '{summary.app_name if summary else ''}'.",
+    })
+
+
+@api_bp.route("/assessments/<int:assessment_id>", methods=["DELETE"])
+def delete_assessment(assessment_id: int):
+    """Delete a stored assessment."""
+    store = _get_assessment_store()
+    deleted = store.delete(assessment_id)
+    if not deleted:
+        return _error("Assessment not found.", 404)
+
+    # If deleted assessment was active, clear it
+    if current_app.config.get("EA_ACTIVE_ASSESSMENT_ID") == assessment_id:
+        current_app.config["EA_ACTIVE_ASSESSMENT_ID"] = None
+        current_app.config["EA_HIERARCHY"] = None
+        current_app.config["EA_HIERARCHY_V2"] = None
+        current_app.config["EA_DEDUP_REPORT"] = None
+        current_app.config["EA_PATTERNS"] = []
+
+    return jsonify({"success": True, "message": f"Assessment #{assessment_id} deleted."})

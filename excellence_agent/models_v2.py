@@ -74,6 +74,23 @@ class UserStoryV2:
             "recommendations": [r.to_dict() for r in self.recommendations],
         }
 
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> "UserStoryV2":
+        recs = [Recommendation.from_dict(r) for r in d.get("recommendations", [])]
+        story = cls(
+            title=d.get("title", ""),
+            resource_type=d.get("resource_type", ""),
+            resource_type_display=d.get("resource_type_display", ""),
+            run_number=d.get("run_number", 1),
+            impact=d.get("impact", ""),
+            category=d.get("category", ""),
+            source=d.get("source", ""),
+            waf_pillars=set(d.get("waf_pillars", [])),
+            resource_count=d.get("resource_count", 0),
+            recommendations=recs,
+        )
+        return story
+
 
 @dataclass
 class FeatureV2:
@@ -120,6 +137,22 @@ class FeatureV2:
             "total_affected_resources": self.total_affected_resources(),
         }
 
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> "FeatureV2":
+        feature = cls(
+            category_key=d.get("category_key", ""),
+            category_name=d.get("category_name", ""),
+            description=d.get("description", ""),
+            resource_types=set(d.get("resource_types", [])),
+            resource_groups=set(d.get("resource_groups", [])),
+            subscriptions=set(d.get("subscriptions", [])),
+            resource_count=d.get("resource_count", 0),
+        )
+        for story_d in d.get("user_stories", []):
+            story = UserStoryV2.from_dict(story_d)
+            feature.add_user_story(story)
+        return feature
+
 
 @dataclass
 class EpicV2:
@@ -164,6 +197,21 @@ class EpicV2:
             "total_recommendations": self.total_recommendations(),
         }
 
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> "EpicV2":
+        epic = cls(
+            app_name=d.get("app_name", ""),
+            description=d.get("description", ""),
+            total_resource_count=d.get("total_resource_count", 0),
+            waf_pillars=set(d.get("waf_pillars", [])),
+            impact_summary=d.get("impact_summary", {}),
+            environments=set(d.get("environments", [])),
+        )
+        for feat_d in d.get("features", []):
+            feature = FeatureV2.from_dict(feat_d)
+            epic.add_feature(feature)
+        return epic
+
 
 @dataclass
 class WorkItemHierarchyV2:
@@ -199,3 +247,10 @@ class WorkItemHierarchyV2:
             "epics": [e.to_dict() for e in self.epics],
             "summary": self.summary_stats(),
         }
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> "WorkItemHierarchyV2":
+        hierarchy = cls()
+        for epic_d in d.get("epics", []):
+            hierarchy.add_epic(EpicV2.from_dict(epic_d))
+        return hierarchy

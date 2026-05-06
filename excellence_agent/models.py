@@ -50,6 +50,20 @@ class AffectedResource:
             "custom_fields": dict(self.custom_fields),
         }
 
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> "AffectedResource":
+        return cls(
+            resource_name=d.get("resource_name", ""),
+            resource_id=d.get("resource_id", ""),
+            resource_group=d.get("resource_group", ""),
+            subscription_id=d.get("subscription_id", ""),
+            location=d.get("location", ""),
+            validation_status=d.get("validation_status", ""),
+            notes=d.get("notes", ""),
+            check_name=d.get("check_name", ""),
+            custom_fields=d.get("custom_fields", {}),
+        )
+
 
 @dataclass
 class Recommendation:
@@ -83,6 +97,24 @@ class Recommendation:
             "advisor_metadata": dict(self.advisor_metadata),
             "affected_resources": [r.to_dict() for r in self.affected_resources],
         }
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> "Recommendation":
+        resources = [AffectedResource.from_dict(r) for r in d.get("affected_resources", [])]
+        return cls(
+            title=d.get("title", ""),
+            recommendation_guid=d.get("recommendation_guid", ""),
+            impact=d.get("impact", ""),
+            recommendation_control=d.get("recommendation_control", ""),
+            potential_benefit=d.get("potential_benefit", ""),
+            learn_more_link=d.get("learn_more_link", ""),
+            long_description=d.get("long_description", ""),
+            waf_pillar=d.get("waf_pillar", ""),
+            category=d.get("category", ""),
+            source=d.get("source", ""),
+            advisor_metadata=d.get("advisor_metadata", {}),
+            affected_resources=resources,
+        )
 
 
 @dataclass

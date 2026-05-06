@@ -36,6 +36,35 @@ def create_app(config: Config | None = None) -> Flask:
     app.config["EA_HIERARCHY"] = None
     app.config["EA_DEDUP_REPORT"] = None
     app.config["EA_PATTERNS"] = None
+    app.config["EA_ACTIVE_ASSESSMENT_ID"] = None
+
+    # Load most recent assessment on startup (if any exist)
+    try:
+        from excellence_agent.ado.assessment_store import AssessmentStore
+        from excellence_agent.models_v2 import WorkItemHierarchyV2
+
+        store = AssessmentStore()
+        app.config["EA_ASSESSMENT_STORE"] = store
+        latest = store.get_latest()
+        if latest:
+            hierarchy_dict = store.load_hierarchy_dict(latest.id)
+            if hierarchy_dict:
+                hierarchy = WorkItemHierarchyV2.from_dict(hierarchy_dict)
+                app.config["EA_HIERARCHY_V2"] = hierarchy
+                app.config["EA_ACTIVE_ASSESSMENT_ID"] = latest.id
+
+                if hierarchy.all_stories():
+                    from excellence_agent.cli import _convert_v2_to_v1
+                    from excellence_agent.analysis import Deduplicator, PatternDetector
+
+                    v1_hierarchy = _convert_v2_to_v1(hierarchy)
+                    app.config["EA_HIERARCHY"] = v1_hierarchy
+                    dedup = Deduplicator()
+                    app.config["EA_DEDUP_REPORT"] = dedup.analyse(v1_hierarchy)
+                    detector = PatternDetector()
+                    app.config["EA_PATTERNS"] = detector.detect(v1_hierarchy)
+    except Exception:
+        pass  # Non-fatal: app starts fresh if store is unavailable
 
     from excellence_agent.web.routes import api_bp  # noqa: E402
 
