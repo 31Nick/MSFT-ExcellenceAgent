@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project
+output/
+.pytest_cache/
+.state/
+
+# Customer configs (secrets) — only example.yaml is committed
+customers/*
+!customers/.gitkeep
+!customers/example.yaml
+
+# Node
+node_modules/
+frontend/node_modules/

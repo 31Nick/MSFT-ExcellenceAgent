@@ -1,0 +1,25 @@
+# ExcellenceAgent — Customer Configuration Template
+#
+# Copy this file and rename it to your customer slug (e.g. contoso.yaml).
+# The filename (without extension) becomes the canonical customer identifier
+# used for state tracking, env var lookup, and CLI commands.
+#
+# Secrets (PAT) are NEVER stored here — they are loaded from environment
+# variables. Set ADO_PAT for a global default, or ADO_PAT_<SLUG> for a
+# customer-specific override (e.g. ADO_PAT_CONTOSO).
+
+customer_name: "Example Corp"
+
+ado:
+  organization: "example-org"
+  project: "Infrastructure"
+  team: ""                              # optional — ADO team name
+  area_path: ""                         # optional — e.g. "Infrastructure\\Reliability"
+  iteration_path: ""                    # optional — e.g. "Infrastructure\\Sprint 1"
+
+work_items:
+  type_mapping:
+    epic: "Epic"
+    feature: "Feature"
+    story: "User Story"
+    task: "Task"

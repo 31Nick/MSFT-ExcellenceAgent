@@ -1,15 +1,19 @@
 import { BrowserRouter, Routes, Route, NavLink, Navigate } from 'react-router-dom';
-import { LayoutDashboard, GitBranch, Puzzle, Download, Shield } from 'lucide-react';
+import { LayoutDashboard, GitBranch, Puzzle, Download, Shield, RefreshCw, FolderOpen } from 'lucide-react';
+import Assessments from './pages/Assessments';
 import Dashboard from './pages/Dashboard';
 import Hierarchy from './pages/Hierarchy';
 import Patterns from './pages/Patterns';
 import Export from './pages/Export';
+import Sync from './pages/Sync';
 
 const navItems = [
+  { to: '/assessments', label: 'Assessments', icon: FolderOpen },
   { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { to: '/hierarchy', label: 'Hierarchy', icon: GitBranch },
   { to: '/patterns', label: 'Patterns', icon: Puzzle },
   { to: '/export', label: 'Export', icon: Download },
+  { to: '/sync', label: 'Sync', icon: RefreshCw },
 ];
 
 export default function App() {
@@ -59,11 +63,13 @@ export default function App() {
         <main className="flex-1 overflow-y-auto">
           <div className="max-w-7xl mx-auto px-6 py-6">
             <Routes>
-              <Route path="/" element={<Navigate to="/dashboard" replace />} />
+              <Route path="/" element={<Navigate to="/assessments" replace />} />
+              <Route path="/assessments" element={<Assessments />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/hierarchy" element={<Hierarchy />} />
               <Route path="/patterns" element={<Patterns />} />
               <Route path="/export" element={<Export />} />
+              <Route path="/sync" element={<Sync />} />
             </Routes>
           </div>
         </main>

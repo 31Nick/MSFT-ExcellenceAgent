@@ -1,37 +1,31 @@
 <h1>{{ title }}</h1>
-<h2>Recommendation</h2>
-<p>{{ long_description }}</p>
-<h2>Details</h2>
+<h2>Overview</h2>
+<p>Consolidated APRL recommendations for <strong>{{ resource_type }}</strong> resources.</p>
 <ul>
 <li><strong>Impact:</strong> {{ impact }}</li>
-<li><strong>WAF Pillar:</strong> {{ waf_pillar }}</li>
-<li><strong>Control:</strong> {{ recommendation_control }}</li>
-<li><strong>Potential Benefit:</strong> {{ potential_benefit }}</li>
+<li><strong>WAF Pillars:</strong> {{ waf_pillars | join(', ') }}</li>
+<li><strong>Recommendations:</strong> {{ recommendations | length }}</li>
+<li><strong>Affected Resources:</strong> {{ resource_count }}</li>
 <li><strong>Source:</strong> {{ source }}</li>
-<li><strong>APRL Guid:</strong> {{ recommendation_guid }}</li>
 </ul>
-{% if learn_more_link and learn_more_link != 'N/A' -%}
-<h2>Learn More</h2>
-<p><a href="{{ learn_more_link }}">{{ learn_more_link }}</a></p>
-{% endif -%}
-{% if advisor_metadata -%}
-<h2>Advisor Information</h2>
+<h2>Recommendations</h2>
+{% for rec in recommendations -%}
+<h3>{{ loop.index }}. {{ rec.title }} [{{ rec.impact }}]</h3>
+<p>{{ rec.long_description or 'No detailed description available.' }}</p>
 <ul>
-{% if advisor_metadata.get('advisor_retirement_date') -%}
-<li><strong>⚠️ Retirement Date:</strong> {{ advisor_metadata['advisor_retirement_date'] }}</li>
-{% endif -%}
-{% if advisor_metadata.get('advisor_retiring_feature') -%}
-<li><strong>Retiring Feature:</strong> {{ advisor_metadata['advisor_retiring_feature'] }}</li>
-{% endif -%}
-{% if advisor_metadata.get('advisor_cost_implications') -%}
-<li><strong>Cost Implications:</strong> {{ advisor_metadata['advisor_cost_implications'] }}</li>
+<li><strong>WAF Pillar:</strong> {{ rec.waf_pillar or 'N/A' }}</li>
+<li><strong>Control:</strong> {{ rec.recommendation_control }}</li>
+<li><strong>Benefit:</strong> {{ rec.potential_benefit or 'N/A' }}</li>
+<li><strong>GUID:</strong> <code>{{ rec.recommendation_guid }}</code></li>
+{% if rec.learn_more_link -%}
+<li><strong>Learn more:</strong> <a href="{{ rec.learn_more_link }}">{{ rec.learn_more_link }}</a></li>
 {% endif -%}
 </ul>
-{% endif -%}
-<h2>Affected Resources ({{ tasks | length }})</h2>
+<p><strong>Affected Resources ({{ rec.affected_resources | length }}):</strong></p>
 <table>
-<tr><th>#</th><th>Resource Name</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
-{% for task in tasks -%}
-<tr><td>{{ loop.index }}</td><td>{{ task.resource_name }}</td><td>{{ task.resource_group }}</td><td>{{ task.location }}</td><td>{{ task.subscription_id }}</td></tr>
+<tr><th>Resource</th><th>Resource Group</th><th>Location</th><th>Subscription</th></tr>
+{% for res in rec.affected_resources -%}
+<tr><td>{{ res.resource_name }}</td><td>{{ res.resource_group }}</td><td>{{ res.location }}</td><td>{{ res.subscription_id }}</td></tr>
 {% endfor -%}
 </table>
+{% endfor -%}

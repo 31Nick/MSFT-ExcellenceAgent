@@ -1,7 +1,10 @@
 """
 Dataclass models for the ExcellenceAgent ADO work-item hierarchy.
 
-Hierarchy: Epic → Feature → UserStory → Task
+Hierarchy: Epic → Feature → UserStory (consolidated per resource type)
+
+Each UserStory contains Recommendation objects (data-only, not ADO work items)
+which in turn reference AffectedResource objects.
 
 Data sourced from APRL v2 (Azure Proactive Resiliency Library) Excel reports.
 """
@@ -12,21 +15,27 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Set
 
 
+def normalize_resource_type(raw: str) -> str:
+    """Canonical resource type key — lowercase, trimmed, slashes collapsed."""
+    s = raw.strip().lower()
+    while "//" in s:
+        s = s.replace("//", "/")
+    return s.rstrip("/")
+
+
 @dataclass
-class Task:
-    """An individual Azure resource that needs remediation."""
+class AffectedResource:
+    """A single Azure resource affected by a recommendation."""
 
     resource_name: str
-    resource_id: str  # full ARM ID
+    resource_id: str
     resource_group: str
     subscription_id: str
     location: str
     validation_status: str = ""
-    custom_fields: Dict[str, str] = field(default_factory=dict)
     notes: str = ""
     check_name: str = ""
-    source: str = ""  # "APRL", "Advisor", or "APRL & Advisor"
-    advisor_metadata: Dict[str, str] = field(default_factory=dict)  # retirement_date, retiring_feature, etc.
+    custom_fields: Dict[str, str] = field(default_factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -36,17 +45,29 @@ class Task:
             "subscription_id": self.subscription_id,
             "location": self.location,
             "validation_status": self.validation_status,
-            "custom_fields": dict(self.custom_fields),
             "notes": self.notes,
             "check_name": self.check_name,
-            "source": self.source,
-            "advisor_metadata": dict(self.advisor_metadata),
+            "custom_fields": dict(self.custom_fields),
         }
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> "AffectedResource":
+        return cls(
+            resource_name=d.get("resource_name", ""),
+            resource_id=d.get("resource_id", ""),
+            resource_group=d.get("resource_group", ""),
+            subscription_id=d.get("subscription_id", ""),
+            location=d.get("location", ""),
+            validation_status=d.get("validation_status", ""),
+            notes=d.get("notes", ""),
+            check_name=d.get("check_name", ""),
+            custom_fields=d.get("custom_fields", {}),
+        )
 
 
 @dataclass
-class UserStory:
-    """A deduplicated APRL recommendation."""
+class Recommendation:
+    """A specific APRL recommendation (data-only, not an ADO work item)."""
 
     title: str
     recommendation_guid: str
@@ -57,25 +78,15 @@ class UserStory:
     long_description: str = ""
     waf_pillar: str = ""
     category: str = ""
-    source: str = ""
+    source: str = ""  # "APRL", "Advisor", or "APRL & Advisor"
     advisor_metadata: Dict[str, str] = field(default_factory=dict)
-    feature: Optional[Feature] = field(default=None, repr=False)
-    tasks: List[Task] = field(default_factory=list)
-
-    @property
-    def priority(self) -> int:
-        """Map Impact to integer: High=1, Medium=2, Low=3."""
-        return {"High": 1, "Medium": 2, "Low": 3}.get(self.impact, 3)
-
-    def add_task(self, task: Task) -> None:
-        self.tasks.append(task)
+    affected_resources: List[AffectedResource] = field(default_factory=list)
 
     def to_dict(self) -> Dict[str, Any]:
         return {
             "title": self.title,
             "recommendation_guid": self.recommendation_guid,
             "impact": self.impact,
-            "priority": self.priority,
             "recommendation_control": self.recommendation_control,
             "potential_benefit": self.potential_benefit,
             "learn_more_link": self.learn_more_link,
@@ -84,7 +95,71 @@ class UserStory:
             "category": self.category,
             "source": self.source,
             "advisor_metadata": dict(self.advisor_metadata),
-            "tasks": [t.to_dict() for t in self.tasks],
+            "affected_resources": [r.to_dict() for r in self.affected_resources],
+        }
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> "Recommendation":
+        resources = [AffectedResource.from_dict(r) for r in d.get("affected_resources", [])]
+        return cls(
+            title=d.get("title", ""),
+            recommendation_guid=d.get("recommendation_guid", ""),
+            impact=d.get("impact", ""),
+            recommendation_control=d.get("recommendation_control", ""),
+            potential_benefit=d.get("potential_benefit", ""),
+            learn_more_link=d.get("learn_more_link", ""),
+            long_description=d.get("long_description", ""),
+            waf_pillar=d.get("waf_pillar", ""),
+            category=d.get("category", ""),
+            source=d.get("source", ""),
+            advisor_metadata=d.get("advisor_metadata", {}),
+            affected_resources=resources,
+        )
+
+
+@dataclass
+class UserStory:
+    """Consolidated APRL recommendations for a resource type."""
+
+    title: str
+    impact: str  # Highest impact among recommendations: High / Medium / Low
+    category: str = ""
+    source: str = ""
+    waf_pillars: Set[str] = field(default_factory=set)
+    resource_count: int = 0  # unique affected resources across all recommendations
+    feature: Optional[Feature] = field(default=None, repr=False)
+    recommendations: List[Recommendation] = field(default_factory=list)
+
+    @property
+    def priority(self) -> int:
+        """Map Impact to integer: High=1, Medium=2, Low=3."""
+        return {"High": 1, "Medium": 2, "Low": 3}.get(self.impact, 3)
+
+    @property
+    def stable_key(self) -> str:
+        """Identity key for sync: ``story:{epic_name}:{resource_type}``."""
+        if self.feature is None:
+            raise ValueError("UserStory.stable_key requires a parent Feature (set via Feature.add_user_story)")
+        epic_name = self.feature.epic.name.lower() if self.feature.epic else ""
+        return f"story:{epic_name}:{self.feature.resource_type.lower()}"
+
+    def add_recommendation(self, rec: Recommendation) -> None:
+        self.recommendations.append(rec)
+
+    def total_affected_resources(self) -> int:
+        """Total number of individual resources across all recommendations."""
+        return sum(len(r.affected_resources) for r in self.recommendations)
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "title": self.title,
+            "impact": self.impact,
+            "priority": self.priority,
+            "category": self.category,
+            "source": self.source,
+            "waf_pillars": sorted(self.waf_pillars),
+            "resource_count": self.resource_count,
+            "recommendations": [r.to_dict() for r in self.recommendations],
         }
 
 
@@ -93,19 +168,31 @@ class Feature:
     """An Azure resource type within an Epic (e.g. 'microsoft.network/networkwatchers')."""
 
     name: str
-    resource_type: str
+    resource_type: str  # canonical (lowercase, normalized)
     epic: Optional[Epic] = field(default=None, repr=False)
     user_stories: List[UserStory] = field(default_factory=list)
     resource_groups: Set[str] = field(default_factory=set)
     subscriptions: Set[str] = field(default_factory=set)
     resource_count: int = 0
 
+    @property
+    def stable_key(self) -> str:
+        """Identity key for sync: ``feature:{category}:{resource_type}``."""
+        if self.epic is None:
+            raise ValueError("Feature.stable_key requires a parent Epic (set via Epic.add_feature)")
+        return f"feature:{self.epic.name.lower()}:{self.resource_type.lower()}"
+
     def add_user_story(self, story: UserStory) -> None:
         story.feature = self
         self.user_stories.append(story)
 
-    def total_tasks(self) -> int:
-        return sum(len(s.tasks) for s in self.user_stories)
+    def total_recommendations(self) -> int:
+        """Total recommendations across all stories."""
+        return sum(len(s.recommendations) for s in self.user_stories)
+
+    def total_affected_resources(self) -> int:
+        """Total individual resources across all stories and recommendations."""
+        return sum(s.total_affected_resources() for s in self.user_stories)
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -115,7 +202,8 @@ class Feature:
             "subscriptions": sorted(self.subscriptions),
             "resource_count": self.resource_count,
             "user_stories": [s.to_dict() for s in self.user_stories],
-            "total_tasks": self.total_tasks(),
+            "total_recommendations": self.total_recommendations(),
+            "total_affected_resources": self.total_affected_resources(),
         }
 
 
@@ -130,6 +218,11 @@ class Epic:
     waf_pillars: Set[str] = field(default_factory=set)
     impact_summary: Dict[str, int] = field(default_factory=dict)
 
+    @property
+    def stable_key(self) -> str:
+        """Identity key for sync: ``epic:{name}``."""
+        return f"epic:{self.name.lower()}"
+
     def add_feature(self, feature: Feature) -> None:
         feature.epic = self
         self.features.append(feature)
@@ -137,8 +230,13 @@ class Epic:
     def total_stories(self) -> int:
         return sum(len(f.user_stories) for f in self.features)
 
-    def total_tasks(self) -> int:
-        return sum(f.total_tasks() for f in self.features)
+    def total_recommendations(self) -> int:
+        """Total recommendations across all features."""
+        return sum(f.total_recommendations() for f in self.features)
+
+    def total_affected_resources(self) -> int:
+        """Total individual resources across all features."""
+        return sum(f.total_affected_resources() for f in self.features)
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -149,7 +247,7 @@ class Epic:
             "impact_summary": dict(self.impact_summary),
             "features": [f.to_dict() for f in self.features],
             "total_stories": self.total_stories(),
-            "total_tasks": self.total_tasks(),
+            "total_recommendations": self.total_recommendations(),
         }
 
 
@@ -168,15 +266,18 @@ class WorkItemHierarchy:
     def all_stories(self) -> List[UserStory]:
         return [s for f in self.all_features() for s in f.user_stories]
 
-    def all_tasks(self) -> List[Task]:
-        return [t for s in self.all_stories() for t in s.tasks]
+    def all_recommendations(self) -> List[Recommendation]:
+        return [r for s in self.all_stories() for r in s.recommendations]
+
+    def all_affected_resources(self) -> List[AffectedResource]:
+        return [ar for r in self.all_recommendations() for ar in r.affected_resources]
 
     def summary_stats(self) -> Dict[str, int]:
         return {
             "epics": len(self.epics),
             "features": len(self.all_features()),
             "user_stories": len(self.all_stories()),
-            "tasks": len(self.all_tasks()),
+            "recommendations": len(self.all_recommendations()),
         }
 
     def to_dict(self) -> Dict[str, Any]:

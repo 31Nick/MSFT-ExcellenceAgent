@@ -12,7 +12,7 @@
     <details class="tree-epic">
       <summary>
         <strong>Epic:</strong> {{ epic.name }}
-        <span class="text-muted ms-2">({{ epic.features | length }} features, {{ epic.total_tasks() }} tasks)</span>
+        <span class="text-muted ms-2">({{ epic.features | length }} features, {{ epic.total_recommendations() }} recommendations)</span>
       </summary>
 
       {% for feature in epic.features %}
@@ -29,33 +29,31 @@
             <span class="badge-impact badge-{{ story.impact | lower }}">{{ story.impact }}</span>
           </summary>
           <div class="tree-story-detail">
-            {% if story.potential_benefit %}
-              <p class="mb-1"><em>{{ story.potential_benefit }}</em></p>
-            {% endif %}
+            <p class="mb-1"><strong>{{ story.recommendations | length }}</strong> recommendation(s), <strong>{{ story.resource_count }}</strong> resource(s)</p>
 
-            {% if story.tasks %}
+            {% if story.recommendations %}
             <table class="table table-sm table-bordered mb-0">
               <thead>
                 <tr>
-                  <th>Resource</th>
-                  <th>Resource Group</th>
-                  <th>Location</th>
-                  <th>Status</th>
+                  <th>Recommendation</th>
+                  <th>Impact</th>
+                  <th>WAF Pillar</th>
+                  <th>Affected Resources</th>
                 </tr>
               </thead>
               <tbody>
-                {% for task in story.tasks %}
+                {% for rec in story.recommendations %}
                 <tr>
-                  <td>{{ task.resource_name }}</td>
-                  <td>{{ task.resource_group }}</td>
-                  <td>{{ task.location }}</td>
-                  <td>{{ task.validation_status }}</td>
+                  <td>{{ rec.title }}</td>
+                  <td>{{ rec.impact }}</td>
+                  <td>{{ rec.waf_pillar }}</td>
+                  <td>{{ rec.affected_resources | length }}</td>
                 </tr>
                 {% endfor %}
               </tbody>
             </table>
             {% else %}
-              <p class="text-muted mb-0">No tasks.</p>
+              <p class="text-muted mb-0">No recommendations.</p>
             {% endif %}
           </div>
         </details>

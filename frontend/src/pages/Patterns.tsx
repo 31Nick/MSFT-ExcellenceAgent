@@ -100,7 +100,7 @@ function PatternCard({ pattern }: { pattern: Pattern }) {
         {/* Counts */}
         <div className="flex gap-4 text-xs text-gray-400 pt-2 border-t border-gray-50">
           <span>{pattern.story_count} stories</span>
-          <span>{pattern.task_count} tasks</span>
+          <span>{pattern.recommendation_count} recommendations</span>
         </div>
       </div>
     </div>

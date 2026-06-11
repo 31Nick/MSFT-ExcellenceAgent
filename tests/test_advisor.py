@@ -335,19 +335,18 @@ class TestSourcePropagation:
         # Should have at least APRL-sourced stories
         assert any("APRL" in s for s in sources)
 
-    def test_sources_in_tasks(self, merged_hierarchy):
-        sources = {t.source for t in merged_hierarchy.all_tasks() if t.source}
+    def test_sources_in_recommendations(self, merged_hierarchy):
+        sources = {r.source for r in merged_hierarchy.all_recommendations() if r.source}
         assert len(sources) > 0
 
     def test_advisor_metadata_on_matched(self, merged_hierarchy):
-        """Tasks from Advisor should have advisor_metadata populated."""
+        """Recommendations from Advisor should have advisor_metadata populated."""
         for story in merged_hierarchy.all_stories():
-            for task in story.tasks:
-                if task.source == "Advisor" or task.source == "APRL & Advisor":
-                    # May or may not have metadata depending on CSV row
+            for rec in story.recommendations:
+                if rec.source == "Advisor" or rec.source == "APRL & Advisor":
                     pass  # Just ensure no crash
-                if task.advisor_metadata.get("advisor_retirement_date"):
-                    assert len(task.advisor_metadata["advisor_retirement_date"]) > 0
+                if rec.advisor_metadata.get("advisor_retirement_date"):
+                    assert len(rec.advisor_metadata["advisor_retirement_date"]) > 0
 
     def test_csv_source_tags(self, merged_hierarchy, tmp_path):
         """Exported CSV should contain Source: tags."""
@@ -391,5 +390,5 @@ class TestSourcePropagation:
         # All sources should be APRL
         for story in hierarchy.all_stories():
             assert story.source in ("APRL", "")
-        for task in hierarchy.all_tasks():
-            assert task.source in ("APRL", "")
+        for rec in hierarchy.all_recommendations():
+            assert rec.source in ("APRL", "")
