@@ -219,7 +219,7 @@ def analyse(report: str, matrix: str, advisor: str | None) -> None:
     click.echo(f"  Epics:        {stats['epics']}")
     click.echo(f"  Features:     {stats['features']}")
     click.echo(f"  User Stories: {stats['user_stories']}")
-    click.echo(f"  Tasks:        {stats['tasks']}")
+    click.echo(f"  Recommendations: {stats['recommendations']}")
     click.echo(f"\n  Elapsed: {_elapsed(start)}")
 
 
@@ -315,7 +315,7 @@ def export(
     click.echo(f"  Epics:        {stats['epics']}")
     click.echo(f"  Features:     {stats['features']}")
     click.echo(f"  User Stories: {stats['user_stories']}")
-    click.echo(f"  Tasks:        {stats['tasks']}")
+    click.echo(f"  Recommendations: {stats['recommendations']}")
     click.echo(f"\n  Elapsed: {_elapsed(start)}")
 
 
@@ -435,7 +435,7 @@ def _load_sync_deps(slug: str, report: str, advisor: str | None, matrix: str):
 
     click.echo(
         f"  {stats['epics']} Epics, {stats['features']} Features, "
-        f"{stats['user_stories']} Stories, {stats['tasks']} Tasks"
+        f"{stats['user_stories']} Stories, {stats['recommendations']} Recommendations"
     )
 
     store = SyncStateStore()

@@ -152,19 +152,20 @@ def build_hierarchy_incremental(
 
     # ── Step 4: Deduplicate against ledger ───────────────────────────
     total_before_dedup = len(df)
-    rows_to_keep: List[bool] = []
+    keep_mask = pd.Series(False, index=df.index)
 
     for app_name_val in df[COL_APP_NAME].unique():
-        app_df = df[df[COL_APP_NAME] == app_name_val]
+        app_idx = df.index[df[COL_APP_NAME] == app_name_val]
         already_processed = ledger.get_already_processed_keys(customer, str(app_name_val))
 
-        for _, row in app_df.iterrows():
+        for idx in app_idx:
+            row = df.loc[idx]
             guid = str(row.get(COL_GUID, "")).strip()
             resource_id = str(row.get(COL_ID, "")).strip()
             key = (guid, resource_id)
-            rows_to_keep.append(key not in already_processed)
+            keep_mask.loc[idx] = key not in already_processed
 
-    df = df[rows_to_keep].reset_index(drop=True)
+    df = df[keep_mask].reset_index(drop=True)
     items_skipped = total_before_dedup - len(df)
     result.items_skipped_duplicate = items_skipped
 

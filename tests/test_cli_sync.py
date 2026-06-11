@@ -104,7 +104,7 @@ class TestSyncPlan:
             patch("excellence_agent.pipeline.build_hierarchy") as mock_bh,
             patch("excellence_agent.ado.sync_service.AdoSyncService.plan", return_value=mock_plan),
         ):
-            mock_bh.return_value = (MagicMock(), {"epics": 1, "features": 1, "user_stories": 2, "tasks": 3})
+            mock_bh.return_value = (MagicMock(), {"epics": 1, "features": 1, "user_stories": 2, "recommendations": 3})
             result = runner.invoke(cli, [
                 "sync", "plan", "testcorp", "--report", str(report),
                 "--matrix", str(matrix),

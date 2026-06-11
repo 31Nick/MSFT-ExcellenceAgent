@@ -152,7 +152,7 @@ excellence-agent sync retry myorg --report path/to/report.xlsx
 #### How It Works
 
 1. **Plan** — Diffs the APRL hierarchy against the local SQLite state store (`.state/sync.db`)
-2. **Push** — Creates/updates work items top-down (Epic → Feature → Story → Task) via MCP, auto-linking parent-child relationships
+2. **Push** — Creates/updates work items top-down (Epic → Feature → User Story) via MCP, auto-linking parent-child relationships
 3. **Re-sync** — On subsequent runs, only changed items are updated; unchanged items are skipped
 4. **Retry** — Failed items are tracked and can be retried without re-pushing everything
 
@@ -172,7 +172,7 @@ Open `http://localhost:5000` in your browser. Upload an APRL Excel report to exp
 4. **Export** — Configure Area/Iteration paths and download the ADO CSV
 5. **Sync** — Select a customer, preview the sync plan, push to ADO, and view run history
 
-#### Azure Advisor Cross-Reference(Optional)
+#### Azure Advisor Cross-Reference (Optional)
 
 To overlay Azure Advisor recommendations alongside APRL:
 

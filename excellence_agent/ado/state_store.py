@@ -186,18 +186,25 @@ class SyncStateStore:
 
     def mark_orphaned(self, customer: str, active_keys: set[str], run_id: int) -> int:
         """Mark items not in *active_keys* as orphaned. Returns count."""
-        if not active_keys:
-            return 0
         with self._connect() as conn:
-            placeholders = ",".join("?" for _ in active_keys)
-            cursor = conn.execute(
-                f"""UPDATE sync_items
-                    SET sync_status = 'orphaned', run_id = ?
-                    WHERE customer = ?
-                    AND stable_key NOT IN ({placeholders})
-                    AND sync_status NOT IN ('orphaned', 'pending')""",
-                [run_id, customer, *active_keys],
-            )
+            if active_keys:
+                placeholders = ",".join("?" for _ in active_keys)
+                cursor = conn.execute(
+                    f"""UPDATE sync_items
+                        SET sync_status = 'orphaned', run_id = ?
+                        WHERE customer = ?
+                        AND stable_key NOT IN ({placeholders})
+                        AND sync_status NOT IN ('orphaned', 'pending')""",
+                    [run_id, customer, *active_keys],
+                )
+            else:
+                cursor = conn.execute(
+                    """UPDATE sync_items
+                        SET sync_status = 'orphaned', run_id = ?
+                        WHERE customer = ?
+                        AND sync_status NOT IN ('orphaned', 'pending')""",
+                    [run_id, customer],
+                )
             return cursor.rowcount
 
     # ── sync runs ─────────────────────────────────────────────────────

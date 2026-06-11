@@ -17,7 +17,7 @@ class TestBuildHierarchy:
 
         mock_hierarchy = MagicMock()
         mock_hierarchy.summary_stats.return_value = {
-            "epics": 2, "features": 3, "user_stories": 5, "tasks": 10,
+            "epics": 2, "features": 3, "user_stories": 5, "recommendations": 10,
         }
 
         with (
@@ -34,5 +34,5 @@ class TestBuildHierarchy:
             hierarchy, stats = build_hierarchy("report.xlsx", "matrix.yaml")
 
         assert stats["epics"] == 2
-        assert stats["tasks"] == 10
+        assert stats["recommendations"] == 10
         MockParser.assert_called_once_with("report.xlsx")

@@ -16,7 +16,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Generator, List, Optional
 
-_DEFAULT_STATE_DIR = Path(__file__).parent.parent / ".state"
+_DEFAULT_STATE_DIR = Path(__file__).parent.parent.parent / ".state"
 
 _SCHEMA_SQL = """
 CREATE TABLE IF NOT EXISTS assessments (

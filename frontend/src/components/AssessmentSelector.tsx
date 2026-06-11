@@ -41,7 +41,7 @@ export default function AssessmentSelector({ onSwitch }: Props) {
     }
   };
 
-  const handleDelete = async (e: React.MouseEvent, id: number) => {
+  const handleDelete = async (e: React.SyntheticEvent, id: number) => {
     e.stopPropagation();
     if (!confirm('Delete this assessment? This cannot be undone.')) return;
     try {
@@ -114,13 +114,16 @@ export default function AssessmentSelector({ onSwitch }: Props) {
                       {a.items_processed} new
                     </div>
                   </div>
-                  <button
+                  <div
+                    role="button"
+                    tabIndex={0}
                     onClick={(e) => handleDelete(e, a.id)}
-                    className="p-1 rounded hover:bg-red-100 text-gray-400 hover:text-red-500 transition-colors"
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleDelete(e, a.id); } }}
+                    className="p-1 rounded hover:bg-red-100 text-gray-400 hover:text-red-500 transition-colors cursor-pointer"
                     title="Delete assessment"
                   >
                     <Trash2 size={14} />
-                  </button>
+                  </div>
                 </button>
               ))}
             </div>

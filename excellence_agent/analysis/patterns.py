@@ -44,7 +44,7 @@ class Pattern:
             "affected_epics": list(self.affected_epics),
             "affected_features": list(self.affected_features),
             "story_count": self.story_count,
-            "task_count": self.task_count,
+            "recommendation_count": self.task_count,
             "recommendation_control": self.recommendation_control,
         }
 
